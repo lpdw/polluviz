@@ -2,10 +2,10 @@
 
 export class Api
 {
-    protected type: string;
-    protected server: string;
-    protected api: string;
-    protected serverWithApiUrl: string;
+    public type: string;
+    public server: string;
+    public api: string;
+    public serverWithApiUrl: string;
 
     constructor() { }
 }
