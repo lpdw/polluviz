@@ -21,7 +21,6 @@ export class ApiService
   {
     //Air pollution
     let airpollution: AirPollution = new Api();
-    airpollution.type = "Air";
     airpollution.server = "http://api.waqi.info/";
     airpollution.api = "feed/shanghai/?token=demo";
     airpollution.serverWithApiUrl = airpollution.server + airpollution.api;
