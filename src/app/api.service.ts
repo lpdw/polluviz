@@ -19,13 +19,19 @@ export class ApiService
 
   constructor(private _http: Http, private _jsonp: Jsonp)
   {
-    //Air pollution
-    let airpollution: AirPollution = new Api();
-    airpollution.server = "http://api.waqi.info/";
-    airpollution.api = "feed/shanghai/?token=demo";
-    airpollution.serverWithApiUrl = airpollution.server + airpollution.api;
+    //Air pollution 1
+    // let airpollution: AirPollution = new Api();
+    // airpollution.server = "http://api.waqi.info/";
+    // airpollution.api = "feed/shanghai/?token=demo";
+    // airpollution.serverWithApiUrl = airpollution.server + airpollution.api;
+    //Air quality
+    let airquality: AirPollution = new Api();
+    airquality.server = "https://api.openaq.org/";
+    airquality.api = "v1/latest?country=FR";
+    airquality.serverWithApiUrl = airquality.server + airquality.api;
 
-    this._listApi.push(airpollution);
+    // this._listApi.push(airpollution);
+    this._listApi.push(airquality);
   }
 
   public getData(serverName: string): Observable<any>

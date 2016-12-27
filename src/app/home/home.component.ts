@@ -16,7 +16,12 @@ export class HomeComponent implements OnInit
 
   ngOnInit()
   {
-    this._apiService.getData("http://api.waqi.info/").toPromise().then(data => console.log(data) );
+    // this._apiService.getData("http://api.waqi.info/").toPromise().then(data => console.log(data) );
+    this._apiService.getData("https://api.openaq.org/").toPromise().then(data => console.log(data) );
   }
 
+  redirectToExternalLink(link: string)
+  {
+    window.open(link.toLowerCase(), '_blank') ;
+  }
 }
