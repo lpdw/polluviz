@@ -25,17 +25,19 @@ export class ApiService
     // airpollution.api = "feed/shanghai/?token=demo";
     // airpollution.serverWithApiUrl = airpollution.server + airpollution.api;
     //Air quality
-    let airquality: AirPollution = new Api();
+    let airquality: AirPollution = new AirPollution();
+    airquality.websiteName = "openaq";
     airquality.server = "https://api.openaq.org/";
     airquality.api = "v1/latest?country=FR";
     airquality.serverWithApiUrl = airquality.server + airquality.api;
 
     //Air quality
-    let airvisual: AirPollution = new Api();
+    let airvisual: AirPollution = new AirPollution();
+    airvisual.websiteName = "airvisual";
     airvisual.server = "http://api.airvisual.com/";
-    airvisual.lat= "29.52961";
-    airvisual.long="34.938219"
-    airvisual.key="p4grS8buAWyJy36vJ";
+    airvisual.lat = "29.52961";
+    airvisual.long = "34.938219"
+    airvisual.key = "p4grS8buAWyJy36vJ";
     airvisual.api = "v1/nearest?lat="+ airvisual.lat + "&lon=" + airvisual.long +"&key=" + airvisual.key;
     airvisual.serverWithApiUrl = airvisual.server + airvisual.api;
 
@@ -48,7 +50,7 @@ export class ApiService
   {
     let apiUrlToGet = "";
     for (let api of this._listApi) {
-      if(api.server == serverName) {
+      if(api.websiteName == serverName) {
         apiUrlToGet = api.serverWithApiUrl;
       }
     }

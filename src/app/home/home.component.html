@@ -9,11 +9,9 @@
   data provenant de <button (click)="redirectToExternalLink('https://openaq.org')">openaq</button>
 </p> -->
 
-
-<!-- TOUT EST GOOD POUR L'INSTANT -->
-<div  class="card good" *ngFor="let api of _listApi" (click)="showPageApi()">
-  {{api.server}}
-</div>
+<a class="card good" *ngFor="let api of _listApi" [routerLink]="['/pageApi',api.websiteName]">
+  {{api.websiteName}}
+</a>
 
 <!-- <div class="card good" > ceci est une carte </div>
 <div class="card good" > ceci est une carte </div>
