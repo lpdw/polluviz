@@ -30,8 +30,18 @@ export class ApiService
     airquality.api = "v1/latest?country=FR";
     airquality.serverWithApiUrl = airquality.server + airquality.api;
 
+    //Air quality
+    let airvisual: AirPollution = new Api();
+    airvisual.server = "http://api.airvisual.com/";
+    airvisual.lat= "29.52961";
+    airvisual.long="34.938219"
+    airvisual.key="p4grS8buAWyJy36vJ";
+    airvisual.api = "v1/nearest?lat="+ airvisual.lat + "&lon=" + airvisual.long +"&key=" + airvisual.key;
+    airvisual.serverWithApiUrl = airvisual.server + airvisual.api;
+
     // this._listApi.push(airpollution);
     this._listApi.push(airquality);
+    this._listApi.push(airvisual);
   }
 
   public getData(serverName: string): Observable<any>

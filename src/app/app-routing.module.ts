@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 //all our component
 import { MenuComponent } from './menu/menu.component';
 import { HomeComponent } from './home/home.component';
-import { CardComponent } from './card/card.component';
 import { PageAPIComponent } from './page-api/page-api.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 

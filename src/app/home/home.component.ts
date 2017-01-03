@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit
   {
     // this._apiService.getData("http://api.waqi.info/").toPromise().then(data => console.log(data) );
     this._apiService.getData("https://api.openaq.org/").toPromise().then(data => console.log(data) );
+    this._apiService.getData("http://api.airvisual.com/").toPromise().then(data => console.log(data) );
   }
 
   redirectToExternalLink(link: string)
