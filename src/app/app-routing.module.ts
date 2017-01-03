@@ -12,7 +12,7 @@ const appRoutes : Routes = [
     path: '', component: HomeComponent,
   },
   {
-    path: 'pageAPI', component: PageAPIComponent,
+    path: 'pageApi', component: PageAPIComponent,
   },
   {
     path: '**', component: PageNotFoundComponent
