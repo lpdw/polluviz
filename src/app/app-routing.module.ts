@@ -11,11 +11,6 @@ const appRoutes : Routes = [
   { path: '', component: HomeComponent, },
   {
     path: 'pageApi/:websiteName', component: PageAPIComponent,
-    // children:[
-    //   {
-    //     path: ':websiteName', component: PageAPIComponent,
-    //   },
-    // ]
   },
   {
     path: '**', component: PageNotFoundComponent

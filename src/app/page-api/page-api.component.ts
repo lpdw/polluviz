@@ -16,7 +16,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   ngOnInit()
   {
     // The PageAPI component must read the parameter,
-    //  then load the product based on the websiteName given in the parameter.
+    //  then load the API based on the websiteName given in the parameter.
 
     this._sub = this._route.params.subscribe(params => {
        this._websiteName = params['websiteName'];
