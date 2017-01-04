@@ -1,9 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ApplicationRef } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 
 import { RouterModule, Routes } from '@angular/router';
+// Google Map
+
+import { CommonModule } from '@angular/common';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -12,6 +16,8 @@ import { MenuComponent } from './menu/menu.component';
 import { HomeComponent } from './home/home.component';
 import { PageAPIComponent } from './page-api/page-api.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+
+
 
 @NgModule({
   declarations: [
@@ -26,7 +32,12 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     FormsModule,
     HttpModule,
     JsonpModule,
+    CommonModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDSqwfOb2E4Elg0kuyK_ZVVgEmfG2UDEMM'
+    }),
     AppRoutingModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,8 @@
+// From angular
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-//all our component
+//From our project
 import { MenuComponent } from './menu/menu.component';
 import { HomeComponent } from './home/home.component';
 import { PageAPIComponent } from './page-api/page-api.component';
@@ -9,14 +10,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 const appRoutes : Routes = [
   { path: '', component: HomeComponent, },
-  {
-    path: 'pageApi/:websiteName', component: PageAPIComponent,
-  },
-  {
-    path: '**', component: PageNotFoundComponent
-  }
+  { path: 'pageApi/:websiteName', component: PageAPIComponent, },
+  { path: '**', component: PageNotFoundComponent }
 ];
-
 
 @NgModule({
   imports: [
