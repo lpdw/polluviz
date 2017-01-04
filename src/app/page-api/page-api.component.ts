@@ -1,3 +1,4 @@
+import { fdatasync } from 'fs';
 //From angular
 import { Component, OnInit , OnDestroy} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -7,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Api } from '../API/api.class';
 import { ApiService } from '../api.service';
 import { AirPollution } from '../API/airpollution.api';
+import { GMAP } from '../API/gmap.api';
 
 @Component({
   selector: 'app-page-api',
@@ -19,7 +21,10 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   private _websiteName: string;
   private _sub: any;
 
-  constructor(private _route: ActivatedRoute,private _apiService: ApiService) { }
+
+  constructor(private _route: ActivatedRoute,private _apiService: ApiService) {
+
+   }
 
   ngOnInit()
   {
@@ -41,5 +46,12 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   showData(data: any) {
     console.log("Tous les données que l'on a récup");
     console.log(data);
+    this.loadingData(data);
+  }
+
+  loadingData(data: any)
+  {
+    let gmap: GMAP = new GMAP();
+    gmap.title = this._websiteName;
   }
 }
