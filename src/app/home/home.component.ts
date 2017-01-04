@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Api } from '../API/api.class';
 import { ApiService } from '../api.service';
 import { AirPollution } from '../API/airpollution.api';
+import { ChimicalPollution } from '../API/chimicalpollution.api';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,7 @@ import { AirPollution } from '../API/airpollution.api';
 export class HomeComponent implements OnInit {
 
   public errorMessage: string;
-  private _listApi : Array<Api> = [];
+  public _listApi : Array<Api> = [];
 
   constructor(private _apiService: ApiService,private _router: Router) { }
 
@@ -30,17 +31,26 @@ export class HomeComponent implements OnInit {
     airvisual.websiteName = "airvisual";
     airvisual.server = "http://api.airvisual.com/";
 
+    // API SafeCast for ChemicalPollution
+    let safeCast: ChimicalPollution = new ChimicalPollution();
+    safeCast.websiteName = "safecast";
+    safeCast.server = "https://api.safecast.org/";
+
+    //Push into listApi
+    this._listApi.push(safeCast);
     this._listApi.push(openaq);
     this._listApi.push(airvisual);
 
     // this._apiService.getData("http://api.waqi.info/").toPromise().then(data => console.log(data) );
+    this._apiService.getData(safeCast.websiteName).toPromise().then(data => console.log(data));
     this._apiService.getData(openaq.websiteName).toPromise().then(data => console.log(data));
     this._apiService.getData(airvisual.websiteName).toPromise().then(data => console.log(data));
   }
 
-  // showPageApi(websiteName: string) :void {
-  //   this._router.navigate(['/pageApi',websiteName]);
-  // }
+  showPageApi(websiteName: string) :void {
+    let options = {};
+    this._router.navigate(['/pageApi',{ websiteName: websiteName, lat: '42', showMap: true }]);
+  }
 
   redirectToExternalLink(link: string) {
     window.open(link.toLowerCase(), '_blank') ;
