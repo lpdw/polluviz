@@ -1,5 +1,3 @@
-<!-- Voir la console de votre navigateur pour voir les données -->
-
 <!-- <p> -->
    <!-- data venant de <button (click)="redirectToExternalLink('http://aqicn.org')">aqicn</button> -->
   <!-- <span style="red">{{errorMessage}}</span> -->
@@ -9,12 +7,8 @@
   data provenant de <button (click)="redirectToExternalLink('https://openaq.org')">openaq</button>
 </p> -->
 
-<div class="container text-center">
-  
-    <a class="card good" *ngFor="let api of _listApi" [routerLink]="['/pageApi',api.websiteName]">
+<div class="container text-center"  class="card good" *ngFor="let api of _listApi" (click)="showPageApi(api.websiteName)">
       {{api.websiteName}}
-    </a>
-    
 </div>
 
 <!-- <div class="card good" > ceci est une carte </div>
