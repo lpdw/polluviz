@@ -64,8 +64,10 @@ export class ApiService
     this._listApi.push(safeCast);
   }
 
-  public getData(serverName: string): Observable<any>
+  public getData(serverName: string, options: any = {} ): Observable<any>
   {
+    console.log(options);
+    
     //we take the Api given from the parameters and return a Observable
     let apiUrlToGet = "";
     for (let api of this._listApi) {

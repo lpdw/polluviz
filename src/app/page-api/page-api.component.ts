@@ -1,4 +1,3 @@
-import { fdatasync } from 'fs';
 //From angular
 import { Component, OnInit , OnDestroy} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -18,23 +17,27 @@ import { GMAP } from '../API/gmap.api';
 })
 export class PageAPIComponent implements OnInit, OnDestroy {
 
-  private _websiteName: string;
   private _sub: any;
+  private _options: any = {};
+  private _showMap: boolean = false;
+  private _data: any = null;
 
-
-  constructor(private _route: ActivatedRoute,private _apiService: ApiService) {
-
-   }
+  constructor(private _route: ActivatedRoute,private _apiService: ApiService) { }
 
   ngOnInit()
   {
     // The PageAPI component must read the parameter,
     //  then load the API based on the websiteName given in the parameter.
-    this._sub = this._route.params.subscribe(params => {
-       this._websiteName = params['websiteName'];
-       // we have to dispatch action to load the details here.
-       this._apiService.getData(this._websiteName).toPromise().then(data => console.log(data));
+    this._sub = this._route.params.subscribe(params =>
+    {
+      //get all params that we need
+      this._options = { websiteName: params['websiteName'], showMap: (params['showMap'] === 'true') };
+
+       //call the ApiService to fectch all data
+       this._apiService.getData(params['websiteName'],this._options).toPromise().then(data => { this._data = data });
     });
+
+    this.showDataFromApi();
   }
 
   ngOnDestroy() {
@@ -43,15 +46,21 @@ export class PageAPIComponent implements OnInit, OnDestroy {
     this._sub.unsubscribe();
   }
 
-  showData(data: any) {
-    console.log("Tous les données que l'on a récup");
-    console.log(data);
-    this.loadingData(data);
+  showDataFromApi(): void
+  {
+    if(this._options.showMap == true) {
+      console.log('show the map');
+      this.showGMap();
+    }
+    else {
+      console.log("don't need the map");
+    }
   }
 
-  loadingData(data: any)
-  {
+  showGMap(): void {
+    //all data => this._data
+    //all options => this._options
     let gmap: GMAP = new GMAP();
-    gmap.title = this._websiteName;
+    gmap.title = this._options.websiteName;
   }
 }
