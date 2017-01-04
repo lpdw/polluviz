@@ -21,6 +21,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   private _options: any = {};
   private _showMap: boolean = false;
   private _data: any = null;
+  private _myStyleMap: any = [];
 
   constructor(private _route: ActivatedRoute,private _apiService: ApiService) { }
 
@@ -62,5 +63,6 @@ export class PageAPIComponent implements OnInit, OnDestroy {
     //all options => this._options
     let gmap: GMAP = new GMAP();
     gmap.title = this._options.websiteName;
+   this._myStyleMap = gmap.myStyleMap;
   }
 }

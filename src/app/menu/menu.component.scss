@@ -15,6 +15,9 @@ $menu-color: #1E88E5;
   position: absolute;
   left: 10%;
 }
+.back {
+  cursor: pointer;
+}
 
 :host a {
   text-decoration:none;
