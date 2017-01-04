@@ -1,9 +1,14 @@
 <div class="container">
     <a routerLink="">Retour!</a>
     <p>website : {{_websiteName}}</p>
-    <h1>{{ title }}</h1>
-    <sebm-google-map [latitude]="lat" [longitude]="lng">
-        <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
-    </sebm-google-map>
-</div>
 
+    <div class="box">
+        <!-- <h1>{{ title }}</h1> -->
+        <sebm-google-map [latitude]="lat" [longitude]="lng">
+            <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
+        </sebm-google-map>
+    </div>
+    <div class="box">
+        <div id="myPieChart"></div>
+    </div>
+</div>
