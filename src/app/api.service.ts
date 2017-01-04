@@ -15,10 +15,12 @@ import { AirPollution } from './API/airpollution.api';
 import { ChimicalPollution } from './API/chimicalpollution.api';
 
 @Injectable()
-export class ApiService {
+export class ApiService
+{
   private _listApi: Array<Api> = [];
 
-  constructor(private _http: Http, private _jsonp: Jsonp) {
+  constructor(private _http: Http, private _jsonp: Jsonp)
+  {
     //TODO Commentaires de code !
 
     //Air pollution 1
@@ -55,8 +57,8 @@ export class ApiService {
     safeCast.long = "2.258291";
     safeCast.api = "measurements.json?distance=35&latitude=" + safeCast.lat + "&longitude=" + safeCast.long;
     safeCast.serverWithApiUrl = safeCast.server + safeCast.api;
-    // this._listApi.push(airpollution);
 
+    // this._listApi.push(airpollution);
     this._listApi.push(airquality);
     this._listApi.push(airvisual);
     this._listApi.push(safeCast);
@@ -64,21 +66,22 @@ export class ApiService {
 
   public getData(serverName: string): Observable<any>
   {
-    //we take the Api given from the parameters
+    //we take the Api given from the parameters and return a Observable
     let apiUrlToGet = "";
     for (let api of this._listApi) {
       if (api.websiteName == serverName) {
         apiUrlToGet = api.serverWithApiUrl;
       }
     }
-    console.log(serverName + " ==> " + apiUrlToGet);
     return this._http.get(apiUrlToGet).map(this.extractData).catch(this.handleError);
   }
 
   private extractData(response: Response) {
+    // extract data from the API website and transform it to json
     let body = response.json();
     return body || {};
   }
+
   private handleError(error: any) {
     let errMsg = (error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
