@@ -1,10 +1,11 @@
+//From angular
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+//From our project
 import { Api } from '../API/api.class';
 import { ApiService } from '../api.service';
 import { AirPollution } from '../API/airpollution.api';
-
 
 @Component({
   selector: 'app-home',

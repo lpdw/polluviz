@@ -1,8 +1,9 @@
 :host a {
   text-decoration:none;
+  font-style: normal;
 }
 .card {
-  width: 29%;
+  width: 25%;
   height: 180px;
   line-height: 180px;
   text-align: center;
@@ -11,14 +12,17 @@
   padding-top: 8px;
   border-radius: 2px;
   display: inline-block;
-  margin: 1%;
+  margin: 2%;
   position: relative;
+  -webkit-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  -moz-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  cursor: pointer;
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
 .card:hover {
+  -webkit-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  -moz-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
