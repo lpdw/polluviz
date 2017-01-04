@@ -1,4 +1,4 @@
-import {Api} from './api.class';
+import { Api } from './api.class';
 
 export class ChimicalPollution extends Api
 {
