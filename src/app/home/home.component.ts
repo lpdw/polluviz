@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Api } from '../API/api.class';
 import { ApiService } from '../api.service';
 import { AirPollution } from '../API/airpollution.api';
+import { ChimicalPollution } from '../API/chimicalpollution.api';
 
 @Component({
   selector: 'app-home',
@@ -30,10 +31,18 @@ export class HomeComponent implements OnInit {
     airvisual.websiteName = "airvisual";
     airvisual.server = "http://api.airvisual.com/";
 
+    // API SafeCast for ChemicalPollution
+    let safeCast: ChimicalPollution = new ChimicalPollution();
+    safeCast.websiteName = "safecast";
+    safeCast.server = "https://api.safecast.org/";
+
+    //Push into listApi
+    this._listApi.push(safeCast);
     this._listApi.push(openaq);
     this._listApi.push(airvisual);
 
     // this._apiService.getData("http://api.waqi.info/").toPromise().then(data => console.log(data) );
+    this._apiService.getData(safeCast.websiteName).toPromise().then(data => console.log(data));
     this._apiService.getData(openaq.websiteName).toPromise().then(data => console.log(data));
     this._apiService.getData(airvisual.websiteName).toPromise().then(data => console.log(data));
   }
