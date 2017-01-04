@@ -16,7 +16,7 @@ import { AirPollution } from '../API/airpollution.api';
 export class HomeComponent implements OnInit {
 
   public errorMessage: string;
-  private _listApi : Array<Api> = [];
+  public _listApi : Array<Api> = [];
 
   constructor(private _apiService: ApiService,private _router: Router) { }
 
@@ -38,9 +38,10 @@ export class HomeComponent implements OnInit {
     this._apiService.getData(airvisual.websiteName).toPromise().then(data => console.log(data));
   }
 
-  // showPageApi(websiteName: string) :void {
-  //   this._router.navigate(['/pageApi',websiteName]);
-  // }
+  showPageApi(websiteName: string) :void {
+    let options = {};
+    this._router.navigate(['/pageApi',{ websiteName: websiteName, lat: '42', showMap: true }]);
+  }
 
   redirectToExternalLink(link: string) {
     window.open(link.toLowerCase(), '_blank') ;

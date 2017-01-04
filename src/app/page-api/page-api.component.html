@@ -3,10 +3,15 @@
     <p>website : {{_websiteName}}</p>
 
     <div class="box">
+        <p>show the map : <b>{{_options.showMap}}</b></p>
         <!-- <h1>{{ title }}</h1> -->
-        <sebm-google-map [latitude]="lat" [longitude]="lng">
-            <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
-        </sebm-google-map>
+
+        <!-- google maps -->
+        <div *ngIf="_options.showMap">
+          <sebm-google-map [latitude]="lat" [longitude]="lng">
+              <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker>
+          </sebm-google-map>
+        </div>
     </div>
     <div class="box">
         <div id="myPieChart"></div>

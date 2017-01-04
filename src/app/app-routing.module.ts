@@ -10,7 +10,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 const appRoutes : Routes = [
   { path: '', component: HomeComponent, },
-  { path: 'pageApi/:websiteName', component: PageAPIComponent, },
+  { path: 'pageApi', component: PageAPIComponent},
   { path: '**', component: PageNotFoundComponent }
 ];
 
