@@ -1,8 +1,6 @@
+//From angular
 import { Injectable }     from '@angular/core';
 import { Http, Response, Headers, RequestOptions , URLSearchParams, Jsonp } from '@angular/http';
-
-import { Api } from './API/api.class';
-import { AirPollution } from './API/airpollution.api';
 
 import 'rxjs/Rx';
 import {Observable} from 'rxjs/Rx';
@@ -11,6 +9,9 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
+//Form our project
+import { Api } from './API/api.class';
+import { AirPollution } from './API/airpollution.api';
 
 @Injectable()
 export class ApiService
@@ -48,6 +49,7 @@ export class ApiService
 
   public getData(serverName: string): Observable<any>
   {
+    //we take the Api given from the parameters
     let apiUrlToGet = "";
     for (let api of this._listApi) {
       if(api.websiteName == serverName) {
