@@ -67,9 +67,9 @@ export class HomeComponent implements OnInit {
     // this._apiService.getData(airvisual.websiteName).toPromise().then(data => console.log(data));
   }
 
-  showPageApi(websiteName: string,lat: string,lng: string) :void {
+  showPageApi(websiteName: string,lat: string,lng: string, typePollution: string) :void {
     let options = {};
-    this._router.navigate(['/pageApi',{ websiteName: websiteName, lat: lat, lng: lng , showMap: true }]);
+    this._router.navigate(['/pageApi',{ websiteName: websiteName, lat: lat, lng: lng , showMap: true, typePollution: typePollution }]);
   }
 
   redirectToExternalLink(link: string) {

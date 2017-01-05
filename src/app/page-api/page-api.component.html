@@ -10,13 +10,11 @@
       <!-- Show Google Maps if params show = true and data are not empty -->
       <div *ngIf="!isEmptyData()">
         <div *ngIf="_options.showMap">
-          <sebm-google-map   [latitude]="_gmap.lat" [longitude]="_gmap.lng" [streetViewControl]="false"  [styles]="_myStyleMap">
+          <sebm-google-map   [latitude]="_gmap.lat" [longitude]="_gmap.lng" [streetViewControl]="false"  [styles]="getStyle(_options.typePollution)">
               <sebm-google-map-marker [latitude]="_gmap.lat" [longitude]="_gmap.lng" ></sebm-google-map-marker>
           </sebm-google-map>
           </div>
       </div>
-
-    </div>
 
     <div class="box">
         <div id="myPieChart"></div>

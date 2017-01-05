@@ -1,11 +1,13 @@
+import { StyleCompiler } from '@angular/compiler';
 import { flatten } from '@angular/router/src/utils/collection';
 //From angular
-import { Component, OnInit , OnDestroy} from '@angular/core';
+import { Component, OnDestroy, OnInit, style } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 //From our project ,
 // We only import what we need
 import { Api } from '../API/api.class';
+import { StylesMap } from '../API/styles.api';
 import { ApiService } from '../api.service';
 import { AirPollution } from '../API/airpollution.api';
 import { GMAP } from '../API/gmap.api';
@@ -25,8 +27,9 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   private _noData: boolean = false;
   private _myStyleMap: any = [];
   private _gmap: GMAP;
+  private _styleMap: StylesMap;
 
-  constructor(private _route: ActivatedRoute,private _apiService: ApiService) { }
+  constructor(private _route: ActivatedRoute,private _apiService: ApiService) {this._styleMap = new StylesMap(); }
 
   ngOnInit()
   {
@@ -35,7 +38,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
     this._sub = this._route.params.subscribe(params =>
     {
       //get all params that we need
-      this._options = { websiteName: params['websiteName'], showMap: (params['showMap'] === 'true'), lng: +params['lng'], lat: +params['lat']  };
+      this._options = { websiteName: params['websiteName'], showMap: (params['showMap'] === 'true'), lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'] };
 
        //call the ApiService to fectch all data
        this._apiService.getData(params['websiteName'],this._options).toPromise().then(this.setData.bind(this));
@@ -81,5 +84,12 @@ export class PageAPIComponent implements OnInit, OnDestroy {
 
   isEmptyData(): boolean {
     return this._noData;
+  }
+
+  getStyle(style: string){
+    let styleType;
+    if(this._options.typePollution == style)
+      styleType = this._styleMap.getStyle(style);
+    return styleType;
   }
 }

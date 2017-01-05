@@ -5,10 +5,13 @@ export class AirPollution extends Api
   public lat: string;
   public long: string;
   public key: string;
+  public mapStyle: any;
 
   constructor()
   {
     super();
-    this.type = "Air pollution";
+    this.typeApi = "Air pollution";
+    this.typePollution = 'air';
+    
   }
 }

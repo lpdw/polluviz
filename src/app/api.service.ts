@@ -1,3 +1,4 @@
+import { MapTypeStyle } from 'angular2-google-maps/core';
 //From angular
 import { Injectable }     from '@angular/core';
 import { Http, Response, Headers, RequestOptions, URLSearchParams, Jsonp } from '@angular/http';
@@ -14,15 +15,16 @@ import { Api } from './API/api.class';
 import { AirPollution } from './API/airpollution.api';
 import { ChimicalPollution } from './API/chimicalpollution.api';
 
+
 @Injectable()
 export class ApiService
 {
   private _listApi: Array<Api> = [];
+  private _mapStyle: any = [];
 
   constructor(private _http: Http, private _jsonp: Jsonp)
   {
     //TODO Commentaires de code !
-
     //Air pollution 1
     // let airpollution: AirPollution = new Api();
     // airpollution.server = "http://api.waqi.info/";
@@ -50,6 +52,7 @@ export class ApiService
 
     //Chimical Pollution
     //This API is opensource and didn't need api-key, this api recognize longitude and latitude
+
     let safeCast: ChimicalPollution = new ChimicalPollution();
     safeCast.websiteName = "safecast";
     safeCast.server = "https://api.safecast.org/";
