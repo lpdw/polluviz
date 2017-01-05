@@ -1,7 +1,7 @@
-$menu-color: #1E88E5;
+$menu-color: #188a94;
 
 .menu {
-  background-color: $menu-color;
+  background-color: $menu-color !important;
   width: 100%;
   height: 64px;
   line-height: 64px;
@@ -21,6 +21,9 @@ $menu-color: #1E88E5;
 .material-icons{
   position: relative;
   top: 5px;
+}
+.logo a img{
+  margin-top: 15px;
 }
 
 :host a {

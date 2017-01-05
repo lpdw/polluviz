@@ -1,8 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+  min-height: 100%;
+}
 body{
-  background-color: #E0E0E0;
+  background-color: #E0E0E0 !important;
+  background: url(assets/images/bottom.svg) center bottom no-repeat;
+  background-size: cover;
   margin: 0;
   font-family: 'Roboto', sans-serif;
+  min-height: 100%;
 }
 p {
   margin: 0;
@@ -10,7 +16,7 @@ p {
 .container {
   width: 80%;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 .left{
   float: left;
