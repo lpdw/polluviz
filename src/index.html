@@ -22,35 +22,11 @@
 
   <!-- Ripple material effect -->
   <script src="assets/js/ripple.min.js"></script>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
 
-  <script type="text/javascript">
-    //  google.charts.load('current', {'packages':['corechart']});
-    //  google.charts.setOnLoadCallback(drawChart);
+  <script>
+  // !important: You want to give this variable(var googleLoaded = false;). This is used to run multiple chart in your jade.
+  var googleLoaded = false;
+  </script>
 
-    //  function drawChart() {
-    //    var data = google.visualization.arrayToDataTable([
-    //      ['Year', 'Val1', 'Val2'],
-    //      ['2008',  1000,      400],
-    //      ['2009',  1170,      460],
-    //      ['2010',  660,       1120],
-    //      ['2011',  1030,      540],
-    //      ['2012',  1000,      400],
-    //      ['2013',  1170,      460],
-    //      ['2014',  660,       1120],
-    //      ['2015',  1030,      540],
-    //      ['2016',  660,       1120],
-    //      ['2017',  1030,      540]
-    //    ]);
-     //
-    //    var options = {
-    //      title: 'Chart test',
-    //      hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
-    //      vAxis: {minValue: 0}
-    //    };
-     //
-    //    var chart = new google.visualization.AreaChart(document.getElementById('myPieChart'));
-    //    chart.draw(data, options);
-    //  }
-   </script>
 </html>

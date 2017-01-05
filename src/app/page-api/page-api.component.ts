@@ -1,7 +1,5 @@
-import { StyleCompiler } from '@angular/compiler';
-import { flatten } from '@angular/router/src/utils/collection';
 //From angular
-import { Component, OnDestroy, OnInit, style } from '@angular/core';
+import { Component, OnDestroy, OnInit, style, Directive } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 //From our project ,
@@ -16,7 +14,7 @@ import { GMAP } from '../API/gmap.api';
   selector: 'app-page-api',
   templateUrl: './page-api.component.html',
   styleUrls: ['./page-api.component.scss'],
-  providers: [ApiService]
+  providers: [ApiService],
 })
 export class PageAPIComponent implements OnInit, OnDestroy {
 
@@ -28,6 +26,13 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   private _myStyleMap: any = [];
   private _gmap: GMAP;
   private _styleMap: StylesMap;
+  public line_ChartData = [
+                            ['Year', 'Sales', 'Expenses'],
+                            ['2004', 1000, 400],
+                            ['2005', 1170, 460],
+                            ['2006', 660, 1120],
+                            ['2007', 1030, 540]
+                          ];
 
   constructor(private _route: ActivatedRoute,private _apiService: ApiService) {this._styleMap = new StylesMap(); }
 
