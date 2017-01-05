@@ -1,7 +1,7 @@
 $menu-color: #188a94;
 
 .menu {
-  background-color: $menu-color;
+  background-color: $menu-color !important;
   width: 100%;
   height: 64px;
   line-height: 64px;
