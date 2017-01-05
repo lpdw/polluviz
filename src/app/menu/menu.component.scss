@@ -18,6 +18,10 @@ $menu-color: #1E88E5;
 .back {
   cursor: pointer;
 }
+.material-icons{
+  position: relative;
+  top: 5px;
+}
 
 :host a {
   text-decoration:none;
