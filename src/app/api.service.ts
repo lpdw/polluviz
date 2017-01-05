@@ -66,13 +66,13 @@ export class ApiService
 
   public getData(serverName: string, options: any = {} ): Observable<any>
   {
-    console.log(options);
-    
     //we take the Api given from the parameters and return a Observable
     let apiUrlToGet = "";
     for (let api of this._listApi) {
-      if (api.websiteName == serverName) {
-        apiUrlToGet = api.serverWithApiUrl;
+      //For safecast
+      if (api.websiteName == serverName && serverName == 'safecast') {
+        apiUrlToGet = api.server + "measurements.json?distance=35&latitude=" + options.lat + "&longitude=" + options.lng;
+        console.log(apiUrlToGet);
       }
     }
     return this._http.get(apiUrlToGet).map(this.extractData).catch(this.handleError);

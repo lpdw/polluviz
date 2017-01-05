@@ -22,6 +22,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   private _options: any = {};
   private _showMap: boolean = false;
   private _data: any = null;
+  private _noData: boolean = false;
   private _myStyleMap: any = [];
   private _gmap: GMAP;
 
@@ -37,7 +38,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
       this._options = { websiteName: params['websiteName'], showMap: (params['showMap'] === 'true'), lng: +params['lng'], lat: +params['lat']  };
 
        //call the ApiService to fectch all data
-       this._apiService.getData(params['websiteName'],this._options).toPromise().then(data => { this._data = data });
+       this._apiService.getData(params['websiteName'],this._options).toPromise().then(this.setData.bind(this));
     });
 
     this.showDataFromApi();
@@ -51,15 +52,17 @@ export class PageAPIComponent implements OnInit, OnDestroy {
 
   showDataFromApi(): void
   {
-    if(this._options.showMap == true) {
-      console.log('show the map');
-      this.showGMap();
-    }
-    else {
-      console.log("don't need the map");
+    // if data is not empty
+    if(this.isEmptyData() === false)
+    {
+      //if we want use Gmap
+      if(this._options.showMap == true)
+        this.showGMap();
+      else
+        console.log("don't need the map");
     }
   }
-// show param map
+
   showGMap(): void {
     //all data => this._data
     //all options => this._options
@@ -68,5 +71,15 @@ export class PageAPIComponent implements OnInit, OnDestroy {
    this._myStyleMap = this._gmap.myStyleMap;
    this._gmap.lat = this._options.lat;
    this._gmap.lng = this._options.lng;
+  }
+
+  setData(data) {
+    console.log(this._data);
+    this._data = data;
+    this._noData = (this._data.length === 0 || this._data === 'null') ? true : false;
+  }
+
+  isEmptyData(): boolean {
+    return this._noData;
   }
 }

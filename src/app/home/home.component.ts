@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
 
     // this._apiService.getData("http://api.waqi.info/").toPromise().then(data => console.log(data) );
     this._apiService.getData(safeCast.websiteName).toPromise().then(data => console.log(data));
-    this._apiService.getData(openaq.websiteName).toPromise().then(data => console.log(data));
+    //this._apiService.getData(openaq.websiteName).toPromise().then(data => console.log(data));
     // this._apiService.getData(airvisual.websiteName).toPromise().then(data => console.log(data));
   }
 
