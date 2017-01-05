@@ -2,13 +2,13 @@ import { StyleCompiler } from '@angular/compiler';
 import { PairsObservable } from 'rxjs/observable/PairsObservable';
 import { pairwise } from 'rxjs/operator/pairwise';
 import { pairs } from 'rxjs/observable/pairs';
-
+// take style for difernt api
 export class StylesMap
 {
 public style: any = {};
 
   constructor()
-  {
+  {   // there are different style
       this.style = 
           {
             air:
@@ -21,7 +21,8 @@ public style: any = {};
             ],
           }
 
-  }
+  } 
+  // and the loop for administrate color in function of api
   getStyle(typePollution: string){ 
       let style;
       switch(typePollution){

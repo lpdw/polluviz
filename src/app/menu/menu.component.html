@@ -1,6 +1,17 @@
 <div class="text-center menu">
-    <span class="title"><span *ngIf="onPage" class="back" routerLink="/"><i class="material-icons">arrow_back</i></span>Pollution en direct à Gennevilliers</span>
-    <span class="logo"><a routerLink=""><img src="../assets/images/logo.svg" alt="logo" width="100"></a></span>
+  
+    <span class="title">
+      <span *ngIf="_showBtnNavBack" class="back" routerLink="/">
+        <i class="material-icons">arrow_back</i>
+      </span>
+      Pollution en direct à Gennevilliers
+    </span>
+
+    <span class="logo">
+      <a routerLink="/">
+        <img src="../assets/images/logo.svg" alt="logo" width="100">
+      </a>
+    </span>
     <!-- <span>Polluviz</span> -->
 
 </div>
