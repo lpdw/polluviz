@@ -1,3 +1,5 @@
+import { LatLng } from 'angular2-google-maps/core';
+import { flatten } from '@angular/router/src/utils/collection';
 //From angular
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -65,9 +67,9 @@ export class HomeComponent implements OnInit {
     // this._apiService.getData(airvisual.websiteName).toPromise().then(data => console.log(data));
   }
 
-  showPageApi(websiteName: string) :void {
+  showPageApi(websiteName: string,lat: string,lng: string) :void {
     let options = {};
-    this._router.navigate(['/pageApi',{ websiteName: websiteName, lat: '42', showMap: true }]);
+    this._router.navigate(['/pageApi',{ websiteName: websiteName, lat: lat, lng: lng , showMap: true }]);
   }
 
   redirectToExternalLink(link: string) {

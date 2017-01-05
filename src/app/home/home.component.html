@@ -13,7 +13,7 @@
 </div>
 
 <div class="container text-center">
-  <div class="card good" *ngFor="let api of _listApi" (click)="showPageApi(api.websiteName)">
+  <div class="card good" *ngFor="let api of _listApi" (click)="showPageApi(api.websiteName,location.latitude,location.longitude)">
         {{api.websiteName}}
   </div>
 </div>
