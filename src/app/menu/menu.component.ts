@@ -1,6 +1,7 @@
 //From Angular
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Location} from '@angular/common';
+import {Router} from '@angular/router'
 
 @Component({
   selector: 'app-menu',
@@ -8,16 +9,26 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
-  private _onPage: boolean = false;
 
-  constructor(private _route: ActivatedRoute) { }
+  private _url: string = "";
+  private _showBtnNavBack: boolean = false;
 
-  ngOnInit() {
-    console.log(this._route);
+  constructor(private router: Router) {
+    //watch the current url
+    router.events.subscribe(this.showNavBackButton.bind(this));
   }
 
-  showButtonNavBack(): boolean {
-    return this._onPage;
+  ngOnInit() {
+  }
+
+  showNavBackButton(val) {
+    this._url = val.url;
+    if(val.url == "/")
+      this._showBtnNavBack = false;
+    else
+      this._showBtnNavBack = true;
+
+    console.log(this._showBtnNavBack);
   }
 
 }
