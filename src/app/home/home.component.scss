@@ -27,3 +27,15 @@
 .good {  background-color: #4CAF50;}
 .moyen { background-color: #FF9800;}
 .bad {background-color: #F44336}
+
+@media screen and (max-width: 900px) {
+  .card {
+    width: 40%
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .card {
+    width: 90%
+  }
+}

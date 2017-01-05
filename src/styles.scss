@@ -18,7 +18,11 @@ p {
 .text-center{
   text-align: center;
 }
-.title {
-  position: absolute;
-  left: 10%;
+
+
+@media screen and (max-width: 900px) {
+  .container {
+    margin-top: 50px;
+    width: 95%;
+  }
 }
