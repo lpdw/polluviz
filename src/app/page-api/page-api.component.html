@@ -6,7 +6,7 @@
       <h1>{{ title }}</h1>
       <!-- google maps -->
       <div *ngIf="_options.showMap">
-        <sebm-google-map   [latitude]="_gmap.lat" [longitude]="_gmap.lng" [streetViewControl]="false"  [styles]="_myStyleMap">
+        <sebm-google-map   [latitude]="_gmap.lat" [longitude]="_gmap.lng" [streetViewControl]="false"  [styles]="getStyle(_options.typePollution)">
             <sebm-google-map-marker [latitude]="_gmap.lat" [longitude]="_gmap.lng" ></sebm-google-map-marker>
         </sebm-google-map>
         </div>
