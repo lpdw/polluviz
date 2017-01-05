@@ -4,11 +4,13 @@ export class ChimicalPollution extends Api
 {
   public lat: string;
   public long: string;
+  public mapStyle: any;
 
   constructor()
   {
     super();
-    this.type = 'Chimical Pollution';
+    this.typeApi = 'Chimical Pollution';
+    this.typePollution= 'chimical';
   }
 
 }

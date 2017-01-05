@@ -5,10 +5,9 @@
       <p>show the map : <b>{{_options.showMap}}</b></p>
       <h1>{{ title }}</h1>
       <!-- google maps -->
-      <div style="color: red; font-size: 50px;"> SIDA</div>
       <div *ngIf="_options.showMap">
-        <sebm-google-map   [latitude]="-15" [longitude]="40" [streetViewControl]="false"  [styles]="_myStyleMap">
-            <sebm-google-map-marker [latitude]="-15" [longitude]="40" ></sebm-google-map-marker>
+        <sebm-google-map   [latitude]="_gmap.lat" [longitude]="_gmap.lng" [streetViewControl]="false"  [styles]="getStyle(_options.typePollution)">
+            <sebm-google-map-marker [latitude]="_gmap.lat" [longitude]="_gmap.lng" ></sebm-google-map-marker>
         </sebm-google-map>
         </div>
     </div>

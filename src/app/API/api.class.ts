@@ -2,11 +2,12 @@
 
 export class Api
 {
-    public type: string;
+    public typeApi: string;
     public server: string;
     public api: string;
     public serverWithApiUrl: string;
     public websiteName: string;
+    public typePollution: string;
 
     constructor() { }
 }

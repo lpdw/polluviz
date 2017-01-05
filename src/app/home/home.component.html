@@ -7,13 +7,17 @@
   data provenant de <button (click)="redirectToExternalLink('https://openaq.org')">openaq</button>
 </p> -->
 
-<div class="container text-center">
+<div>
+    <p style="color:red">latitude : {{location.latitude}}</p>
+    <p style="color:red">longitude : {{location.longitude}}</p>
+</div>
 
-  <div class="card good" *ngFor="let api of _listApi" (click)="showPageApi(api.websiteName)">
+<div class="container text-center">
+  <div class="card good" *ngFor="let api of _listApi" (click)="showPageApi(api.websiteName,location.latitude,location.longitude, api.typePollution)">
         {{api.websiteName}}
   </div>
-
 </div>
+
 
 
 <!-- <div class="card good" > ceci est une carte </div>
