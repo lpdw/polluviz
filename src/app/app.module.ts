@@ -7,10 +7,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 //Google Chart => https://www.npmjs.com/package/angular2-google-chart
 import { GoogleChart } from 'angular2-google-chart/directives/angular2-google-chart.directive';
-
 // Google Map
 import { CommonModule } from '@angular/common';
-import { AgmCoreModule } from 'angular2-google-maps/core';
+import { AgmCoreModule, SebmGoogleMap, SebmGoogleMapMarker } from 'angular2-google-maps/core';
 
 import { AppRoutingModule } from './routing/app-routing.module';
 
@@ -19,6 +18,7 @@ import { MenuComponent } from './menu/menu.component';
 import { HomeComponent } from './home/home.component';
 import { PageAPIComponent } from './page-api/page-api.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 
@@ -30,6 +30,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     HomeComponent,
     PageAPIComponent,
     PageNotFoundComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,15 +1,17 @@
 <div class="text-center menu">
-  
+
     <span class="title">
       <span *ngIf="_showBtnNavBack" class="back" routerLink="/">
         <i class="material-icons">arrow_back</i>
       </span>
-      Pollution en direct à Gennevilliers
+      
+      <span class="textTitle">Pollution en direct à {{selectedCity}}</span>
+
     </span>
 
     <span class="logo">
       <a routerLink="/">
-        <img src="../assets/images/logo.svg" alt="logo" width="100">
+        <img src="../assets/images/logo.svg" alt="logo" width="130">
       </a>
     </span>
     <!-- <span>Polluviz</span> -->
