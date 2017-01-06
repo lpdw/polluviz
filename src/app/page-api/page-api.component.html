@@ -1,6 +1,6 @@
 
-<div class="container">
-    <p>website : {{_websiteName}}</p>
+<div>
+    <!-- <p>website : {{_websiteName}}</p> -->
 
       <!-- Show Google Maps if params show = true and data are not empty -->
       <div *ngIf="!isEmptyData()" class="good">
@@ -12,8 +12,8 @@
               <sebm-google-map-marker [zIndex]="1"   [latitude]="_gMap.lat" [longitude]="_gMap.lng"  [iconUrl]="'https://cdn0.iconfinder.com/data/icons/fatcow/16/radioactivity.png'"></sebm-google-map-marker>
               <!--create a loop to display data-->
             <sebm-google-map-circle
-                    [latitude]="_gMap.lat" 
-                    [longitude]="_gMap.lng" 
+                    [latitude]="_gMap.lat"
+                    [longitude]="_gMap.lng"
                     [radius]="2000"
                     [fillColor]="'green'"
                     [circleDraggable]="false"
