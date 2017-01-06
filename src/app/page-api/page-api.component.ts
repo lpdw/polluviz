@@ -85,7 +85,6 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   }
 
   setData(data) {
-    console.log(this._data);
     this._data = data;
     this._noData = (this._data.length === 0 || this._data === 'null') ? true : false;
   }
