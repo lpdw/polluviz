@@ -23,18 +23,10 @@ $menu-color: #188a94;
   top: 5px;
 }
 .logo {
-  // background-color: $menu-color;
   padding: 20px;
-  // border-radius: 10px;
-  // transform:rotate(45deg);
-  // display: block;
-  // width: 120px;
-  // position: relative;
-  // left: 80%;
 }
 .logo a img{
-  margin-top: 15px;
-  // transform:rotate(-45deg);
+  margin-top: 10px;
 }
 
 :host a {
@@ -45,6 +37,7 @@ $menu-color: #188a94;
   .logo {
     position: absolute;
     right: 2.5%;
+    padding: 0;
   }
   .title {
     left: 2.5%;

@@ -1,28 +1,21 @@
 <div class="container">
-    <a routerLink="">Retour!</a>
     <p>website : {{_websiteName}}</p>
 
-    <div class="box">
-      <p>show the map : <b>{{_options.showMap}}</b></p>
-      <p>data empty : <b>{{isEmptyData()}}</b></p>
-      <h1>{{ title }}</h1>
-
       <!-- Show Google Maps if params show = true and data are not empty -->
-      <div *ngIf="!isEmptyData()">
-        <div *ngIf="_options.showMap">
-          <sebm-google-map   [latitude]="_gmap.lat" [longitude]="_gmap.lng" [streetViewControl]="false"  [styles]="getStyle(_options.typePollution)">
-              <!-- on the go for take a mega loop for capture marker and take them to the sky -->
-              <sebm-google-map-marker [latitude]="_gmap.lat" [longitude]="_gmap.lng" [label]="'A'" [iconUrl]="'https://cdn1.iconfinder.com/data/icons/Momentum_MatteEntireSet/32/rectangle.png'"></sebm-google-map-marker>
-          </sebm-google-map>
+      <div *ngIf="!isEmptyData()" class="box">
+          <p>show the map : <b>{{_options.showMap}}</b></p>
+          <p>data empty : <b>{{isEmptyData()}}</b></p>
+          <h1>{{ title }}</h1>
+          <div *ngIf="_options.showMap">
+            <sebm-google-map   [latitude]="_gmap.lat" [longitude]="_gmap.lng" [streetViewControl]="false"  [styles]="getStyle(_options.typePollution)">
+                <!-- on the go for take a mega loop for capture marker and take them to the sky -->
+                <sebm-google-map-marker [latitude]="_gmap.lat" [longitude]="_gmap.lng" [label]="'A'" [iconUrl]="'https://cdn1.iconfinder.com/data/icons/Momentum_MatteEntireSet/32/rectangle.png'"></sebm-google-map-marker>
+            </sebm-google-map>
           </div>
       </div>
 
-      <div>
+      <div class="box">
         <div id="line_chart" [chartData]="line_ChartData" [chartOptions] = "line_ChartOptions" chartType="LineChart" GoogleChart>
         </div>
       </div>
-
-    <div class="box">
-        <div id="myPieChart"></div>
-    </div>
 </div>
