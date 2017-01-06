@@ -1,7 +1,7 @@
 import { MapTypeStyle } from 'angular2-google-maps/esm/core';
 import { Api } from './api.class';
 
-export class GMAP extends Api
+export class Gmap extends Api
 {
   public title: string;
   public lat: number;
@@ -15,4 +15,4 @@ export class GMAP extends Api
     super();
 
   }
-} 
+}
