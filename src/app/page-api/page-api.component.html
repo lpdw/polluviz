@@ -11,7 +11,7 @@
       <div *ngIf="!isEmptyData()">
         <div *ngIf="_options.showMap">
           <sebm-google-map   [latitude]="_gmap.lat" [longitude]="_gmap.lng" [streetViewControl]="false"  [styles]="getStyle(_options.typePollution)">
-              <sebm-google-map-marker [latitude]="_gmap.lat" [longitude]="_gmap.lng" ></sebm-google-map-marker>
+              <sebm-google-map-marker [latitude]="_gmap.lat" [longitude]="_gmap.lng" [label]="'A'" [iconUrl]="'https://cdn1.iconfinder.com/data/icons/Momentum_MatteEntireSet/32/rectangle.png'"></sebm-google-map-marker>
           </sebm-google-map>
           </div>
       </div>

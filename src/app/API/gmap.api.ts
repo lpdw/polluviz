@@ -1,5 +1,8 @@
 import { MapTypeStyle } from 'angular2-google-maps/esm/core';
 import { Api } from './api.class';
+import { SebmGoogleMap, SebmGoogleMapMarker } from 'angular2-google-maps/core';
+
+
 
 export class GMAP extends Api
 {
@@ -9,7 +12,7 @@ export class GMAP extends Api
   public myStyleMap: any = [];
 
 
-
+ 
   constructor()
   {
     super();

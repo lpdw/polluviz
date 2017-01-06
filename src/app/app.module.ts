@@ -7,10 +7,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 //Google Chart => https://www.npmjs.com/package/angular2-google-chart
 import { GoogleChart } from 'angular2-google-chart/directives/angular2-google-chart.directive';
-
 // Google Map
 import { CommonModule } from '@angular/common';
-import { AgmCoreModule } from 'angular2-google-maps/core';
+import { AgmCoreModule, SebmGoogleMap, SebmGoogleMapMarker } from 'angular2-google-maps/core';
 
 import { AppRoutingModule } from './routing/app-routing.module';
 

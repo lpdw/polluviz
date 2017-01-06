@@ -2,6 +2,8 @@
 import { Component, OnDestroy, OnInit, style, Directive } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+
+
 //From our project ,
 // We only import what we need
 import { Api } from '../API/api.class';
