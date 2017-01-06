@@ -9,8 +9,6 @@ import {Router} from '@angular/router'
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
-
-  private _url: string = "";
   private _showBtnNavBack: boolean = false;
 
   constructor(private router: Router) {
@@ -22,13 +20,10 @@ export class MenuComponent implements OnInit {
   }
 
   showNavBackButton(val) {
-    this._url = val.url;
     if(val.url == "/")
       this._showBtnNavBack = false;
     else
       this._showBtnNavBack = true;
-
-    console.log(this._showBtnNavBack);
   }
 
 }

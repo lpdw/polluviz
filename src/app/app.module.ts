@@ -4,10 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 
 import { RouterModule, Routes } from '@angular/router';
-// Google Map
 
+//Google Chart => https://www.npmjs.com/package/angular2-google-chart
+import { GoogleChart } from 'angular2-google-chart/directives/angular2-google-chart.directive';
+// Google Map
 import { CommonModule } from '@angular/common';
-import { AgmCoreModule } from 'angular2-google-maps/core';
+import { AgmCoreModule, SebmGoogleMap, SebmGoogleMapMarker } from 'angular2-google-maps/core';
 
 import { AppRoutingModule } from './routing/app-routing.module';
 
@@ -21,6 +23,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 @NgModule({
   declarations: [
+    GoogleChart,
     AppComponent,
     MenuComponent,
     HomeComponent,
@@ -37,7 +40,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
       apiKey: 'AIzaSyDSqwfOb2E4Elg0kuyK_ZVVgEmfG2UDEMM'
     }),
     AppRoutingModule,
-
   ],
   providers: [],
   bootstrap: [AppComponent]
