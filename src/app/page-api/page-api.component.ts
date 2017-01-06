@@ -2,15 +2,14 @@
 import { Component, OnDestroy, OnInit, style, Directive } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-
-
 //From our project ,
 // We only import what we need
 import { Api } from '../API/api.class';
 import { StylesMap } from '../API/styles.api';
 import { ApiService } from '../api.service';
 import { AirPollution } from '../API/airpollution.api';
-import { GMAP } from '../API/gmap.api';
+import { Gmap } from '../API/gmap.api';
+import { GChart} from '../API/gchart.api';
 
 @Component({
   selector: 'app-page-api',
@@ -26,18 +25,19 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   private _data: any = null;
   private _noData: boolean = false;
   private _myStyleMap: any = [];
-  private _gmap: GMAP;
+  private _gMap: Gmap;
   private _styleMap: StylesMap;
-  public line_ChartData = [
-                            ['Year', 'Sales', 'Expenses'],
-                            ['2004', 1000, 400],
-                            ['2005', 1170, 460],
-                            ['2006', 660, 1120],
-                            ['2007', 1030, 540],
-                            ['2050', 9999, 999],
-                          ];
+  private _gChart: GChart;
+  private _chartData: any;
+  private _chartOptions: any;
+  private _chartType: string;
 
-  constructor(private _route: ActivatedRoute,private _apiService: ApiService) {this._styleMap = new StylesMap(); }
+  constructor( private _route: ActivatedRoute, private _apiService: ApiService)
+  {
+    this._styleMap = new StylesMap();
+    this._gMap = new Gmap();
+    this._gChart = new GChart();
+  }
 
   ngOnInit()
   {
@@ -51,6 +51,11 @@ export class PageAPIComponent implements OnInit, OnDestroy {
        //call the ApiService to fectch all data
        this._apiService.getData(params['websiteName'],this._options).toPromise().then(this.setData.bind(this));
     });
+
+    //Example line chart
+    this._chartType = 'LineChart';
+    this._chartData = this._gChart.getExampleChartType('LineChart').LineChart.data;
+    this._chartOptions = this._gChart.getExampleChartType('LineChart').LineChart.options;
 
     this.showDataFromApi();
   }
@@ -68,20 +73,20 @@ export class PageAPIComponent implements OnInit, OnDestroy {
     {
       //if we want use Gmap
       if(this._options.showMap == true)
-        this.showGMap();
+        this.showGmap();
       else
         console.log("don't need the map");
     }
   }
 
-  showGMap(): void {
+  showGmap(): void {
     //all data => this._data
     //all options => this._options
-    this._gmap = new GMAP();
-    this._gmap.title = this._options.websiteName;
-   this._myStyleMap = this._gmap.myStyleMap;
-   this._gmap.lat = this._options.lat;
-   this._gmap.lng = this._options.lng;
+    this._gMap = new Gmap();
+    this._gMap.title = this._options.websiteName;
+   this._myStyleMap = this._gMap.myStyleMap;
+   this._gMap.lat = this._options.lat;
+   this._gMap.lng = this._options.lng;
   }
 
   setData(data) {
