@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
   private _options: any = {};
 
   private _optionsLocation: any = {};
+  private _apiData: Array<any> = [];
   public selectedCity: string;
   public dataLocation: any = {};
   private lat: number;
@@ -49,7 +50,8 @@ export class HomeComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnInit()
+  {
     this.selectedCity = localStorage.getItem('city');
     this.dataLocation = JSON.parse(localStorage['location']);
 
@@ -86,12 +88,12 @@ export class HomeComponent implements OnInit {
     // this._apiService.getData("http://api.waqi.info/").toPromise().then(data => console.log(data) );
 
     //options for safecast
-    this._options = { lat: this.lat, lng: this.lng };
-    this._apiService.getData(safeCast.websiteName, this._options).toPromise().then(data => console.log(data));
+    this._options = { lat: this.lat, lng: this.lng, distance: 2222 };
+    this._apiService.getData(safeCast.websiteName, this._options).toPromise().then(this.addData.bind(this,'safecast'));
 
     //options for openaq
     this._options = { lat: this.lat, lng: this.lng, country: 'FR' };
-    this._apiService.getData(openaq.websiteName, this._options).toPromise().then(data => console.log(data));
+    this._apiService.getData(openaq.websiteName, this._options).toPromise().then(this.addData.bind(this,'openaq'));
 
     //this._apiService.getData(openaq.websiteName).toPromise().then(data => console.log(data));
     // this._apiService.getData(airvisual.websiteName).toPromise().then(data => console.log(data));
@@ -106,13 +108,10 @@ export class HomeComponent implements OnInit {
     window.open(link.toLowerCase(), '_blank');
   }
 
-  extractData(websiteName: string): void {
-    if(websiteName == 'safecast') {
-
-    }
-    else if(websiteName == 'openaq') {
-
-    }
+  addData(website:string, data: any): void {
+    //first parameter is the second on bind apply with addData function
+    this._apiData.push({website: website, data: data});
+    console.log(this._apiData);
   }
 
 }

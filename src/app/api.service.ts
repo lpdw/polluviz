@@ -86,7 +86,7 @@ export class ApiService {
     {
       //For SAFECAST
       if (api.websiteName == serverName && serverName == 'safecast') {
-        apiUrlToGet = api.server + "measurements.json?distance=222&latitude=" + options.lat + "&longitude=" + options.lng;
+        apiUrlToGet = api.server + "measurements.json?distance="+ options.distance + "&latitude=" + options.lat + "&longitude=" + options.lng;
         console.log(apiUrlToGet);
       }
       //For OPENAQ
