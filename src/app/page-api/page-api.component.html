@@ -1,6 +1,6 @@
 
-<div class="container">
-    <p>website : {{_websiteName}}</p>
+<div>
+    <!-- <p>website : {{_websiteName}}</p> -->
 
       <!-- Show Google Maps if params show = true and data are not empty -->
       <div *ngIf="!isEmptyData()" class="good">
@@ -10,16 +10,16 @@
           <sebm-google-map   [latitude]="_gMap.lat" [longitude]="_gMap.lng" [streetViewControl]="false"  [styles]="getStyle(_options.typePollution)">
               <!-- the main marker -->
               <sebm-google-map-marker [zIndex]="1"   [latitude]="_gMap.lat" [longitude]="_gMap.lng"  [iconUrl]="'https://cdn0.iconfinder.com/data/icons/fatcow/16/radioactivity.png'"></sebm-google-map-marker>
-              <!--create a loop to display data-->
+              <!--create a loop to display data : INSERER VARIABLE A LA PLACE DES VALEURS-->
             <sebm-google-map-circle
-                    [latitude]="_gMap.lat" 
-                    [longitude]="_gMap.lng" 
+                    [latitude]="_gMap.lat"
+                    [longitude]="_gMap.lng"
                     [radius]="2000"
                     [fillColor]="'green'"
                     [circleDraggable]="false"
                     [editable]="false"
                     [clickable]="true"
-                    [strokeColor]="red"
+                    [strokeColor]="red"  
                     [fillOpacity]="1.0"
                     >
             </sebm-google-map-circle>
