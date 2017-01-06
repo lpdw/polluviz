@@ -1,11 +1,8 @@
-<div class="container">
-    <p>website : {{_websiteName}}</p>
+
+    <!-- <p>website : {{_websiteName}}</p> -->
 
       <!-- Show Google Maps if params show = true and data are not empty -->
-      <div *ngIf="!isEmptyData()" class="box">
-          <p>show the map : <b>{{_options.showMap}}</b></p>
-          <p>data empty : <b>{{isEmptyData()}}</b></p>
-          <h1>{{ title }}</h1>
+      <div *ngIf="!isEmptyData()" class="good">
           <div *ngIf="_options.showMap">
             <sebm-google-map   [latitude]="_gmap.lat" [longitude]="_gmap.lng" [streetViewControl]="false"  [styles]="getStyle(_options.typePollution)">
                 <!-- on the go for take a mega loop for capture marker and take them to the sky -->
@@ -13,6 +10,10 @@
             </sebm-google-map>
           </div>
       </div>
+<div class="container">
+  <h1>Titre {{ title }}</h1>
+  <!-- <p>show the map : <b>{{_options.showMap}}</b></p>
+  <p>data empty : <b>{{isEmptyData()}}</b></p> -->
 
       <div class="box">
         <div id="line_chart" [chartData]="line_ChartData" [chartOptions] = "line_ChartOptions" chartType="LineChart" GoogleChart>
