@@ -2,7 +2,7 @@ import { MapTypeStyle } from 'angular2-google-maps/core';
 //From angular
 import { Injectable }     from '@angular/core';
 import { Http, Response, Headers, RequestOptions, URLSearchParams, Jsonp } from '@angular/http';
-
+import { Component } from '@angular/core';
 import 'rxjs/Rx';
 import {Observable} from 'rxjs/Rx';
 // Import RxJs required methods
@@ -15,14 +15,41 @@ import { Api } from './API/api.class';
 import { AirPollution } from './API/airpollution.api';
 import { ChimicalPollution } from './API/chimicalpollution.api';
 
+//Geolocation component
+import { EmitterService } from './ng2-location/browser-location'
+import { nglocationService } from './ng2-location/browser-location-service';
+import {EventEmitter} from '@angular/core';
+import {Location} from './ng2-location/location-interface';
+
+
 
 @Injectable()
 export class ApiService {
   private _listApi: Array<Api> = [];
   private _mapStyle: any = [];
+  public selectedCity: string;
+  public dataLocation: any = {};
+  private lat: number;
+  private lng: number;
 
   constructor(private _http: Http, private _jsonp: Jsonp) {
     //TODO Commentaires de code !
+
+
+
+     //Emitter is used for retrieve city information / Exist or not
+    EmitterService.get("selectedCity").subscribe(data => {
+      this.selectedCity = data;
+      localStorage.setItem('city', this.selectedCity);
+    });
+
+
+      this.selectedCity = localStorage.getItem('city');
+      this.dataLocation = JSON.parse(localStorage['location']);
+
+      this.lat = this.dataLocation.latitude;
+      this.lng = this.dataLocation.longitude;
+
     //Air pollution 1
     // let airpollution: AirPollution = new Api();
     // airpollution.server = "http://api.waqi.info/";
@@ -42,8 +69,8 @@ export class ApiService {
     let airvisual: AirPollution = new AirPollution();
     airvisual.websiteName = "airvisual";
     airvisual.server = "http://api.airvisual.com/";
-    airvisual.lat = "29.52961";
-    airvisual.long = "34.938219"
+    airvisual.lat = this.lat;
+    airvisual.long = this.lng;
     airvisual.key = "p4grS8buAWyJy36vJ";
     airvisual.api = "v1/nearest?lat=" + airvisual.lat + "&lon=" + airvisual.long + "&key=" + airvisual.key;
     airvisual.serverWithApiUrl = airvisual.server + airvisual.api;
@@ -54,11 +81,11 @@ export class ApiService {
     let safeCast: ChimicalPollution = new ChimicalPollution();
     safeCast.websiteName = "safecast";
     safeCast.server = "https://api.safecast.org/";
-    safeCast.lat = "48.837153";
-    safeCast.long = "2.258291";
+    safeCast.lat = this.lat;
+    safeCast.long = this.lng;
     safeCast.api = "measurements.json?distance=35&latitude=" + safeCast.lat + "&longitude=" + safeCast.long;
     safeCast.serverWithApiUrl = safeCast.server + safeCast.api;
-    
+
     // this._listApi.push(airpollution);
     this._listApi.push(airquality);
     this._listApi.push(airvisual);

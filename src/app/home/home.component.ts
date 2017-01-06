@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.selectedCity = localStorage.getItem('city');
     this.dataLocation = JSON.parse(localStorage['location']);
-    console.log(this.dataLocation.latitude);
+
     this.lat = this.dataLocation.latitude;
     this.lng = this.dataLocation.longitude;
     // Set the options for the geolocation
