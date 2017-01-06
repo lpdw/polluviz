@@ -9,6 +9,8 @@ export class Gmap extends Api
   public lat: number;
   public lng: number;
   public myStyleMap: any = [];
+  public circleColor: string;
+  public circleRadius: number;
 
 
  
