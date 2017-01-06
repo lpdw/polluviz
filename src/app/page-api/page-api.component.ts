@@ -33,7 +33,8 @@ export class PageAPIComponent implements OnInit, OnDestroy {
                             ['2004', 1000, 400],
                             ['2005', 1170, 460],
                             ['2006', 660, 1120],
-                            ['2007', 1030, 540]
+                            ['2007', 1030, 540],
+                            ['2050', 9999, 999],
                           ];
 
   constructor(private _route: ActivatedRoute,private _apiService: ApiService) {this._styleMap = new StylesMap(); }
