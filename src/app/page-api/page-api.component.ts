@@ -82,8 +82,8 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   showGmap(): void {
     //all data => this._data
     //all options => this._options
-    this._gMap = new Gmap();
-    this._gMap.title = this._options.websiteName;
+    
+   this._gMap.title = this._options.websiteName;
    this._myStyleMap = this._gMap.myStyleMap;
    this._gMap.lat = this._options.lat;
    this._gMap.lng = this._options.lng;
