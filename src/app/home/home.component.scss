@@ -28,6 +28,13 @@
 .moyen { background-color: #FBC02D;}
 .bad {background-color: #BF360C}
 
+.twitter {
+  padding-left: 85%;
+  position: fixed;
+  bottom: 20px;
+  opacity: 0.7;
+}
+
 @media screen and (max-width: 900px) {
   .card {
     width: 40%
