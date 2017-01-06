@@ -17,3 +17,12 @@ $a-color: #188a94;
   display: inline-block;
   vertical-align: top;
 }
+
+@media screen and (max-width: 900px) {
+  .box {
+    text-align: center;
+    width: 80%;
+    margin: 10%;
+    display: block;
+  }
+}

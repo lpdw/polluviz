@@ -22,8 +22,19 @@ $menu-color: #188a94;
   position: relative;
   top: 5px;
 }
+.logo {
+  // background-color: $menu-color;
+  padding: 20px;
+  // border-radius: 10px;
+  // transform:rotate(45deg);
+  // display: block;
+  // width: 120px;
+  // position: relative;
+  // left: 80%;
+}
 .logo a img{
   margin-top: 15px;
+  // transform:rotate(-45deg);
 }
 
 :host a {
@@ -40,7 +51,7 @@ $menu-color: #188a94;
   }
 }
 @media screen and (max-width: 450px) {
-  .title {
+  .textTitle {
     display: none;
   }
   .logo {
