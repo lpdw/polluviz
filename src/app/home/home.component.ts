@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.selectedCity = localStorage.getItem('city');
     this.dataLocation = JSON.parse(localStorage['location']);
-    console.log(this.dataLocation.latitude);
+
     this.lat = this.dataLocation.latitude;
     this.lng = this.dataLocation.longitude;
     // Set the options for the geolocation
@@ -82,12 +82,15 @@ export class HomeComponent implements OnInit {
     this._listApi.push(openaq);
     // this._listApi.push(airvisual);
 
+    // this._options = { lat: this.lat,lng: this.lng };
+    // this._apiService.getData("http://api.waqi.info/").toPromise().then(data => console.log(data) );
+
     //options for safecast
     this._options = { lat: this.lat,lng: this.lng };
-    // this._apiService.getData("http://api.waqi.info/").toPromise().then(data => console.log(data) );
     this._apiService.getData(safeCast.websiteName, this._options).toPromise().then(data => console.log(data));
+
     //options for openaq
-    this._options = { lat: this.lat,lng: this.lng };
+    this._options = { lat: this.lat,lng: this.lng, country: 'FR' };
     this._apiService.getData(openaq.websiteName, this._options).toPromise().then(data => console.log(data));
 
     //this._apiService.getData(openaq.websiteName).toPromise().then(data => console.log(data));

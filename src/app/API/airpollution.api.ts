@@ -2,8 +2,8 @@ import { Api } from './api.class';
 
 export class AirPollution extends Api
 {
-  public lat: string;
-  public long: string;
+  public lat: number;
+  public long: number;
   public key: string;
   public mapStyle: any;
 
@@ -12,6 +12,6 @@ export class AirPollution extends Api
     super();
     this.typeApi = "Air pollution";
     this.typePollution = 'air';
-    
+
   }
 }

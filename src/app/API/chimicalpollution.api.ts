@@ -2,8 +2,8 @@ import { Api } from './api.class';
 
 export class ChimicalPollution extends Api
 {
-  public lat: string;
-  public long: string;
+  public lat: number;
+  public long: number;
   public mapStyle: any;
 
   constructor()

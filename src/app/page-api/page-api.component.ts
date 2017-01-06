@@ -49,6 +49,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
       this._options = { websiteName: params['websiteName'], showMap: (params['showMap'] === 'true'), lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'] };
 
        //call the ApiService to fectch all data
+       //options for safecast
        this._apiService.getData(params['websiteName'],this._options).toPromise().then(this.setData.bind(this));
     });
 
@@ -82,7 +83,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   showGmap(): void {
     //all data => this._data
     //all options => this._options
-    
+
    this._gMap.title = this._options.websiteName;
    this._myStyleMap = this._gMap.myStyleMap;
    this._gMap.lat = this._options.lat;
