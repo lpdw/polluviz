@@ -3,11 +3,17 @@
 
       <!-- Show Google Maps if params show = true and data are not empty -->
       <div *ngIf="!isEmptyData()" class="good">
-          <div *ngIf="_options.showMap">
-            <sebm-google-map   [latitude]="_gmap.lat" [longitude]="_gmap.lng" [streetViewControl]="false"  [styles]="getStyle(_options.typePollution)">
-                <!-- on the go for take a mega loop for capture marker and take them to the sky -->
-                <sebm-google-map-marker [latitude]="_gmap.lat" [longitude]="_gmap.lng" [label]="'A'" [iconUrl]="'https://cdn1.iconfinder.com/data/icons/Momentum_MatteEntireSet/32/rectangle.png'"></sebm-google-map-marker>
-            </sebm-google-map>
+        <!-- <p>show the map : <b>{{_options.showMap}}</b></p>
+          <p>data empty : <b>{{isEmptyData()}}</b></p> -->
+        <div *ngIf="_options.showMap">
+          <sebm-google-map   [latitude]="_gmap.lat" [longitude]="_gmap.lng" [streetViewControl]="false"  [styles]="getStyle(_options.typePollution)">
+              <!-- the main marker -->
+              <sebm-google-map-marker [zIndex]="1"  [latitude]="_gmap.lat" [longitude]="_gmap.lng" [label]="'A'" [iconUrl]="'https://cdn1.iconfinder.com/data/icons/Momentum_MatteEntireSet/32/rectangle.png'"></sebm-google-map-marker>
+              <!-- secondary marker (marker off api's') create a loop -->
+            <!--  <div *ngFor="let data of datas" >
+                    <sebm-google-map-marker [latitude]="data.lat" [longitude]="data.lng" [label]="'B'" [iconUrl]="'https://cdn1.iconfinder.com/data/icons/Momentum_MatteEntireSet/32/rectangle.png'"></sebm-google-map-marker>
+              </div> -->
+          </sebm-google-map>
           </div>
       </div>
 <div class="container">
