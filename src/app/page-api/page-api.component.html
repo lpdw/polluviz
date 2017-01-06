@@ -9,11 +9,19 @@
         <div *ngIf="_options.showMap">
           <sebm-google-map   [latitude]="_gmap.lat" [longitude]="_gmap.lng" [streetViewControl]="false"  [styles]="getStyle(_options.typePollution)">
               <!-- the main marker -->
-              <sebm-google-map-marker [zIndex]="1"  [latitude]="_gmap.lat" [longitude]="_gmap.lng" [label]="'A'" [iconUrl]="'https://cdn1.iconfinder.com/data/icons/Momentum_MatteEntireSet/32/rectangle.png'"></sebm-google-map-marker>
-              <!-- secondary marker (marker off api's') create a loop -->
-            <!--  <div *ngFor="let data of datas" >
-                    <sebm-google-map-marker [latitude]="data.lat" [longitude]="data.lng" [label]="'B'" [iconUrl]="'https://cdn1.iconfinder.com/data/icons/Momentum_MatteEntireSet/32/rectangle.png'"></sebm-google-map-marker>
-              </div> -->
+              <sebm-google-map-marker [zIndex]="1"   [latitude]="_gmap.lat" [longitude]="_gmap.lng"  [iconUrl]="'https://cdn0.iconfinder.com/data/icons/fatcow/16/radioactivity.png'"></sebm-google-map-marker>
+              <!--create a loop to display data-->
+            <sebm-google-map-circle
+                    [latitude]="_gmap.lat" 
+                    [longitude]="_gmap.lng" 
+                    [radius]="2000"
+                    [fillColor]="'green'"
+                    [circleDraggable]="false"
+                    [editable]="false"
+                    [clickable]="true"
+                    [strokeColor]="red"
+                    >
+            </sebm-google-map-circle>
           </sebm-google-map>
           </div>
       </div>

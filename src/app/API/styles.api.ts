@@ -22,7 +22,7 @@ public style: any = {};
           }
 
   } 
-  // and the loop for administrate color in function of api
+  // and the loop of colors used for api
   getStyle(typePollution: string){ 
       let style;
       switch(typePollution){
