@@ -82,8 +82,13 @@ export class HomeComponent implements OnInit {
     this._listApi.push(openaq);
     // this._listApi.push(airvisual);
 
+    //options for safecast
+    this._options = { lat: this.lat,lng: this.lng };
     // this._apiService.getData("http://api.waqi.info/").toPromise().then(data => console.log(data) );
-    this._apiService.getData(safeCast.websiteName).toPromise().then(data => console.log(data));
+    this._apiService.getData(safeCast.websiteName, this._options).toPromise().then(data => console.log(data));
+    //options for openaq
+    this._options = { lat: this.lat,lng: this.lng };
+    this._apiService.getData(openaq.websiteName, this._options).toPromise().then(data => console.log(data));
 
     //this._apiService.getData(openaq.websiteName).toPromise().then(data => console.log(data));
     // this._apiService.getData(airvisual.websiteName).toPromise().then(data => console.log(data));

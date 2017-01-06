@@ -20,6 +20,7 @@ import { ChimicalPollution } from './API/chimicalpollution.api';
 export class ApiService {
   private _listApi: Array<Api> = [];
   private _mapStyle: any = [];
+  private _serverNameToGet: string = "";
 
   constructor(private _http: Http, private _jsonp: Jsonp) {
     //TODO Commentaires de code !
@@ -58,20 +59,22 @@ export class ApiService {
     safeCast.long = "2.258291";
     safeCast.api = "measurements.json?distance=35&latitude=" + safeCast.lat + "&longitude=" + safeCast.long;
     safeCast.serverWithApiUrl = safeCast.server + safeCast.api;
-    
+
     // this._listApi.push(airpollution);
     this._listApi.push(airquality);
     this._listApi.push(airvisual);
     this._listApi.push(safeCast);
   }
 
-  public getData(serverName: string, options: any = {}): Observable<any> {
+  public getData(serverName: string, options: any = {}): Observable<any>
+  {
+    console.log(options);
     //we take the Api given from the parameters and return a Observable
     let apiUrlToGet = "";
     for (let api of this._listApi) {
       //For safecast
       if (api.websiteName == serverName && serverName == 'safecast') {
-        apiUrlToGet = api.server + "measurements.json?distance=35&latitude=" + options.lat + "&longitude=" + options.lng;
+        apiUrlToGet = api.server + "measurements.json?distance=222&latitude=" + options.lat + "&longitude=" + options.lng;
         console.log(apiUrlToGet);
       }
     }
@@ -79,7 +82,8 @@ export class ApiService {
   }
 
   private extractData(response: Response) {
-    // extract data from the API website and transform it to json
+    // extract data from the API website and parse it to json
+    console.log(response);
     let body = response.json();
     return body || {};
   }
