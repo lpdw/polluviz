@@ -86,11 +86,11 @@ export class HomeComponent implements OnInit {
     // this._apiService.getData("http://api.waqi.info/").toPromise().then(data => console.log(data) );
 
     //options for safecast
-    this._options = { lat: this.lat,lng: this.lng };
+    this._options = { lat: this.lat, lng: this.lng };
     this._apiService.getData(safeCast.websiteName, this._options).toPromise().then(data => console.log(data));
 
     //options for openaq
-    this._options = { lat: this.lat,lng: this.lng, country: 'FR' };
+    this._options = { lat: this.lat, lng: this.lng, country: 'FR' };
     this._apiService.getData(openaq.websiteName, this._options).toPromise().then(data => console.log(data));
 
     //this._apiService.getData(openaq.websiteName).toPromise().then(data => console.log(data));
@@ -106,6 +106,13 @@ export class HomeComponent implements OnInit {
     window.open(link.toLowerCase(), '_blank');
   }
 
+  extractData(websiteName: string): void {
+    if(websiteName == 'safecast') {
 
+    }
+    else if(websiteName == 'openaq') {
+
+    }
+  }
 
 }

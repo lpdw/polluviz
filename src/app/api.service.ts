@@ -79,7 +79,7 @@ export class ApiService {
 
   public getData(serverName: string, options: any = {}): Observable<any>
   {
-    console.log(options);
+    // console.log(options);
     //we take the Api given from the parameters and return a Observable
     let apiUrlToGet = "";
     for (let api of this._listApi)
@@ -99,7 +99,6 @@ export class ApiService {
 
   private extractData(response: Response) {
     // extract data from the API website and parse it to json
-    console.log(response);
     let body = response.json();
     return body || {};
   }
