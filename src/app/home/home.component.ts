@@ -15,7 +15,6 @@ import { nglocationService } from '../ng2-location/browser-location-service';
 import {EventEmitter} from '@angular/core';
 import {Location} from '../ng2-location/location-interface';
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -27,7 +26,7 @@ import {Location} from '../ng2-location/location-interface';
 export class HomeComponent implements OnInit {
 
   public errorMessage: string;
-  private _listApi: Array<Api> = [];
+  // private _listApi: Array<Api> = [];
   private _options: any = {};
 
   private _optionsLocation: any = {};
@@ -80,38 +79,41 @@ export class HomeComponent implements OnInit {
     safeCast.server = "https://api.safecast.org/";
 
     //Push into listApi
-    this._listApi.push(safeCast);
-    this._listApi.push(openaq);
+    // this._listApi.push(safeCast);
+    // this._listApi.push(openaq);
     // this._listApi.push(airvisual);
 
     // this._options = { lat: this.lat,lng: this.lng };
     // this._apiService.getData("http://api.waqi.info/").toPromise().then(data => console.log(data) );
 
     //options for safecast
+    let showMap = true;
+
     this._options = { lat: this.lat, lng: this.lng, distance: 2222 };
-    this._apiService.getData(safeCast.websiteName, this._options).toPromise().then(this.addData.bind(this,'safecast'));
+    this._apiService.getData(safeCast.websiteName, this._options).toPromise().then(
+      this.addData.bind(this, 'safecast', this._options, safeCast.typePollution, showMap)
+    );
 
     //options for openaq
     this._options = { lat: this.lat, lng: this.lng, country: 'FR' };
-    this._apiService.getData(openaq.websiteName, this._options).toPromise().then(this.addData.bind(this,'openaq'));
+    this._apiService.getData(openaq.websiteName, this._options).toPromise().then(
+      this.addData.bind(this, 'openaq', this._options, openaq.typePollution, showMap)
+    );
 
     //this._apiService.getData(openaq.websiteName).toPromise().then(data => console.log(data));
     // this._apiService.getData(airvisual.websiteName).toPromise().then(data => console.log(data));
   }
 
-  showPageApi(websiteName: string, typePollution: string): void {
-    let options = {};
-    this._router.navigate(['/pageApi', { websiteName: websiteName, lat: this.lat, lng: this.lng, showMap: true, typePollution: typePollution }]);
+  showPageApi(api: any): void {
+    this._router.navigate(['/pageApi', { websiteName: api.websiteName, lat: api.options.lat, lng: api.options.lng, showMap: api.showMap, typePollution: api.typePollution }]);
   }
 
   redirectToExternalLink(link: string) {
     window.open(link.toLowerCase(), '_blank');
   }
 
-  addData(website:string, data: any): void {
-    //first parameter is the second on bind apply with addData function
-    this._apiData.push({website: website, data: data});
-    console.log(this._apiData);
+  addData(website: string, options: any, typePollution: string,showMap: boolean, data: any): void {
+    this._apiData.push({websiteName: website, data: data,typePollution: typePollution, options: options, showMap: showMap});
   }
 
 }

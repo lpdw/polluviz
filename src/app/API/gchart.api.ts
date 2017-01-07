@@ -122,7 +122,15 @@ export class GChart {
     return myChart;
   }
 
-  getChart(type: string, data: any) {
-
+  getChart(chartType: string, data: any = []) {
+    let myChart;
+    for (let chart of this._listChartType) {
+      if (Object.keys(chart)[0] == chartType) {
+          myChart = chart;
+          myChart.data = data;
+          console.log(myChart);
+      }
+    }
+    return myChart;
   }
 }
