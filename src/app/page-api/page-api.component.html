@@ -7,7 +7,7 @@
         <!-- <p>show the map : <b>{{_options.showMap}}</b></p>
           <p>data empty : <b>{{isEmptyData()}}</b></p> -->
         <div *ngIf="_options.showMap">
-          <sebm-google-map   [latitude]="_gMap.lat" [longitude]="_gMap.lng" [streetViewControl]="false"  [styles]="getStyle(_options.typePollution)">
+          <sebm-google-map   [latitude]="_gMap.lat" [longitude]="_gMap.lng" [streetViewControl]="false"  [styles]="getStyleMap(_options.typePollution)">
               <!-- the main marker -->
               <sebm-google-map-marker [zIndex]="1"   [latitude]="_gMap.lat" [longitude]="_gMap.lng"  [iconUrl]="'https://cdn0.iconfinder.com/data/icons/fatcow/16/radioactivity.png'"></sebm-google-map-marker>
               <!--create a loop to display data : INSERER VARIABLE A LA PLACE DES VALEURS-->
@@ -19,9 +19,9 @@
                     [circleDraggable]="false"
                     [editable]="false"
                     [clickable]="true"
-                    [strokeColor]="red"  
+                    [strokeColor]="red"
                     [fillOpacity]="1.0"
-                    >
+            >
             </sebm-google-map-circle>
           </sebm-google-map>
           </div>
@@ -31,8 +31,8 @@
   <!-- <p>show the map : <b>{{_options.showMap}}</b></p>
   <p>data empty : <b>{{isEmptyData()}}</b></p> -->
 
-      <div class="box">
-        <div id="line_chart" [chartData]="_chartData" [chartOptions]="_chartOptions" [chartType]="_chartType" GoogleChart> </div>
+      <div class="box" *ngIf="_showChart">
+        <div id="line_chart" *ngFor="let chart of _listGChart" [chartData]="chart.data" [chartOptions]="" [chartType]="chart.type" GoogleChart> </div>
         <!-- <div id="bubble_chart" [chartData]="bubble_ChartData" [chartOptions]="bubble_ChartOptions" chartType="BubbleChart" GoogleChart ></div>
         <div id="scatter_chart" [chartData]="scatter_ChartData" [chartOptions]="scatter_ChartOptions" chartType="ScatterChart" GoogleChart > </div>
         <div id="candle_chart" [chartData]="candle_ChartData" [chartOptions]="candle_ChartOptions" chartType="CandlestickChart" GoogleChart ></div>

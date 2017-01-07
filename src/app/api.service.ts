@@ -87,13 +87,13 @@ export class ApiService {
       //For SAFECAST
       if (api.websiteName == serverName && serverName == 'safecast') {
         apiUrlToGet = api.server + "measurements.json?distance="+ options.distance + "&latitude=" + options.lat + "&longitude=" + options.lng;
-        console.log(apiUrlToGet);
       }
       //For OPENAQ
       else if(api.websiteName == serverName && serverName == 'openaq') {
         apiUrlToGet = api.server + "v1/latest?country=" + options.country;
       }
     }
+    // console.log(apiUrlToGet);
     return this._http.get(apiUrlToGet).map(this.extractData).catch(this.handleError);
   }
 

@@ -88,16 +88,17 @@ export class HomeComponent implements OnInit {
 
     //options for safecast
     let showMap = true;
+    let showChart = true;
 
     this._options = { lat: this.lat, lng: this.lng, distance: 2222 };
     this._apiService.getData(safeCast.websiteName, this._options).toPromise().then(
-      this.addData.bind(this, 'safecast', this._options, safeCast.typePollution, showMap)
+      this.addData.bind(this, 'safecast', this._options, safeCast.typePollution, showMap, showChart)
     );
 
     //options for openaq
     this._options = { lat: this.lat, lng: this.lng, country: 'FR' };
     this._apiService.getData(openaq.websiteName, this._options).toPromise().then(
-      this.addData.bind(this, 'openaq', this._options, openaq.typePollution, showMap)
+      this.addData.bind(this, 'openaq', this._options, openaq.typePollution, showMap, showChart)
     );
 
     //this._apiService.getData(openaq.websiteName).toPromise().then(data => console.log(data));
@@ -105,15 +106,21 @@ export class HomeComponent implements OnInit {
   }
 
   showPageApi(api: any): void {
-    this._router.navigate(['/pageApi', { websiteName: api.websiteName, lat: api.options.lat, lng: api.options.lng, showMap: api.showMap, typePollution: api.typePollution }]);
+    let  options;
+    if(api.websiteName == 'safecast') //get all options for safecast
+      options = { websiteName: api.websiteName, lat: api.options.lat, lng: api.options.lng, showMap: api.showMap,showChart: api.showChart, typePollution: api.typePollution, distance: api.options.distance };
+    else if(api.websiteName == 'openaq') //get all options for openaq
+      options = { websiteName: api.websiteName, lat: api.options.lat, lng: api.options.lng, showMap: api.showMap,showChart: api.showChart, typePollution: api.typePollution, country: api.options.country };
+
+    this._router.navigate(['/pageApi', options]);
   }
 
   redirectToExternalLink(link: string) {
     window.open(link.toLowerCase(), '_blank');
   }
 
-  addData(website: string, options: any, typePollution: string,showMap: boolean, data: any): void {
-    this._apiData.push({websiteName: website, data: data,typePollution: typePollution, options: options, showMap: showMap});
+  addData(website: string, options: any, typePollution: string,showMap: boolean,showChart: boolean, data: any): void {
+    this._apiData.push({websiteName: website, data: data,typePollution: typePollution, options: options, showMap: showMap, showChart: showChart});
   }
 
 }
