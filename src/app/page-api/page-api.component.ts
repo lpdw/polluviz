@@ -101,16 +101,18 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   }
 
   drawGChart(type: string, data: any) {
-    console.log(data);
+    // console.log(data);
     //Example line chart
     let gChart: GChart = new GChart();
     gChart.type = type;
 
     if(this._websiteName == 'openaq') {
-      gChart.data = gChart.getChart('LineChart',this._websiteName, data.results).data;
+      // console.log(data.results);
+      gChart.data = gChart.getChartData(this._websiteName, data);
     }
 
-    gChart.options = gChart.getChart('LineChart',this._websiteName).options;
-    this._listGChart.push({data: gChart.data, type: gChart.type});
+    //chaque chart a ses propres options
+    gChart.options = gChart.getChartOptions('LineChart', this._websiteName, data);
+    this._listGChart.push({data: gChart.data, options: gChart.options, type: gChart.type});
   }
 }

@@ -2,7 +2,7 @@
 export class GChart {
 
   public type: string;
-  public data: any;
+  public data: any = [];
   public options: any;
 
   public _listChartType: Array<any> = [
@@ -126,28 +126,46 @@ export class GChart {
     return myChart;
   }
 
-  getChart(chartType: string,websiteName: string, data: any = []) {
-    let myChart = { options: null, data: null };
-    console.log(data);
-
-    for (let chart of this._listChartType) {
-      if (Object.keys(chart)[0] == chartType) {
-          myChart = this.constructDataForChart(websiteName, chartType, chart);
+  getChartData(websiteName: string, data: any = [])
+  {
+    let dataResults = [];
+    if(websiteName == 'openaq') //contruct and return data for openaq
+    {
+      dataResults = [ ['', 'picto'], ];
+      console.log(data);
+      for (let result of data.results) {
+          // reset the legend
+          dataResults[0][1] = result.measurements[0].unit;
+          for (let measurement of result.measurements) {
+            let date = new Date(measurement.lastUpdated);
+              dataResults.push( [ result.city + " : " + date, measurement.value ] );
+          }
       }
     }
-    return myChart;
+    else if(websiteName == 'safecast') {
+      //contrcut and return data for safecast
+    }
+    return dataResults;
   }
 
-  constructDataForChart(websiteName: string, chartType: string, chart: any) {
-    console.log(websiteName);
-    console.log(chart);
+  getChartOptions(chartType: string, websiteName: string, data: any = [])
+  {
+    let options = {};
+    if(websiteName == 'openaq') //contruct and return options for openaq
+    {
+      if(chartType == 'LineChart') {
+        options = {
+          title: 'Company Performance',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        }
+      }
+    }
+    else if(websiteName == 'safecast') //contruct and return data fior openaq
+    {
+      //get options
+    }
 
-    if(websiteName == 'openaq') {
-      //construction des données pour l'API openaq
-    }
-    else if(websiteName == 'chart') {
-      //construction des données pour l'API openaq
-    }
-    return {data: null, options: null };
+    return options;
   }
 }
