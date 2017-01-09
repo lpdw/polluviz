@@ -21,34 +21,23 @@ import { nglocationService } from './ng2-location/browser-location-service';
 import {EventEmitter} from '@angular/core';
 import {Location} from './ng2-location/location-interface';
 
-
-
 @Injectable()
 export class ApiService {
   private _listApi: Array<Api> = [];
   private _mapStyle: any = [];
   public selectedCity: string;
   public dataLocation: any = {};
-  private lat: number;
-  private lng: number;
 
   constructor(private _http: Http, private _jsonp: Jsonp) {
     //TODO Commentaires de code !
-
-
-
      //Emitter is used for retrieve city information / Exist or not
     EmitterService.get("selectedCity").subscribe(data => {
       this.selectedCity = data;
       localStorage.setItem('city', this.selectedCity);
     });
 
-
       this.selectedCity = localStorage.getItem('city');
       this.dataLocation = JSON.parse(localStorage['location']);
-
-      this.lat = this.dataLocation.latitude;
-      this.lng = this.dataLocation.longitude;
 
     //Air pollution 1
     // let airpollution: AirPollution = new Api();
@@ -69,8 +58,6 @@ export class ApiService {
     let airvisual: AirPollution = new AirPollution();
     airvisual.websiteName = "airvisual";
     airvisual.server = "http://api.airvisual.com/";
-    airvisual.lat = this.lat;
-    airvisual.long = this.lng;
     airvisual.key = "p4grS8buAWyJy36vJ";
     airvisual.api = "v1/nearest?lat=" + airvisual.lat + "&lon=" + airvisual.long + "&key=" + airvisual.key;
     airvisual.serverWithApiUrl = airvisual.server + airvisual.api;
@@ -81,8 +68,6 @@ export class ApiService {
     let safeCast: ChimicalPollution = new ChimicalPollution();
     safeCast.websiteName = "safecast";
     safeCast.server = "https://api.safecast.org/";
-    safeCast.lat = this.lat;
-    safeCast.long = this.lng;
     safeCast.api = "measurements.json?distance=35&latitude=" + safeCast.lat + "&longitude=" + safeCast.long;
     safeCast.serverWithApiUrl = safeCast.server + safeCast.api;
 
@@ -92,21 +77,28 @@ export class ApiService {
     this._listApi.push(safeCast);
   }
 
-  public getData(serverName: string, options: any = {}): Observable<any> {
+  public getData(serverName: string, options: any = {}): Observable<any>
+  {
+    // console.log(options);
     //we take the Api given from the parameters and return a Observable
     let apiUrlToGet = "";
-    for (let api of this._listApi) {
-      //For safecast
+    for (let api of this._listApi)
+    {
+      //For SAFECAST
       if (api.websiteName == serverName && serverName == 'safecast') {
-        apiUrlToGet = api.server + "measurements.json?distance=35&latitude=" + options.lat + "&longitude=" + options.lng;
-        console.log(apiUrlToGet);
+        apiUrlToGet = api.server + "measurements.json?distance="+ options.distance + "&latitude=" + options.lat + "&longitude=" + options.lng;
+      }
+      //For OPENAQ
+      else if(api.websiteName == serverName && serverName == 'openaq') {
+        apiUrlToGet = api.server + "v1/latest?country=" + options.country;
       }
     }
+    // console.log(apiUrlToGet);
     return this._http.get(apiUrlToGet).map(this.extractData).catch(this.handleError);
   }
 
   private extractData(response: Response) {
-    // extract data from the API website and transform it to json
+    // extract data from the API website and parse it to json
     let body = response.json();
     return body || {};
   }

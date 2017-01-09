@@ -13,7 +13,7 @@
 </div> -->
 
 <div class="container text-center">
-  <div class="card good" *ngFor="let api of _listApi" (click)="showPageApi(api.websiteName, api.typePollution)">
+  <div class="card good" *ngFor="let api of _apiData" (click)="showPageApi(api)">
         {{api.websiteName}}
   </div>
 </div>

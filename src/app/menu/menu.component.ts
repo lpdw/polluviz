@@ -1,7 +1,9 @@
 //From Angular
 import { Component, OnInit } from '@angular/core';
-//import {Locations} from '@angular/common';
+
 import {Router} from '@angular/router'
+
+//Geolocation component
 import { EmitterService } from '../ng2-location/browser-location'
 import { nglocationService } from '../ng2-location/browser-location-service';
 import {EventEmitter} from '@angular/core';
@@ -34,10 +36,7 @@ export class MenuComponent implements OnInit {
   }
 
   showNavBackButton(val) {
-    if(val.url == "/")
-      this._showBtnNavBack = false;
-    else
-      this._showBtnNavBack = true;
+    this._showBtnNavBack = (val.url == "/") ? false : true;
   }
 
 }

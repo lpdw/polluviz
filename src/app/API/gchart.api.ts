@@ -1,6 +1,10 @@
 
 export class GChart {
 
+  public type: string;
+  public data: any;
+  public options: any;
+
   public _listChartType: Array<any> = [
   {
     LineChart: {
@@ -122,7 +126,28 @@ export class GChart {
     return myChart;
   }
 
-  getChart(type: string, data: any) {
+  getChart(chartType: string,websiteName: string, data: any = []) {
+    let myChart = { options: null, data: null };
+    console.log(data);
 
+    for (let chart of this._listChartType) {
+      if (Object.keys(chart)[0] == chartType) {
+          myChart = this.constructDataForChart(websiteName, chartType, chart);
+      }
+    }
+    return myChart;
+  }
+
+  constructDataForChart(websiteName: string, chartType: string, chart: any) {
+    console.log(websiteName);
+    console.log(chart);
+
+    if(websiteName == 'openaq') {
+      //construction des données pour l'API openaq
+    }
+    else if(websiteName == 'chart') {
+      //construction des données pour l'API openaq
+    }
+    return {data: null, options: null };
   }
 }
