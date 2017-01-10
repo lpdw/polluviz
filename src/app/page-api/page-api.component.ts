@@ -51,6 +51,8 @@ export class PageAPIComponent implements OnInit, OnDestroy {
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], distance: params['distance']};
       else if(params['websiteName'] == 'openaq') //options for openaq
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], country: params['country']};
+      else if(params['websiteName'] == 'aqicn')
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution']};
 
        //call the ApiService to fectch all data
        this._apiService.getData(params['websiteName'],this._options).toPromise().then(this.setData.bind(this));
@@ -83,6 +85,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   }
 
   setData(data: any) {
+    console.log(data);
     this._data = data;
     this._noData = (this._data.length === 0 || this._data === 'null') ? true : false;
     this.showGmap();
@@ -93,7 +96,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
     return this._noData;
   }
 
-  getStyleMap(style: string){
+  getStyleMap(style: string) {
     let styleType;
     if(this._options.typePollution == style)
       styleType = this._styleMap.getStyle(style);

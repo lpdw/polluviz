@@ -6,7 +6,7 @@ export class ChimicalPollution extends Api
   public long: number;
   public mapStyle: any;
 
-  constructor()
+  constructor(token? : string)
   {
     super();
     this.typeApi = 'Chimical Pollution';

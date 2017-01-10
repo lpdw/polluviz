@@ -4,14 +4,13 @@ export class AirPollution extends Api
 {
   public lat: number;
   public long: number;
-  public key: string;
   public mapStyle: any;
 
-  constructor()
-  {
+  //le token est optionnel
+  constructor(token? : string) {
     super();
     this.typeApi = "Air pollution";
     this.typePollution = 'air';
-
+    this.token = token;
   }
 }

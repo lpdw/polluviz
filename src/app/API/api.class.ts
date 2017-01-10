@@ -8,6 +8,7 @@ export class Api
     public serverWithApiUrl: string;
     public websiteName: string;
     public typePollution: string;
+    public token: string;
 
     constructor() { }
 }

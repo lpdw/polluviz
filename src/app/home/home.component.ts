@@ -26,9 +26,7 @@ import {Location} from '../ng2-location/location-interface';
 export class HomeComponent implements OnInit {
 
   public errorMessage: string;
-  // private _listApi: Array<Api> = [];
   private _options: any = {};
-
   private _optionsLocation: any = {};
   private _apiData: Array<any> = [];
   public selectedCity: string;
@@ -65,53 +63,71 @@ export class HomeComponent implements OnInit {
 
 
     //TOUS LES API QUI SERONT CHARGE DE BASE
-    let openaq: AirPollution = new AirPollution();
-    openaq.websiteName = "openaq";
-    openaq.server = "https://api.openaq.org/";
-
     // let airvisual: AirPollution = new AirPollution();
     // airvisual.websiteName = "airvisual";
-    // airvisual.server = "http://api.airvisual.com/";
+
+    let openaq: AirPollution = new AirPollution();
+    openaq.websiteName = 'openaq';
 
     // API SafeCast for ChemicalPollution
     let safeCast: ChimicalPollution = new ChimicalPollution();
-    safeCast.websiteName = "safecast";
-    safeCast.server = "https://api.safecast.org/";
+    safeCast.websiteName = 'safecast';
 
-    //Push into listApi
-    // this._listApi.push(safeCast);
-    // this._listApi.push(openaq);
-    // this._listApi.push(airvisual);
+    // API aqicn for AirPollution
+    let aqicn: AirPollution = new AirPollution();
+    aqicn.websiteName = 'aqicn';
 
-    // this._options = { lat: this.lat,lng: this.lng };
-    // this._apiService.getData("http://api.waqi.info/").toPromise().then(data => console.log(data) );
-
-    //options for safecast
-    let showMap = true;
-    let showChart = true;
-
-    this._options = { lat: this.lat, lng: this.lng, distance: 2222 };
+    //options for Safecast
+    this._options = {
+      lat: this.lat,
+      lng: this.lng,
+      typePollution: safeCast.typePollution,
+      distance: 2222,
+      showMap: true,
+      showChart: true
+    };
+    //get data for safecast
     this._apiService.getData(safeCast.websiteName, this._options).toPromise().then(
-      this.addData.bind(this, 'safecast', this._options, safeCast.typePollution, showMap, showChart)
+      this.addData.bind(this, 'safecast', this._options)
     );
 
     //options for openaq
-    this._options = { lat: this.lat, lng: this.lng, country: 'FR' };
+    this._options = {
+      lat: this.lat,
+      lng: this.lng,
+      typePollution: openaq.typePollution,
+      country: 'FR',
+      showMap: true,
+      showChart: true
+    };
+    //get data for openaq
     this._apiService.getData(openaq.websiteName, this._options).toPromise().then(
-      this.addData.bind(this, 'openaq', this._options, openaq.typePollution, showMap, showChart)
+      this.addData.bind(this, 'openaq', this._options)
     );
 
-    //this._apiService.getData(openaq.websiteName).toPromise().then(data => console.log(data));
-    // this._apiService.getData(airvisual.websiteName).toPromise().then(data => console.log(data));
+    //options for aqicn
+    this._options = {
+      lat: this.lat,
+      lng: this.lng,
+      typePollution: aqicn.typePollution,
+      showMap: true,
+      showChart: true
+    };
+    //get data for aqicn
+    this._apiService.getData(aqicn.websiteName, this._options).toPromise().then(
+      this.addData.bind(this, 'aqicn', this._options)
+    );
   }
 
-  showPageApi(api: any): void {
-    let  options;
+  showPageApi(api: any): void
+  {
+    let options;
     if(api.websiteName == 'safecast') //get all options for safecast
       options = { websiteName: api.websiteName, lat: api.options.lat, lng: api.options.lng, showMap: api.showMap,showChart: api.showChart, typePollution: api.typePollution, distance: api.options.distance };
     else if(api.websiteName == 'openaq') //get all options for openaq
       options = { websiteName: api.websiteName, lat: api.options.lat, lng: api.options.lng, showMap: api.showMap,showChart: api.showChart, typePollution: api.typePollution, country: api.options.country };
-
+    else if(api.websiteName == 'aqicn') // get all options for aqicn
+      options = { websiteName: api.websiteName, lat: api.options.lat, lng: api.options.lng, showMap: api.showMap,showChart: api.showChart, typePollution: api.typePollution};
     this._router.navigate(['/pageApi', options]);
   }
 
@@ -119,8 +135,17 @@ export class HomeComponent implements OnInit {
     window.open(link.toLowerCase(), '_blank');
   }
 
-  addData(website: string, options: any, typePollution: string,showMap: boolean,showChart: boolean, data: any): void {
-    this._apiData.push({websiteName: website, data: data,typePollution: typePollution, options: options, showMap: showMap, showChart: showChart});
+  addData(website: string, options: any, data: any): void {
+    console.log(data);
+    this._apiData.push(
+      {
+        websiteName: website,
+        data: data,
+        typePollution: options.typePollution,
+        options: options,
+        showMap: options.showMap,
+        showChart: options.showChart
+      });
   }
 
 }

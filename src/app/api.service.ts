@@ -27,6 +27,7 @@ export class ApiService {
   private _mapStyle: any = [];
   public selectedCity: string;
   public dataLocation: any = {};
+  private _token: string;
 
   constructor(private _http: Http, private _jsonp: Jsonp) {
     //TODO Commentaires de code !
@@ -40,26 +41,28 @@ export class ApiService {
       this.dataLocation = JSON.parse(localStorage['location']);
 
     //Air pollution 1
-    // let airpollution: AirPollution = new Api();
-    // airpollution.server = "http://api.waqi.info/";
-    // airpollution.api = "feed/shanghai/?token=demo";
-    // airpollution.serverWithApiUrl = airpollution.server + airpollution.api;
-    //Air quality
+    this._token = '4d786963eb8fec1329365e78bf3f9d16c1b157b9';
+    let aqicn: AirPollution = new AirPollution(this._token);
+    aqicn.websiteName = "aqicn";
+    aqicn.server = "http://api.waqi.info/";
+    aqicn.api = "feed/here/?token="+this._token;
+    aqicn.serverWithApiUrl = aqicn.server + aqicn.api;
 
+    //Air quality
     // 1) Create an ApiPollution with properties
     // 2) Add it one the _listApi
-    let airquality: AirPollution = new AirPollution();
-    airquality.websiteName = "openaq";
-    airquality.server = "https://api.openaq.org/";
-    airquality.api = "v1/latest?country=FR";
-    airquality.serverWithApiUrl = airquality.server + airquality.api;
+    let openaq: AirPollution = new AirPollution();
+    openaq.websiteName = "openaq";
+    openaq.server = "https://api.openaq.org/";
+    openaq.api = "v1/latest?country=FR";
+    openaq.serverWithApiUrl = openaq.server + openaq.api;
 
     //Air quality
-    let airvisual: AirPollution = new AirPollution();
+    this._token = 'p4grS8buAWyJy36vJ';
+    let airvisual: AirPollution = new AirPollution(this._token);
     airvisual.websiteName = "airvisual";
     airvisual.server = "http://api.airvisual.com/";
-    airvisual.key = "p4grS8buAWyJy36vJ";
-    airvisual.api = "v1/nearest?lat=" + airvisual.lat + "&lon=" + airvisual.long + "&key=" + airvisual.key;
+    airvisual.api = "v1/nearest?lat=" + airvisual.lat + "&lon=" + airvisual.long + "&key=" + airvisual.token;
     airvisual.serverWithApiUrl = airvisual.server + airvisual.api;
 
     //Chimical Pollution
@@ -72,9 +75,10 @@ export class ApiService {
     safeCast.serverWithApiUrl = safeCast.server + safeCast.api;
 
     // this._listApi.push(airpollution);
-    this._listApi.push(airquality);
+    this._listApi.push(openaq);
     this._listApi.push(airvisual);
     this._listApi.push(safeCast);
+    this._listApi.push(aqicn);
   }
 
   public getData(serverName: string, options: any = {}): Observable<any>
@@ -91,6 +95,9 @@ export class ApiService {
       //For OPENAQ
       else if(api.websiteName == serverName && serverName == 'openaq') {
         apiUrlToGet = api.server + "v1/latest?country=" + options.country;
+      }
+      else if(api.websiteName == serverName && serverName == 'aqicn') {
+        apiUrlToGet = api.serverWithApiUrl;
       }
     }
     // console.log(apiUrlToGet);
