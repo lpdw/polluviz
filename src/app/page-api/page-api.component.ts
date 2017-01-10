@@ -52,7 +52,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
       else if(params['websiteName'] == 'openaq') //options for openaq
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], country: params['country']};
       else if(params['websiteName'] == 'aqicn')
-        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution']};
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution']};
 
        //call the ApiService to fectch all data
        this._apiService.getData(params['websiteName'],this._options).toPromise().then(this.setData.bind(this));
