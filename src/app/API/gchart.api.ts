@@ -135,10 +135,13 @@ export class GChart {
       console.log(data);
       for (let result of data.results) {
           // reset the legend
+          dataResults[0][1] = result.measurements[0].lastUpdated;
           dataResults[0][1] = result.measurements[0].unit;
           for (let measurement of result.measurements) {
             let date = new Date(measurement.lastUpdated);
-              dataResults.push( [ result.city + " : " + date, measurement.value ] );
+            let fullDate = this.getFullDate(date);
+            let fullTime = this.getFullTime(date);
+            dataResults.push( [ result.city + " " + fullDate+" "+fullTime, measurement.value ] );
           }
       }
     }
@@ -167,5 +170,19 @@ export class GChart {
     }
 
     return options;
+  }
+
+  getFullDate(date: Date) {
+    let d = date.getDate();
+    let m = date.getMonth();
+    let y = date.getFullYear();
+    return d+"/"+m+"/"+y;
+  }
+
+  getFullTime(date: Date) {
+    let hh = date.getHours();
+    let mm = date.getMinutes();
+    let ss = date.getSeconds();
+    return hh+":"+mm+":"+ss;
   }
 }
