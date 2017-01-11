@@ -81,7 +81,14 @@ export class PageAPIComponent implements OnInit, OnDestroy {
 
   showGChart() {
     if(this._showChart == true)
-        this.drawGChart('LineChart',this._data);
+        //for openaq use LineChart
+        if (this._websiteName == 'openaq') {
+            this.drawGChart('LineChart', this._data);
+        }
+        else if (this._websiteName == 'aqicn') { //for openaq use PieChart
+            this.drawGChart('PieChart', this._data);
+        }
+
   }
 
   setData(data: any) {
@@ -103,19 +110,21 @@ export class PageAPIComponent implements OnInit, OnDestroy {
     return styleType;
   }
 
-  drawGChart(type: string, data: any) {
+  drawGChart(chartType: string, data: any) {
     // console.log(data);
-    //Example line chart
     let gChart: GChart = new GChart();
-    gChart.type = type;
+    gChart.type = chartType;
+
+    gChart.data = gChart.getChartData(this._websiteName, data);
 
     if(this._websiteName == 'openaq') {
-      // console.log(data.results);
-      gChart.data = gChart.getChartData(this._websiteName, data);
+        //chaque chart a ses propres options
+        gChart.options = gChart.getChartOptions(this._websiteName, data);
+    }
+    else if (this._websiteName == 'aqicn') {
+        gChart.options = gChart.getChartOptions(this._websiteName, data);
     }
 
-    //chaque chart a ses propres options
-    gChart.options = gChart.getChartOptions('LineChart', this._websiteName, data);
     this._listGChart.push({data: gChart.data, options: gChart.options, type: gChart.type});
   }
 }

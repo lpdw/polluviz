@@ -128,11 +128,11 @@ export class GChart {
 
   getChartData(websiteName: string, data: any = [])
   {
+    console.log(data);
     let dataResults = [];
     if(websiteName == 'openaq') //contruct and return data for openaq
     {
       dataResults = [ ['', 'picto'], ];
-      console.log(data);
       for (let result of data.results) {
           // reset the legend
           dataResults[0][1] = result.measurements[0].lastUpdated;
@@ -147,6 +147,14 @@ export class GChart {
     }
     else if(websiteName == 'safecast') {
       //contrcut and return data for safecast
+    }
+    else if(websiteName == 'aqicn') {
+      dataResults = [ ['', ''], ];
+      let datas = data.data.iaqi;
+      for (let data in datas) {
+        dataResults.push([data, datas[data].v]);
+          console.log(datas[data]);
+      }
     }
     return dataResults;
   }
