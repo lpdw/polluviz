@@ -18,10 +18,4 @@ export class Gmap extends Api
  
   constructor(){ super(); }
 
-  getDataForGMap(websiteName: string, data: any = []){
-    if(websiteName == 'openaq'){
-      console.log("Tu es sur SafeCast");
-    }
-  }
-
 } 
