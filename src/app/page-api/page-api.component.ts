@@ -36,7 +36,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
     this._styleMap = new StylesMap();
     this._gMap = new Gmap();
   }
-
+  
   ngOnInit()
   {
     // The PageAPI component must read the parameter,
@@ -92,11 +92,28 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   }
 
   setData(data: any) {
-    console.log(data);
+    
     this._data = data;
     this._noData = (this._data.length === 0 || this._data === 'null') ? true : false;
     this.showGmap();
     this.showGChart();
+
+    switch(this._websiteName){
+      case  'openaq' :
+        alert(`tu es sur ${this._websiteName}`)
+      break;
+      case  'safecast' :
+        alert(`tu es sur ${this._websiteName}`)
+      break;
+      case  'aqicn' :
+        alert(`tu es sur ${this._websiteName}`)
+      break;
+    }
+
+
+    if(this._websiteName == 'openaq'){
+      console.log("Tu es sur un Q");
+    }
   }
 
   isEmptyData(): boolean {

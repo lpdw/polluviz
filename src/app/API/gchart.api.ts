@@ -1,3 +1,4 @@
+import { Api } from './api.class';
 
 export class GChart {
 
@@ -128,7 +129,8 @@ export class GChart {
 
   getChartData(websiteName: string, data: any = [])
   {
-    console.log(data);
+    console.log("Your are in Gchart Component - gchart.api.ts - in line 132");
+    //console.log(data);
     let dataResults = [];
     if(websiteName == 'openaq') //contruct and return data for openaq
     {

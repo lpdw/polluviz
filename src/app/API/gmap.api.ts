@@ -11,12 +11,17 @@ export class Gmap extends Api
   public myStyleMap: any = [];
   public circleColor: string;
   public circleRadius: number;
-
+  public type: string;
+  public data: any = [];
+  public options: any;
 
  
-  constructor()
-  {
-    super();
+  constructor(){ super(); }
 
+  getDataForGMap(websiteName: string, data: any = []){
+    if(websiteName == 'openaq'){
+      console.log("Tu es sur SafeCast");
+    }
   }
+
 } 

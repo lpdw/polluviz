@@ -136,7 +136,6 @@ export class HomeComponent implements OnInit {
   }
 
   addData(website: string, options: any, data: any): void {
-    console.log(data);
     this._apiData.push(
       {
         websiteName: website,
