@@ -71,7 +71,7 @@ export class ApiService {
     let safeCast: ChimicalPollution = new ChimicalPollution();
     safeCast.websiteName = "safecast";
     safeCast.server = "https://api.safecast.org/";
-    safeCast.api = "measurements.json?distance=35&latitude=" + safeCast.lat + "&longitude=" + safeCast.long;
+    safeCast.api = "measurements.json?distance=20000&latitude=" + safeCast.lat + "&longitude=" + safeCast.long;
     safeCast.serverWithApiUrl = safeCast.server + safeCast.api;
 
     // this._listApi.push(airpollution);

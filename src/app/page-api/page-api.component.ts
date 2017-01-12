@@ -47,8 +47,9 @@ export class PageAPIComponent implements OnInit, OnDestroy {
       this._showChart = (params['showChart'] === 'true');
       this._websiteName = params['websiteName'];
       //get all params that we need depends api
-      if(params['websiteName'] == 'safecast') //options for safecast
+      if(params['websiteName'] == 'safecast')//options for safecast
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], distance: params['distance']};
+
       else if(params['websiteName'] == 'openaq') //options for openaq
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], country: params['country']};
       else if(params['websiteName'] == 'aqicn')
@@ -94,6 +95,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   setData(data: any) {
     
     this._data = data;
+    
     this._noData = (this._data.length === 0 || this._data === 'null') ? true : false;
     this.showGmap();
     this.showGChart();
