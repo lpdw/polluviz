@@ -11,12 +11,13 @@
               <!-- the main marker -->
               <sebm-google-map-marker [zIndex]="1"   [latitude]="_gMap.lat" [longitude]="_gMap.lng"  [iconUrl]="'https://cdn0.iconfinder.com/data/icons/fatcow/16/radioactivity.png'"></sebm-google-map-marker>
               <!--create a loop to display data : INSERER VARIABLE A LA PLACE DES VALEURS-->
+            
             <div *ngFor="let pos of _data">
             <sebm-google-map-circle 
                     [latitude]="pos.latitude"
                     [longitude]="pos.longitude"
-                    [radius]="100"
-                    [fillColor]="'yellow'"  
+                    [radius]="_circleRadius"
+                    [fillColor]="_circleColor"  
                     [circleDraggable]="false"
                     [editable]="false"
                     [clickable]="true"

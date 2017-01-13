@@ -30,6 +30,8 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   private _gMap: Gmap;
   private _styleMap: StylesMap;
   private _websiteName: string;
+  private _circleRadius: number;
+  private _circleColor: string;
 
   constructor( private _route: ActivatedRoute, private _apiService: ApiService)
   {
@@ -48,6 +50,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
       this._websiteName = params['websiteName'];
       //get all params that we need depends api
       if(params['websiteName'] == 'safecast')//options for safecast
+        
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], distance: params['distance']};
 
       else if(params['websiteName'] == 'openaq') //options for openaq
@@ -105,7 +108,33 @@ export class PageAPIComponent implements OnInit, OnDestroy {
         alert(`tu es sur ${this._websiteName}`)
       break;
       case  'safecast' :
-        alert(`tu es sur ${this._websiteName}`)
+        alert(`tu es sur ${this._websiteName}`);
+        let i =0;
+        for(i=0; i<this._data.length; i++){  // boucle permettant d'avoir les infos de l'objet _data
+          console.log(this._data[i]);
+          this._circleRadius = this._data[i].value*2;  // la value des points pour avoir la taille @TODO --> avec ce code mm taille partt, peut etre faire un array !
+         switch(this._circleRadius){ // switch pour couleur
+          
+          case this._circleRadius < 10,1:
+            this._circleColor = 'green';
+          break;
+          case this._circleRadius > 10 &&  this._circleRadius < 20,1:
+            this._circleColor = 'yellow';
+          break;
+          case this._circleRadius > 20 &&  this._circleRadius < 30,1:
+            this._circleColor = 'orange';
+          break;
+          case this._circleRadius > 30 &&  this._circleRadius < 40,1:
+            this._circleColor = 'red';
+          break;
+          case this._circleRadius > 40,0:
+            this._circleColor = 'black';
+          break;
+        };
+      };
+       
+       
+        
       break;
       case  'aqicn' :
         alert(`tu es sur ${this._websiteName}`)
