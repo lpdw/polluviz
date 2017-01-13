@@ -109,7 +109,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
       break;
       case  'safecast' :
       this._data[0].websiteName = this._websiteName;
-        // alert(`tu es sur ${this._websiteName}`);
+        // alert(` ${this._websiteName}`);
         console.log(this._data);
         for(var i=0; i<this._data.length; i++){  // boucle permettant d'avoir les infos de l'objet _data
               console.log(this._data[i]); 

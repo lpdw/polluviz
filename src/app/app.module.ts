@@ -5,6 +5,9 @@ import { HttpModule, JsonpModule } from '@angular/http';
 
 import { RouterModule, Routes } from '@angular/router';
 
+//From Custom Pipes
+import { OrderBy } from "./PIPES/orderBy.pipe";
+
 //Google Chart => https://www.npmjs.com/package/angular2-google-chart
 import { GoogleChart } from 'angular2-google-chart/directives/angular2-google-chart.directive';
 // Google Map
@@ -22,10 +25,9 @@ import { FooterComponent } from './footer/footer.component';
 import { TermsComponent } from './terms/terms.component';
 import { SitemapComponent } from './sitemap/sitemap.component';
 
-
-
 @NgModule({
   declarations: [
+    OrderBy,
     GoogleChart,
     AppComponent,
     MenuComponent,
