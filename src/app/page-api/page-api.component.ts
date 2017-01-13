@@ -30,7 +30,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   private _gMap: Gmap;
   private _styleMap: StylesMap;
   private _websiteName: string;
-  private _circleRadius: number;
+  private _circleRadius: number = 0 ;
   private _circleColor: string;
 
   constructor( private _route: ActivatedRoute, private _apiService: ApiService)
@@ -109,29 +109,29 @@ export class PageAPIComponent implements OnInit, OnDestroy {
       break;
       case  'safecast' :
         alert(`tu es sur ${this._websiteName}`);
-        let i =0;
-        for(i=0; i<this._data.length; i++){  // boucle permettant d'avoir les infos de l'objet _data
-          console.log(this._data[i]);
-          this._circleRadius = this._data[i].value*2;  // la value des points pour avoir la taille @TODO --> avec ce code mm taille partt, peut etre faire un array !
-         switch(this._circleRadius){ // switch pour couleur
-          
-          case this._circleRadius < 10,1:
-            this._circleColor = 'green';
-          break;
-          case this._circleRadius > 10 &&  this._circleRadius < 20,1:
-            this._circleColor = 'yellow';
-          break;
-          case this._circleRadius > 20 &&  this._circleRadius < 30,1:
-            this._circleColor = 'orange';
-          break;
-          case this._circleRadius > 30 &&  this._circleRadius < 40,1:
-            this._circleColor = 'red';
-          break;
-          case this._circleRadius > 40,0:
-            this._circleColor = 'black';
-          break;
+
+        for(var i=0; i<this._data.length; i++){  // boucle permettant d'avoir les infos de l'objet _data
+              console.log(this._data[i]); 
+              this._circleRadius = this._data[i].value*2;  // la value des points pour avoir la taille @TODO --> avec ce code mm taille partt, peut etre faire un array !
+             // this._circleColor = "yellow";/
+            if(this._circleRadius < 30){
+              this._data[i].circleRadius = this._circleRadius;
+              this._data[i].circleColor = "yellow";
+            }
+            if(this._circleRadius >= 30 && this._circleRadius < 60){
+              this._data[i].circleRadius = this._circleRadius;
+              this._data[i].circleColor = "orange";            
+            }
+            if(this._circleRadius >= 60 && this._circleRadius < 80){
+              this._data[i].circleRadius = this._circleRadius;
+              this._data[i].circleColor = "red";            
+            }
+            if(this._circleRadius >= 80 && this._circleRadius < 100){
+              this._data[i].circleRadius = this._circleRadius;
+              this._data[i].circleColor = "black";
+            }  
+              console.log(this._circleColor); 
         };
-      };
        
        
         
