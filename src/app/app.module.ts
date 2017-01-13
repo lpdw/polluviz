@@ -19,6 +19,7 @@ import { HomeComponent } from './home/home.component';
 import { PageAPIComponent } from './page-api/page-api.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FooterComponent } from './footer/footer.component';
+import { TermsComponent } from './terms/terms.component';
 
 
 
@@ -31,6 +32,7 @@ import { FooterComponent } from './footer/footer.component';
     PageAPIComponent,
     PageNotFoundComponent,
     FooterComponent,
+    TermsComponent,
   ],
   imports: [
     BrowserModule,
