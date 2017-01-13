@@ -20,6 +20,7 @@ import { PageAPIComponent } from './page-api/page-api.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FooterComponent } from './footer/footer.component';
 import { TermsComponent } from './terms/terms.component';
+import { SitemapComponent } from './sitemap/sitemap.component';
 
 
 
@@ -33,6 +34,7 @@ import { TermsComponent } from './terms/terms.component';
     PageNotFoundComponent,
     FooterComponent,
     TermsComponent,
+    SitemapComponent,
   ],
   imports: [
     BrowserModule,
