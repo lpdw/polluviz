@@ -64,10 +64,10 @@ export class ApiService {
 
     //Chimical Pollution
     //This API is opensource and didn't need api-key, this api recognize longitude and latitude
-
-    let safeCast: ChimicalPollution = new ChimicalPollution('safecast');
+    this._token = 'SH2oGvx4oSaGU59yJaAM';
+    let safeCast: ChimicalPollution = new ChimicalPollution('safecast', this._token);
     safeCast.server = "https://api.safecast.org/";
-    safeCast.api = "measurements.json?distance=99999&latitude=" + safeCast.lat + "&longitude=" + safeCast.long;
+    safeCast.api = "measurements.json";
     safeCast.serverWithApiUrl = safeCast.server + safeCast.api;
 
     // this._listApi.push(airpollution);
