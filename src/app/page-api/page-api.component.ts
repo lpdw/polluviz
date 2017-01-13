@@ -114,22 +114,34 @@ export class PageAPIComponent implements OnInit, OnDestroy {
               console.log(this._data[i]); 
               this._circleRadius = this._data[i].value*2;  // la value des points pour avoir la taille @TODO --> avec ce code mm taille partt, peut etre faire un array !
              // this._circleColor = "yellow";/
-            if(this._circleRadius < 30){
+            if(this._circleRadius < 40){
               this._data[i].circleRadius = this._circleRadius;
-              this._data[i].circleColor = "yellow";
+              this._data[i].circleColor = "lightgreen";
             }
-            if(this._circleRadius >= 30 && this._circleRadius < 60){
+            if(this._circleRadius >= 40 && this._circleRadius < 60){
+              this._data[i].circleRadius = this._circleRadius;
+              this._data[i].circleColor = "green";            
+            }
+              if(this._circleRadius >= 60 && this._circleRadius < 80){
+              this._data[i].circleRadius = this._circleRadius;
+              this._data[i].circleColor = "darkgreen";
+            }
+            if(this._circleRadius >= 80 && this._circleRadius < 90){
+              this._data[i].circleRadius = this._circleRadius;
+              this._data[i].circleColor = "yellow";            
+            }
+            if(this._circleRadius >= 90 && this._circleRadius < 110){
               this._data[i].circleRadius = this._circleRadius;
               this._data[i].circleColor = "orange";            
             }
-            if(this._circleRadius >= 60 && this._circleRadius < 80){
+            if(this._circleRadius >= 110 && this._circleRadius < 150){
               this._data[i].circleRadius = this._circleRadius;
-              this._data[i].circleColor = "red";            
+              this._data[i].circleColor = "red";
             }
-            if(this._circleRadius >= 80 && this._circleRadius < 100){
+            if(this._circleRadius >= 150){
               this._data[i].circleRadius = this._circleRadius;
               this._data[i].circleColor = "black";
-            }  
+            }
               console.log(this._circleColor); 
         };
        
