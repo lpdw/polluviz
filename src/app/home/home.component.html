@@ -11,7 +11,7 @@
     <p style="color:red">longitude : {{location.longitude}}</p>
 </div> -->
 
-<div class="container text-center">
+<div class="container text-center" *ngIf="_allApiLoaded">
   <div class="card good" *ngFor="let api of _apiData | orderBy : ['-'] " (click)="showPageApi(api)">
         {{api.websiteName}}
   </div>

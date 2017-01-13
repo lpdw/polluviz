@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
 
   private _options: any = {};
   private _apiData: Array<any> = [];
+  private _allApiLoaded: boolean = false;
   public selectedCity: string;
   public dataLocation: any = {};
 
@@ -124,6 +125,12 @@ export class HomeComponent implements OnInit {
         showMap: options.showMap,
         showChart: options.showChart
       });
+      this.showApi();
+  }
+
+  showApi() {
+    //if all API are loaded
+    this._allApiLoaded = (this._apiData.length === 3) ? true : false;
   }
 
 }
