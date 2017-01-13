@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
 
   private _options: any = {};
   private _apiData: Array<any> = [];
-  private _allApiLoaded: boolean = false;
   public selectedCity: string;
   public dataLocation: any = {};
 
@@ -51,23 +50,23 @@ export class HomeComponent implements OnInit {
     // let airvisual: AirPollution = new AirPollution();
     // airvisual.websiteName = "airvisual";
 
-    let openaq: AirPollution = new AirPollution('openaq');
+    let Openaq: AirPollution = new AirPollution('openaq');
 
-    let safeCast: ChimicalPollution = new ChimicalPollution('safecast');
+    let SafeCast: ChimicalPollution = new ChimicalPollution('safecast');
 
-    let aqicn: AirPollution = new AirPollution('aqicn');
+    let Aqicn: AirPollution = new AirPollution('aqicn');
 
     //options for Safecast
     this._options = {
       lat: this.dataLocation.latitude,
       lng: this.dataLocation.longitude,
-      typePollution: safeCast.typePollution,
+      typePollution: SafeCast.typePollution,
       distance: 2222,
       showMap: true,
       showChart: true
     };
     //get data for safecast
-    this._apiService.getData(safeCast.websiteName, this._options).toPromise().then(
+    this._apiService.getData(SafeCast.websiteName, this._options).toPromise().then(
       this.addData.bind(this, 'safecast', this._options)
     );
 
@@ -75,13 +74,13 @@ export class HomeComponent implements OnInit {
     this._options = {
       lat: this.dataLocation.latitude,
       lng: this.dataLocation.longitude,
-      typePollution: openaq.typePollution,
+      typePollution: Openaq.typePollution,
       country: 'FR',
       showMap: true,
       showChart: true
     };
     //get data for openaq
-    this._apiService.getData(openaq.websiteName, this._options).toPromise().then(
+    this._apiService.getData(Openaq.websiteName, this._options).toPromise().then(
       this.addData.bind(this, 'openaq', this._options)
     );
 
@@ -89,12 +88,12 @@ export class HomeComponent implements OnInit {
     this._options = {
       lat: this.dataLocation.latitude,
       lng: this.dataLocation.longitude,
-      typePollution: aqicn.typePollution,
+      typePollution: Aqicn.typePollution,
       showMap: true,
       showChart: true
     };
     //get data for aqicn
-    this._apiService.getData(aqicn.websiteName, this._options).toPromise().then(
+    this._apiService.getData(Aqicn.websiteName, this._options).toPromise().then(
       this.addData.bind(this, 'aqicn', this._options)
     );
   }
@@ -125,12 +124,5 @@ export class HomeComponent implements OnInit {
         showMap: options.showMap,
         showChart: options.showChart
       });
-      this.showApi();
   }
-
-  showApi() {
-    //if all API are loaded
-    this._allApiLoaded = (this._apiData.length === 3) ? true : false;
-  }
-
 }
