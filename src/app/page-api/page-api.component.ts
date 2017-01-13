@@ -38,7 +38,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
     this._styleMap = new StylesMap();
     this._gMap = new Gmap();
   }
-  
+
   ngOnInit()
   {
     // The PageAPI component must read the parameter,
@@ -50,9 +50,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
       this._websiteName = params['websiteName'];
       //get all params that we need depends api
       if(params['websiteName'] == 'safecast')//options for safecast
-        
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], distance: params['distance']};
-
       else if(params['websiteName'] == 'openaq') //options for openaq
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], country: params['country']};
       else if(params['websiteName'] == 'aqicn')
@@ -96,9 +94,9 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   }
 
   setData(data: any) {
-    
+
     this._data = data;
-    
+
     this._noData = (this._data.length === 0 || this._data === 'null') ? true : false;
     this.showGmap();
     this.showGChart();
@@ -112,7 +110,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
         // alert(` ${this._websiteName}`);
         console.log(this._data);
         for(var i=0; i<this._data.length; i++){  // boucle permettant d'avoir les infos de l'objet _data
-              console.log(this._data[i]); 
+              console.log(this._data[i]);
               this._circleRadius = this._data[i].value;  // la value des points pour avoir la taille @TODO --> avec ce code mm taille partt, peut etre faire un array !
              // this._circleColor = "yellow";/
             if(this._circleRadius < 40){
@@ -121,7 +119,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
             }
             if(this._circleRadius >= 40 && this._circleRadius < 60){
               this._data[i].circleRadius = this._circleRadius;
-              this._data[i].circleColor = "green";            
+              this._data[i].circleColor = "green";
             }
               if(this._circleRadius >= 60 && this._circleRadius < 80){
               this._data[i].circleRadius = this._circleRadius;
@@ -129,11 +127,11 @@ export class PageAPIComponent implements OnInit, OnDestroy {
             }
             if(this._circleRadius >= 80 && this._circleRadius < 90){
               this._data[i].circleRadius = this._circleRadius;
-              this._data[i].circleColor = "yellow";            
+              this._data[i].circleColor = "yellow";
             }
             if(this._circleRadius >= 90 && this._circleRadius < 110){
               this._data[i].circleRadius = this._circleRadius;
-              this._data[i].circleColor = "orange";            
+              this._data[i].circleColor = "orange";
             }
             if(this._circleRadius >= 110 && this._circleRadius < 150){
               this._data[i].circleRadius = this._circleRadius;
@@ -144,9 +142,9 @@ export class PageAPIComponent implements OnInit, OnDestroy {
               this._data[i].circleColor = "black";
             }
         };
-       
-       
-        
+
+
+
       break;
       case  'aqicn' :
         // alert(`tu es sur ${this._websiteName}`)
