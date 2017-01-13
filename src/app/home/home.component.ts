@@ -1,5 +1,3 @@
-import { LatLng } from 'angular2-google-maps/core';
-import { flatten } from '@angular/router/src/utils/collection';
 //From angular
 import { Component, OnInit, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -25,7 +23,6 @@ import {Location} from '../ng2-location/location-interface';
 
 export class HomeComponent implements OnInit {
 
-  public errorMessage: string;
   private _options: any = {};
   private _optionsLocation: any = {};
   private _apiData: Array<any> = [];
