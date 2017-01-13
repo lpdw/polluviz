@@ -87,10 +87,10 @@ export class PageAPIComponent implements OnInit, OnDestroy {
     if(this._showChart == true)
         //for openaq use LineChart
         if (this._websiteName == 'openaq') {
-            this.drawGChart('LineChart', this._data);
+            this.drawGChart('LineChart',this._data);
         }
         else if (this._websiteName == 'aqicn') { //for openaq use PieChart
-            this.drawGChart('PieChart', this._data);
+            this.drawGChart('PieChart',this._data);
         }
 
   }

@@ -1,12 +1,16 @@
-
 .twitter {
-  padding-left: 80%;
-  // position: fixed;
-  // bottom: 20px;
-  opacity: 0.5;
+  float: right;
+}
+.link-footer {
+  opacity: 0.7;
   transition: 0.3s;
 }
-.twitter:hover {
+.link-footer:hover {
   opacity: 1;
   transition: 0.3s;
+}
+
+a {
+  color: white;
+  text-decoration: none;
 }
