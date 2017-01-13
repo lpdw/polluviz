@@ -152,7 +152,7 @@ export class GChart {
       dataResults = [ ['', ''], ];
       let datas = data.data.iaqi;
       for (let data in datas) {
-        dataResults.push([data, datas[data].v]);
+        dataResults.push([data, datas[data].v])
           console.log(datas[data]);
       }
     }
