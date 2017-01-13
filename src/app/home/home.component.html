@@ -1,18 +1,5 @@
-<!-- <p> -->
-   <!-- data venant de <button (click)="redirectToExternalLink('http://aqicn.org')">aqicn</button> -->
-<!-- </p> -->
-
-<!-- <p>
-  data provenant de <button (click)="redirectToExternalLink('https://openaq.org')">openaq</button>
-</p> -->
-
-<!-- <div>
-    <p style="color:red">latitude : {{location.latitude}}</p>
-    <p style="color:red">longitude : {{location.longitude}}</p>
-</div> -->
-
-<div class="container text-center" *ngIf="_allApiLoaded">
-  <div class="card good" *ngFor="let api of _apiData | orderBy : ['-'] " (click)="showPageApi(api)">
+<div class="container text-center" *ngIf="_apiData.length === 3">
+  <div class="card good" *ngFor="let api of _apiData | orderBy : ['websiteName'] " (click)="showPageApi(api)">
         {{api.websiteName}}
   </div>
 </div>
