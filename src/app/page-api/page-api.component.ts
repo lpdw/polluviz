@@ -30,13 +30,15 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   private _gMap: Gmap;
   private _styleMap: StylesMap;
   private _websiteName: string;
+  private _circleRadius: number = 0 ;
+  private _circleColor: string;
 
   constructor( private _route: ActivatedRoute, private _apiService: ApiService)
   {
     this._styleMap = new StylesMap();
     this._gMap = new Gmap();
   }
-
+  
   ngOnInit()
   {
     // The PageAPI component must read the parameter,
@@ -47,8 +49,10 @@ export class PageAPIComponent implements OnInit, OnDestroy {
       this._showChart = (params['showChart'] === 'true');
       this._websiteName = params['websiteName'];
       //get all params that we need depends api
-      if(params['websiteName'] == 'safecast') //options for safecast
+      if(params['websiteName'] == 'safecast')//options for safecast
+        
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], distance: params['distance']};
+
       else if(params['websiteName'] == 'openaq') //options for openaq
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], country: params['country']};
       else if(params['websiteName'] == 'aqicn')
@@ -92,11 +96,67 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   }
 
   setData(data: any) {
-    console.log(data);
+    
     this._data = data;
+    
     this._noData = (this._data.length === 0 || this._data === 'null') ? true : false;
     this.showGmap();
     this.showGChart();
+
+    switch(this._websiteName){
+      case  'openaq' :
+        alert(`tu es sur ${this._websiteName}`)
+      break;
+      case  'safecast' :
+        alert(`tu es sur ${this._websiteName}`);
+
+        for(var i=0; i<this._data.length; i++){  // boucle permettant d'avoir les infos de l'objet _data
+              console.log(this._data[i]); 
+              this._circleRadius = this._data[i].value*2;  // la value des points pour avoir la taille @TODO --> avec ce code mm taille partt, peut etre faire un array !
+             // this._circleColor = "yellow";/
+            if(this._circleRadius < 40){
+              this._data[i].circleRadius = this._circleRadius;
+              this._data[i].circleColor = "lightgreen";
+            }
+            if(this._circleRadius >= 40 && this._circleRadius < 60){
+              this._data[i].circleRadius = this._circleRadius;
+              this._data[i].circleColor = "green";            
+            }
+              if(this._circleRadius >= 60 && this._circleRadius < 80){
+              this._data[i].circleRadius = this._circleRadius;
+              this._data[i].circleColor = "darkgreen";
+            }
+            if(this._circleRadius >= 80 && this._circleRadius < 90){
+              this._data[i].circleRadius = this._circleRadius;
+              this._data[i].circleColor = "yellow";            
+            }
+            if(this._circleRadius >= 90 && this._circleRadius < 110){
+              this._data[i].circleRadius = this._circleRadius;
+              this._data[i].circleColor = "orange";            
+            }
+            if(this._circleRadius >= 110 && this._circleRadius < 150){
+              this._data[i].circleRadius = this._circleRadius;
+              this._data[i].circleColor = "red";
+            }
+            if(this._circleRadius >= 150){
+              this._data[i].circleRadius = this._circleRadius;
+              this._data[i].circleColor = "black";
+            }
+              console.log(this._circleColor); 
+        };
+       
+       
+        
+      break;
+      case  'aqicn' :
+        alert(`tu es sur ${this._websiteName}`)
+      break;
+    }
+
+
+    if(this._websiteName == 'openaq'){
+      console.log("Tu es sur un Q");
+    }
   }
 
   isEmptyData(): boolean {
