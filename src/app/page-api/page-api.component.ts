@@ -87,10 +87,10 @@ export class PageAPIComponent implements OnInit, OnDestroy {
     if(this._showChart == true)
         //for openaq use LineChart
         if (this._websiteName == 'openaq') {
-            this.drawGChart('LineChart', this._data);
+            this.drawGChart('LineChart',this._data);
         }
         else if (this._websiteName == 'aqicn') { //for openaq use PieChart
-            this.drawGChart('PieChart', this._data);
+            this.drawGChart('PieChart',this._data);
         }
 
   }
@@ -105,14 +105,15 @@ export class PageAPIComponent implements OnInit, OnDestroy {
 
     switch(this._websiteName){
       case  'openaq' :
-        alert(`tu es sur ${this._websiteName}`)
+        // alert(`tu es sur ${this._websiteName}`)
       break;
       case  'safecast' :
-        alert(`tu es sur ${this._websiteName}`);
-
+      this._data[0].websiteName = this._websiteName;
+        // alert(` ${this._websiteName}`);
+        console.log(this._data);
         for(var i=0; i<this._data.length; i++){  // boucle permettant d'avoir les infos de l'objet _data
               console.log(this._data[i]); 
-              this._circleRadius = this._data[i].value*2;  // la value des points pour avoir la taille @TODO --> avec ce code mm taille partt, peut etre faire un array !
+              this._circleRadius = this._data[i].value;  // la value des points pour avoir la taille @TODO --> avec ce code mm taille partt, peut etre faire un array !
              // this._circleColor = "yellow";/
             if(this._circleRadius < 40){
               this._data[i].circleRadius = this._circleRadius;
@@ -142,14 +143,13 @@ export class PageAPIComponent implements OnInit, OnDestroy {
               this._data[i].circleRadius = this._circleRadius;
               this._data[i].circleColor = "black";
             }
-              console.log(this._circleColor); 
         };
        
        
         
       break;
       case  'aqicn' :
-        alert(`tu es sur ${this._websiteName}`)
+        // alert(`tu es sur ${this._websiteName}`)
       break;
     }
 

@@ -6,12 +6,12 @@
       <div *ngIf="!isEmptyData()" class="good">
         <!-- <p>show the map : <b>{{_options.showMap}}</b></p>
           <p>data empty : <b>{{isEmptyData()}}</b></p> -->
-        <div *ngIf="_options.showMap">
+        <div *ngIf="_options.showMap"> 
           <sebm-google-map   [latitude]="_gMap.lat" [longitude]="_gMap.lng" [streetViewControl]="false"  [styles]="getStyleMap(_options.typePollution)">
               <!-- the main marker -->
               <sebm-google-map-marker [zIndex]="1"   [latitude]="_gMap.lat" [longitude]="_gMap.lng"  [iconUrl]="'https://cdn0.iconfinder.com/data/icons/fatcow/16/radioactivity.png'"></sebm-google-map-marker>
               <!--create a loop to display data : INSERER VARIABLE A LA PLACE DES VALEURS-->
-            
+            <div *ngIf='_websiteName=== "safecast" '> 
             <div *ngFor="let pos of _data">
             <sebm-google-map-circle 
                     [latitude]="pos.latitude"
@@ -22,9 +22,10 @@
                     [editable]="false"
                     [clickable]="true"
                     [strokeColor]="red"
-                    [fillOpacity]="1.0"
+                    [fillOpacity]="0.6"
                   >
                   </sebm-google-map-circle> 
+            </div>
             </div>
           </sebm-google-map>
           </div>

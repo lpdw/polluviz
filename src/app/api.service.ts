@@ -107,6 +107,7 @@ export class ApiService {
   private extractData(response: Response) {
     // extract data from the API website and parse it to json
     let body = response.json();
+    console.log(body);
     return body || {};
   }
 
