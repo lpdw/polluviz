@@ -42,8 +42,7 @@ export class ApiService {
 
     //Air pollution 1
     this._token = '4d786963eb8fec1329365e78bf3f9d16c1b157b9';
-    let aqicn: AirPollution = new AirPollution(this._token);
-    aqicn.websiteName = "aqicn";
+    let aqicn: AirPollution = new AirPollution('aqicn', this._token);
     aqicn.server = "http://api.waqi.info/";
     aqicn.api = "feed/here/?token="+this._token;
     aqicn.serverWithApiUrl = aqicn.server + aqicn.api;
@@ -51,16 +50,14 @@ export class ApiService {
     //Air quality
     // 1) Create an ApiPollution with properties
     // 2) Add it one the _listApi
-    let openaq: AirPollution = new AirPollution();
-    openaq.websiteName = "openaq";
+    let openaq: AirPollution = new AirPollution('openaq');
     openaq.server = "https://api.openaq.org/";
     openaq.api = "v1/latest?country=FR";
     openaq.serverWithApiUrl = openaq.server + openaq.api;
 
     //Air quality
     this._token = 'p4grS8buAWyJy36vJ';
-    let airvisual: AirPollution = new AirPollution(this._token);
-    airvisual.websiteName = "airvisual";
+    let airvisual: AirPollution = new AirPollution('airvisual', this._token);
     airvisual.server = "http://api.airvisual.com/";
     airvisual.api = "v1/nearest?lat=" + airvisual.lat + "&lon=" + airvisual.long + "&key=" + airvisual.token;
     airvisual.serverWithApiUrl = airvisual.server + airvisual.api;
@@ -68,8 +65,7 @@ export class ApiService {
     //Chimical Pollution
     //This API is opensource and didn't need api-key, this api recognize longitude and latitude
 
-    let safeCast: ChimicalPollution = new ChimicalPollution();
-    safeCast.websiteName = "safecast";
+    let safeCast: ChimicalPollution = new ChimicalPollution('safecast');
     safeCast.server = "https://api.safecast.org/";
     safeCast.api = "measurements.json?distance=99999&latitude=" + safeCast.lat + "&longitude=" + safeCast.long;
     safeCast.serverWithApiUrl = safeCast.server + safeCast.api;
@@ -107,6 +103,7 @@ export class ApiService {
   private extractData(response: Response) {
     // extract data from the API website and parse it to json
     let body = response.json();
+    console.log(body);
     return body || {};
   }
 

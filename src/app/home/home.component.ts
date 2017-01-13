@@ -24,12 +24,9 @@ import {Location} from '../ng2-location/location-interface';
 export class HomeComponent implements OnInit {
 
   private _options: any = {};
-  private _optionsLocation: any = {};
   private _apiData: Array<any> = [];
   public selectedCity: string;
   public dataLocation: any = {};
-  private lat: number;
-  private lng: number;
 
   constructor(private _apiService: ApiService, private _router: Router, private _ngLocation: nglocationService) {
 
@@ -49,35 +46,20 @@ export class HomeComponent implements OnInit {
     this.selectedCity = localStorage.getItem('city');
     this.dataLocation = JSON.parse(localStorage['location']);
 
-    this.lat = this.dataLocation.latitude;
-    this.lng = this.dataLocation.longitude;
-    // Set the options for the geolocation
-    this._optionsLocation = {
-      enableHighAccuracy: true, //Gets a more accurate position via GPS
-      timeout: 5000, //Duration before return to error function
-      maximumAge: 0  // Duration of the caching of the current position,  if maximumAge: 0 then the position will never come from the cache, it will always be renewed
-    }
-
-
-    //TOUS LES API QUI SERONT CHARGE DE BASE
+    //Load all API that we need
     // let airvisual: AirPollution = new AirPollution();
     // airvisual.websiteName = "airvisual";
 
-    let openaq: AirPollution = new AirPollution();
-    openaq.websiteName = 'openaq';
+    let openaq: AirPollution = new AirPollution('openaq');
 
-    // API SafeCast for ChemicalPollution
-    let safeCast: ChimicalPollution = new ChimicalPollution();
-    safeCast.websiteName = 'safecast';
+    let safeCast: ChimicalPollution = new ChimicalPollution('safecast');
 
-    // API aqicn for AirPollution
-    let aqicn: AirPollution = new AirPollution();
-    aqicn.websiteName = 'aqicn';
+    let aqicn: AirPollution = new AirPollution('aqicn');
 
     //options for Safecast
     this._options = {
-      lat: this.lat,
-      lng: this.lng,
+      lat: this.dataLocation.latitude,
+      lng: this.dataLocation.longitude,
       typePollution: safeCast.typePollution,
       distance: 2222,
       showMap: true,
@@ -90,8 +72,8 @@ export class HomeComponent implements OnInit {
 
     //options for openaq
     this._options = {
-      lat: this.lat,
-      lng: this.lng,
+      lat: this.dataLocation.latitude,
+      lng: this.dataLocation.longitude,
       typePollution: openaq.typePollution,
       country: 'FR',
       showMap: true,
@@ -104,8 +86,8 @@ export class HomeComponent implements OnInit {
 
     //options for aqicn
     this._options = {
-      lat: this.lat,
-      lng: this.lng,
+      lat: this.dataLocation.latitude,
+      lng: this.dataLocation.longitude,
       typePollution: aqicn.typePollution,
       showMap: true,
       showChart: true

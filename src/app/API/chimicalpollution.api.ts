@@ -6,11 +6,13 @@ export class ChimicalPollution extends Api
   public long: number;
   public mapStyle: any;
 
-  constructor(token? : string)
+  constructor(websiteName?: string, token? : string)
   {
     super();
+    this.websiteName = websiteName;
     this.typeApi = 'Chimical Pollution';
     this.typePollution= 'chimical';
+    this.token = token;
   }
 
 }

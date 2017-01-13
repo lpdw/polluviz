@@ -7,8 +7,9 @@ export class AirPollution extends Api
   public mapStyle: any;
 
   //le token est optionnel
-  constructor(token? : string) {
+  constructor(websiteName?: string, token? : string) {
     super();
+    this.websiteName = websiteName;
     this.typeApi = "Air pollution";
     this.typePollution = 'air';
     this.token = token;
