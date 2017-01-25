@@ -1,5 +1,6 @@
 //From angular
 import { Component, OnInit, Injectable } from '@angular/core';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 //From our project
@@ -17,9 +18,11 @@ import {Location} from '../ng2-location/location-interface';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  providers: [ApiService, nglocationService]
+  providers: [ApiService, nglocationService],
 })
 export class HomeComponent implements OnInit {
+
+  public searchControl: FormControl;
 
   private _options: any = {};
   private _apiData: Array<any> = [];
@@ -28,10 +31,13 @@ export class HomeComponent implements OnInit {
 
   constructor(private _apiService: ApiService, private _router: Router, private _ngLocation: nglocationService) {
 
+    this.searchControl = new FormControl();
+    this.searchControl.setValue('');
+
     //See manual function for more details.
      _ngLocation.getCitydata();
 
-     //Emitter is used for retrieve city information / Exist or not
+    //Emitter is used for retrieve city information / Exist or not
     EmitterService.get("selectedCity").subscribe(data => {
       this.selectedCity = data;
       localStorage.setItem('city', this.selectedCity);
@@ -49,9 +55,7 @@ export class HomeComponent implements OnInit {
     // airvisual.websiteName = "airvisual";
 
     let Openaq: AirPollution = new AirPollution('openaq');
-
     let SafeCast: ChimicalPollution = new ChimicalPollution('safecast');
-
     let Aqicn: AirPollution = new AirPollution('aqicn');
 
     //options for Safecast
@@ -97,6 +101,11 @@ export class HomeComponent implements OnInit {
     this._apiService.getData(Aqicn.websiteName, this._options).toPromise().then(
       this.addData.bind(this, this._options)
     );
+  }
+
+  onSubmit(data: any) {
+    let city = data._value.toLowerCase();
+    // get Location data from the city  
   }
 
   showPageApi(api: any): void {

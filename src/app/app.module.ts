@@ -50,6 +50,7 @@ import { SitemapComponent } from './sitemap/sitemap.component';
       apiKey: 'AIzaSyDSqwfOb2E4Elg0kuyK_ZVVgEmfG2UDEMM'
     }),
     AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,3 +1,10 @@
+
+
+<form (ngSubmit)="onSubmit(searchControl)">
+  <input type="text" [formControl]="searchControl" placeholder="city" style="margin-left:2em">
+  <input type="submit">
+</form>
+
 <div class="container text-center" *ngIf="_apiData.length === 3">
   <div class="card good" *ngFor="let api of _apiData | orderBy : ['websiteName'] " (click)="showPageApi(api)">
         {{api.websiteName}}
