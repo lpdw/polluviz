@@ -4,10 +4,8 @@
 
       <!-- Show Google Maps if params show = true and data are not empty -->
       <div *ngIf="!isEmptyData()" class="good">
-        <!-- <p>show the map : <b>{{_options.showMap}}</b></p>
-          <p>data empty : <b>{{isEmptyData()}}</b></p> -->
         <div *ngIf="_options.showMap">
-          <sebm-google-map   [latitude]="_gMap.lat" [longitude]="_gMap.lng" [streetViewControl]="false"  [styles]="getStyleMap(_options.typePollution)">
+          <sebm-google-map  [latitude]="_gMap.lat" [longitude]="_gMap.lng" [streetViewControl]="false"  [styles]="getStyleMap(_options.typePollution)">
               <!-- the main marker -->
               <sebm-google-map-marker [zIndex]="1"   [latitude]="_gMap.lat" [longitude]="_gMap.lng"  [iconUrl]="'https://cdn0.iconfinder.com/data/icons/fatcow/16/radioactivity.png'"></sebm-google-map-marker>
               <!--create a loop to display data : INSERER VARIABLE A LA PLACE DES VALEURS-->
@@ -23,8 +21,7 @@
                       [editable]="false"
                       [clickable]="true"
                       [strokeColor]="red"
-                      [fillOpacity]="0.6"
-                    >
+                      [fillOpacity]="0.6">
                   </sebm-google-map-circle>
               </div>
             </div>
@@ -33,6 +30,16 @@
       </div>
 <div class="container">
   <h1>Titre {{ title }}</h1>
+  <div *ngIf="_websiteName == 'aqicn' ">
+    <ul>
+      <li>co   : Monoxyde de carbone</li>
+      <li>h    : Hydrogène</li>
+      <li>no2  : Dioxyde d'azote</li>
+      <li>p    : Phosphore </li>
+      <li>pm10 : Particule Matter <a href="http://www.notre-planete.info/environnement/pollution_air/particules-fines.php#pm10">en savoir plus</a></li>
+      <li>pm25 : Particule Matter <a href="http://www.notre-planete.info/environnement/pollution_air/particules-fines.php#pm25">en savoir plus</a></li>
+    </ul>
+  </div>
   <!-- <p>show the map : <b>{{_options.showMap}}</b></p>
   <p>data empty : <b>{{isEmptyData()}}</b></p> -->
 
