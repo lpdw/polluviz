@@ -8,6 +8,8 @@ import { Api } from '../API/api.class';
 import { ApiService } from '../api.service';
 import { AirPollution } from '../API/airpollution.api';
 import { ChimicalPollution } from '../API/chimicalpollution.api';
+import { Weather } from '../API/weather.api'; //TRYHARD
+
 //Geolocation component
 import { EmitterService } from '../ng2-location/browser-location'
 import { nglocationService } from '../ng2-location/browser-location-service';
@@ -57,6 +59,7 @@ export class HomeComponent implements OnInit {
     let Openaq: AirPollution = new AirPollution('openaq');
     let SafeCast: ChimicalPollution = new ChimicalPollution('safecast');
     let Aqicn: AirPollution = new AirPollution('aqicn');
+    let MyWeather: Weather = new Weather('weather'); //TRYHARD
 
     //options for Safecast
     this._options = {
@@ -101,11 +104,25 @@ export class HomeComponent implements OnInit {
     this._apiService.getData(Aqicn.websiteName, this._options).toPromise().then(
       this.addData.bind(this, this._options)
     );
+
+    //options for weather TRYHARD
+    this._options = {
+      websiteName: 'weather',
+      lat: this.location.latitude,
+      lng: this.location.longitude,
+      typePollution: MyWeather.typePollution,
+      //showMap: true,
+      //showChart: true
+    };
+    //get data for weather
+    this._apiService.getData(MyWeather.websiteName, this._options).toPromise().then(
+      this.addData.bind(this, this._options)
+    );
   }
 
   onSubmit(data: any) {
     let city = data._value.toLowerCase();
-    // get Location data from the city  
+    // get Location data from the city
   }
 
   showPageApi(api: any): void {

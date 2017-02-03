@@ -14,6 +14,7 @@ import 'rxjs/add/observable/throw';
 import { Api } from './API/api.class';
 import { AirPollution } from './API/airpollution.api';
 import { ChimicalPollution } from './API/chimicalpollution.api';
+import { Weather } from './API/weather.api'; //TRYHARD
 
 //Geolocation component
 import { EmitterService } from './ng2-location/browser-location'
@@ -70,11 +71,19 @@ export class ApiService {
     safeCast.api = "measurements.json";
     safeCast.serverWithApiUrl = safeCast.server + safeCast.api;
 
+    //Weather
+    this._token = '691ec3376cb82530f3cd25ce9a1d1936';
+    let weather: Weather = new Weather('weather', this._token);
+    weather.server = "http://api.openweathermap.org/";
+    weather.api = "data/2.5/weather?lat=" + weather.lat + "&lon=" + weather.long + "&appid=" + weather.token;
+    weather.serverWithApiUrl = weather.server + weather.api;
+
     // this._listApi.push(airpollution);
     this._listApi.push(openaq);
     this._listApi.push(airvisual);
     this._listApi.push(safeCast);
     this._listApi.push(aqicn);
+    this._listApi.push(weather); //TRYHARD
   }
 
   public getData(serverName: string, options: any = {}): Observable<any>
@@ -90,6 +99,10 @@ export class ApiService {
       }
       //For OPENAQ
       else if(api.websiteName == serverName && serverName == 'openaq') {
+        apiUrlToGet = api.server + "v1/latest?country=" + options.country;
+      }
+      //For WEATHER TRYHARD
+      else if(api.websiteName == serverName && serverName == 'weather') {
         apiUrlToGet = api.server + "v1/latest?country=" + options.country;
       }
       else if(api.websiteName == serverName && serverName == 'aqicn') {

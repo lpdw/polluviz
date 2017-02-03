@@ -1,7 +1,6 @@
 
 
-export class Api
-{
+export class Api {
     public typeApi: string;
     public server: string;
     public api: string;

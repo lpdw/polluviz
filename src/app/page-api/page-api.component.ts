@@ -8,6 +8,7 @@ import { Api } from '../API/api.class';
 import { StylesMap } from '../API/styles.api';
 import { ApiService } from '../api.service';
 import { AirPollution } from '../API/airpollution.api';
+import { Weather } from '../API/weather.api'; //TRYHARD
 import { Gmap } from '../API/gmap.api';
 import { GChart} from '../API/gchart.api';
 
@@ -55,6 +56,8 @@ export class PageAPIComponent implements OnInit, OnDestroy {
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], country: params['country']};
       else if(params['websiteName'] == 'aqicn')
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution']};
+      else if(params['websiteName'] == 'weather') //options for weather TRYHARD
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], country: params['country']};
 
        //call the ApiService to fectch all data
        this._apiService.getData(params['websiteName'],this._options).toPromise().then(this.setData.bind(this));
@@ -106,45 +109,44 @@ export class PageAPIComponent implements OnInit, OnDestroy {
         // alert(`tu es sur ${this._websiteName}`)
       break;
       case  'safecast' :
-      this._data[0].websiteName = this._websiteName;
+        this._data[0].websiteName = this._websiteName;
         // alert(` ${this._websiteName}`);
         console.log(this._data);
-        for(var i=0; i<this._data.length; i++){  // boucle permettant d'avoir les infos de l'objet _data
-              console.log(this._data[i]);
-              this._circleRadius = this._data[i].value;  // la value des points pour avoir la taille @TODO --> avec ce code mm taille partt, peut etre faire un array !
-             // this._circleColor = "yellow";/
-            if(this._circleRadius < 40){
-              this._data[i].circleRadius = this._circleRadius;
-              this._data[i].circleColor = "lightgreen";
-            }
-            if(this._circleRadius >= 40 && this._circleRadius < 60){
-              this._data[i].circleRadius = this._circleRadius;
-              this._data[i].circleColor = "green";
-            }
-              if(this._circleRadius >= 60 && this._circleRadius < 80){
-              this._data[i].circleRadius = this._circleRadius;
-              this._data[i].circleColor = "darkgreen";
-            }
-            if(this._circleRadius >= 80 && this._circleRadius < 90){
-              this._data[i].circleRadius = this._circleRadius;
-              this._data[i].circleColor = "yellow";
-            }
-            if(this._circleRadius >= 90 && this._circleRadius < 110){
-              this._data[i].circleRadius = this._circleRadius;
-              this._data[i].circleColor = "orange";
-            }
-            if(this._circleRadius >= 110 && this._circleRadius < 150){
-              this._data[i].circleRadius = this._circleRadius;
-              this._data[i].circleColor = "red";
-            }
-            if(this._circleRadius >= 150){
-              this._data[i].circleRadius = this._circleRadius;
-              this._data[i].circleColor = "black";
-            }
+        for(var i=0; i<this._data.length; i++)
+        {
+          // boucle permettant d'avoir les infos de l'objet _data
+          console.log(this._data[i]);
+          this._circleRadius = this._data[i].value;  // la value des points pour avoir la taille @TODO --> avec ce code mm taille partt, peut etre faire un array !
+         // this._circleColor = "yellow";/
+          if(this._circleRadius < 40){
+            this._data[i].circleRadius = this._circleRadius;
+            this._data[i].circleColor = "lightgreen";
+          }
+          if(this._circleRadius >= 40 && this._circleRadius < 60){
+            this._data[i].circleRadius = this._circleRadius;
+            this._data[i].circleColor = "green";
+          }
+            if(this._circleRadius >= 60 && this._circleRadius < 80){
+            this._data[i].circleRadius = this._circleRadius;
+            this._data[i].circleColor = "darkgreen";
+          }
+          if(this._circleRadius >= 80 && this._circleRadius < 90){
+            this._data[i].circleRadius = this._circleRadius;
+            this._data[i].circleColor = "yellow";
+          }
+          if(this._circleRadius >= 90 && this._circleRadius < 110){
+            this._data[i].circleRadius = this._circleRadius;
+            this._data[i].circleColor = "orange";
+          }
+          if(this._circleRadius >= 110 && this._circleRadius < 150){
+            this._data[i].circleRadius = this._circleRadius;
+            this._data[i].circleColor = "red";
+          }
+          if(this._circleRadius >= 150){
+            this._data[i].circleRadius = this._circleRadius;
+            this._data[i].circleColor = "black";
+          }
         };
-
-
-
       break;
       case  'aqicn' :
         // alert(`tu es sur ${this._websiteName}`)
@@ -182,6 +184,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
     else if (this._websiteName == 'aqicn') {
         gChart.options = gChart.getChartOptions(this._websiteName, data);
     }
+
 
     this._listGChart.push({data: gChart.data, options: gChart.options, type: gChart.type});
   }
