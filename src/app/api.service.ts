@@ -16,30 +16,14 @@ import { AirPollution } from './API/airpollution.api';
 import { ChimicalPollution } from './API/chimicalpollution.api';
 import { Weather } from './API/weather.api'; //TRYHARD
 
-//Geolocation component
-import { EmitterService } from './ng2-location/browser-location'
-import { nglocationService } from './ng2-location/browser-location-service';
-import {EventEmitter} from '@angular/core';
-import {Location} from './ng2-location/location-interface';
-
 @Injectable()
 export class ApiService {
   private _listApi: Array<Api> = [];
   private _mapStyle: any = [];
-  public selectedCity: string;
-  public dataLocation: any = {};
+  public location: any = {};
   private _token: string;
 
   constructor(private _http: Http, private _jsonp: Jsonp) {
-    //TODO Commentaires de code !
-     //Emitter is used for retrieve city information / Exist or not
-    EmitterService.get("selectedCity").subscribe(data => {
-      this.selectedCity = data;
-      localStorage.setItem('city', this.selectedCity);
-    });
-
-      this.selectedCity = localStorage.getItem('city');
-      this.dataLocation = JSON.parse(localStorage['location']);
 
     //Air pollution 1
     this._token = '4d786963eb8fec1329365e78bf3f9d16c1b157b9';

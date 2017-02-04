@@ -9,5 +9,11 @@ export class Api {
     public typePollution: string;
     public token: string;
 
+    public options: any = {};
+
     constructor() { }
+
+    setOptions(options: any) {
+      this.options = options
+    }
 }

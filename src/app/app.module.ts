@@ -26,6 +26,9 @@ import { AboutComponent } from './about/about.component';
 import { TermsComponent } from './terms/terms.component';
 import { SitemapComponent } from './sitemap/sitemap.component';
 
+//Providers
+import { GeolocationService } from '../providers/geolocation/geolocation.service';
+
 @NgModule({
   declarations: [
     OrderBy,
@@ -52,7 +55,7 @@ import { SitemapComponent } from './sitemap/sitemap.component';
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [GeolocationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

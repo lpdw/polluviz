@@ -11,46 +11,40 @@ import { ChimicalPollution } from '../API/chimicalpollution.api';
 import { Weather } from '../API/weather.api'; //TRYHARD
 
 //Geolocation component
-import { EmitterService } from '../ng2-location/browser-location'
-import { nglocationService } from '../ng2-location/browser-location-service';
-import {EventEmitter} from '@angular/core';
-import {Location} from '../ng2-location/location-interface';
+import { GeolocationService } from '../../providers/geolocation/geolocation.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  providers: [ApiService, nglocationService],
+  providers: [ApiService]
 })
 export class HomeComponent implements OnInit {
 
   public searchControl: FormControl;
+  public location: any = {}
+  public listApi: Array<Api>;
 
   private _options: any = {};
   private _apiData: Array<any> = [];
-  public selectedCity: string;
-  public location: any = {};
 
-  constructor(private _apiService: ApiService, private _router: Router, private _ngLocation: nglocationService) {
-
+  constructor
+  (
+    private _apiService: ApiService,
+    private _router: Router,
+    private _geolocationService: GeolocationService,
+    // private _ngLocation: nglocationService
+  )
+  {
     this.searchControl = new FormControl();
     this.searchControl.setValue('');
-
-    //See manual function for more details.
-     _ngLocation.getCitydata();
-
-    //Emitter is used for retrieve city information / Exist or not
-    EmitterService.get("selectedCity").subscribe(data => {
-      this.selectedCity = data;
-      localStorage.setItem('city', this.selectedCity);
-    });
-
+    this.listApi = new Array<Api>();
   }
 
   ngOnInit()
   {
-    this.selectedCity = localStorage.getItem('city');
-    this.location = JSON.parse(localStorage['location']);
+
+    this.location = JSON.parse(window.localStorage.getItem('location'));
 
     //Load all API that we need
     // let airvisual: AirPollution = new AirPollution();
@@ -59,25 +53,10 @@ export class HomeComponent implements OnInit {
     let Openaq: AirPollution = new AirPollution('openaq');
     let SafeCast: ChimicalPollution = new ChimicalPollution('safecast');
     let Aqicn: AirPollution = new AirPollution('aqicn');
-    let MyWeather: Weather = new Weather('weather'); //TRYHARD
-
-    //options for Safecast
-    this._options = {
-      websiteName: 'safecast',
-      lat: this.location.latitude,
-      lng: this.location.longitude,
-      typePollution: SafeCast.typePollution,
-      distance: 2222,
-      showMap: true,
-      showChart: true
-    };
-    //get data for safecast
-    this._apiService.getData(SafeCast.websiteName, this._options).toPromise().then(
-      this.addData.bind(this, this._options)
-    );
+    // let MyWeather: Weather = new Weather('weather'); //TRYHARD
 
     //options for openaq
-    this._options = {
+    Openaq.setOptions({
       websiteName: 'openaq',
       lat: this.location.latitude,
       lng: this.location.longitude,
@@ -85,44 +64,76 @@ export class HomeComponent implements OnInit {
       country: 'FR',
       showMap: true,
       showChart: true
-    };
-    //get data for openaq
-    this._apiService.getData(Openaq.websiteName, this._options).toPromise().then(
-      this.addData.bind(this, this._options)
-    );
+    });
+
+    //options for Safecast
+    SafeCast.setOptions({
+      websiteName: 'safecast',
+      lat: this.location.latitude,
+      lng: this.location.longitude,
+      typePollution: SafeCast.typePollution,
+      distance: 2222,
+      showMap: true,
+      showChart: true
+    });
 
     //options for aqicn
-    this._options = {
+    Aqicn.setOptions({
       websiteName: 'aqicn',
       lat: this.location.latitude,
       lng: this.location.longitude,
       typePollution: Aqicn.typePollution,
       showMap: true,
       showChart: true
-    };
+    });
+
+    // options for weather TRYHARD
+    // MyWeather.setOptions({
+    //   websiteName: 'weather',
+    //   lat: this.location.latitude,
+    //   lng: this.location.longitude,
+    //   typePollution: MyWeather.typePollution,
+    //   showMap: true,
+    //   showChart: true
+    // });
+
+    //get data for safecast
+    this._apiService.getData(SafeCast.websiteName, SafeCast.options).toPromise().then(
+      this.addData.bind(this, this._options)
+    );
+
+    //get data for openaq
+    this._apiService.getData(Openaq.websiteName, Openaq.options).toPromise().then(
+      this.addData.bind(this, this._options)
+    );
+
     //get data for aqicn
     this._apiService.getData(Aqicn.websiteName, this._options).toPromise().then(
       this.addData.bind(this, this._options)
     );
 
-    //options for weather TRYHARD
-    this._options = {
-      websiteName: 'weather',
-      lat: this.location.latitude,
-      lng: this.location.longitude,
-      typePollution: MyWeather.typePollution,
-      //showMap: true,
-      //showChart: true
-    };
-    //get data for weather
-    this._apiService.getData(MyWeather.websiteName, this._options).toPromise().then(
-      this.addData.bind(this, this._options)
-    );
+    //get data for MyWweather
+    // this._apiService.getData(MyWeather.websiteName, this._options).toPromise().then(
+    //   this.addData.bind(this, this._options)
+    // );
+
+    this.listApi.push(Openaq);
+    this.listApi.push(SafeCast);
+    this.listApi.push(Aqicn);
+    // this.listApi.push(MyWeather);
   }
 
   onSubmit(data: any) {
     let city = data._value.toLowerCase();
     // get Location data from the city
+    let result = this._geolocationService.searchingDataForCity(city);
+    let timeoutId = setTimeout(() => {
+      console.log(result);
+      this.listApi.map((api) => {
+        api.options.lat = result.latitude;
+        api.options.lng = result.longitude;
+      });
+    }, 1000);
   }
 
   showPageApi(api: any): void {
@@ -133,7 +144,7 @@ export class HomeComponent implements OnInit {
     this._apiData.push({
         websiteName: options.websiteName,
         data: data,
-        options: options,
+        options: options
     });
   }
 }
