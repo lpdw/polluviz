@@ -2,14 +2,14 @@ import { StyleCompiler } from '@angular/compiler';
 import { PairsObservable } from 'rxjs/observable/PairsObservable';
 import { pairwise } from 'rxjs/operator/pairwise';
 import { pairs } from 'rxjs/observable/pairs';
-// take style for difernt api
-export class StylesMap
-{
-public style: any = {};
+
+// take style for different api
+export class StylesMap {
+  public style: any = {};
 
   constructor()
   {   // there are different style
-      this.style = 
+      this.style =
           {
             air:
             [
@@ -21,12 +21,12 @@ public style: any = {};
             ],
           }
 
-  } 
+  }
   // and the loop of colors used for api
-  getStyle(typePollution: string){ 
+  getStyle(typePollution: string){
       let style;
       switch(typePollution){
-          case 'air': 
+          case 'air':
             style = this.style.air;
             break;
           case 'chimical':
@@ -35,4 +35,4 @@ public style: any = {};
       }
       return style;
   }
-} 
+}

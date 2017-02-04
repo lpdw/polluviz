@@ -1,7 +1,6 @@
 import { Api } from './api.class';
 
-export class AirPollution extends Api
-{
+export class AirPollution extends Api {
   public lat: number;
   public long: number;
   public mapStyle: any;

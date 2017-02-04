@@ -1,3 +1,4 @@
+<ng2-slim-loading-bar [height]="'4px'"></ng2-slim-loading-bar>
 
 
 <form (ngSubmit)="onSubmit(searchControl)" style="text-align:center">
@@ -5,7 +6,7 @@
   <input type="submit">
 </form>
 
-<div class="container text-center" *ngIf="_apiData.length === 3">
+<div class="container text-center" *ngIf="allDataApiLoaded">
   <div class="card good" *ngFor="let api of listApi | orderBy : ['websiteName'] "
         (click)="showPageApi(api)">
         {{api.websiteName}}

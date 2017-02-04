@@ -14,14 +14,14 @@ import { GeolocationService } from '../../providers/geolocation/geolocation.serv
 export class MenuComponent implements OnInit {
 
   public location: any;
-  private _showBtnNavBack: boolean = false;
+  public showBtnNavBack: boolean = false;
 
   constructor(private router: Router) {
     this.location = JSON.parse(window.localStorage.getItem('location'));
 
-    //watch the current url
+    // watch the current url
     router.events.subscribe( val => {
-      this._showBtnNavBack = (val.url == "/") ? false : true;
+      this.showBtnNavBack = (val.url == "/") ? false : true;
     });
   }
 

@@ -2,8 +2,7 @@
 import { Component, OnDestroy, OnInit, style, Directive } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-//From our project ,
-// We only import what we need
+//From Internal Api
 import { Api } from '../../api/api.class';
 import { StylesMap } from '../../api/styles.api';
 import { AirPollution } from '../../api/airpollution.api';
@@ -11,8 +10,8 @@ import { Weather } from '../../api/weather.api'; //TRYHARD
 import { Gmap } from '../../api/gmap.api';
 import { GChart} from '../../api/gchart.api';
 
+// From providers
 import { ApiService } from '../../providers/api/api.service';
-
 
 @Component({
   selector: 'app-page-api',
@@ -22,7 +21,7 @@ import { ApiService } from '../../providers/api/api.service';
 })
 export class PageAPIComponent implements OnInit, OnDestroy {
 
-  private _sub: any;
+  private _subscribe: any;
   private _options: any = {};
   private _showMap: boolean = false;
   private _showChart: boolean = false;
@@ -36,7 +35,11 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   private _circleRadius: number = 0 ;
   private _circleColor: string;
 
-  constructor( private _route: ActivatedRoute, private _apiService: ApiService)
+  constructor
+  (
+    private _route: ActivatedRoute,
+    private _apiService: ApiService
+  )
   {
     this._styleMap = new StylesMap();
     this._gMap = new Gmap();
@@ -46,11 +49,12 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   {
     // The PageAPI component must read the parameter,
     //  then load the API based on the websiteName given in the parameter.
-    this._sub = this._route.params.subscribe(params =>
+    this._subscribe = this._route.params.subscribe(params =>
     {
       this._showMap = (params['showMap'] === 'true');
       this._showChart = (params['showChart'] === 'true');
       this._websiteName = params['websiteName'];
+
       //get all params that we need depends api
       if(params['websiteName'] == 'safecast')//options for safecast
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], distance: params['distance']};
@@ -62,14 +66,19 @@ export class PageAPIComponent implements OnInit, OnDestroy {
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], country: params['country']};
 
        //call the ApiService to fectch all data
-       this._apiService.getData(params['websiteName'],this._options).toPromise().then(this.setData.bind(this));
+       this._apiService.getData(params['websiteName'],this._options)
+       .subscribe( result => {
+         this.setData(result);
+       }, error => {
+         console.log('error gettings data from the API ');
+       });
     });
   }
 
   ngOnDestroy() {
     // when we inherit the interface "OnDestroy" we need to implement "OnDestroy"
     // just before the component is destroyed
-    this._sub.unsubscribe();
+    this._subscribe.unsubscribe();
   }
 
   drawGmap(): void {
@@ -99,17 +108,16 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   }
 
   setData(data: any) {
-
     this._data = data;
 
     this._noData = (this._data.length === 0 || this._data === 'null') ? true : false;
     this.showGmap();
     this.showGChart();
 
-    switch(this._websiteName){
+    switch(this._websiteName) {
       case  'openaq' :
-        // alert(`tu es sur ${this._websiteName}`)
-      break;
+        console.log(`${this._websiteName}`);
+        break;
       case  'safecast' :
         this._data[0].websiteName = this._websiteName;
         // alert(` ${this._websiteName}`);
@@ -150,14 +158,9 @@ export class PageAPIComponent implements OnInit, OnDestroy {
           }
         };
       break;
-      case  'aqicn' :
-        // alert(`tu es sur ${this._websiteName}`)
-      break;
-    }
-
-
-    if(this._websiteName == 'openaq'){
-      console.log("Tu es sur un Q");
+      case 'aqicn' :
+        console.log(`${this._websiteName}`);
+        break;
     }
   }
 
@@ -186,7 +189,6 @@ export class PageAPIComponent implements OnInit, OnDestroy {
     else if (this._websiteName == 'aqicn') {
         gChart.options = gChart.getChartOptions(this._websiteName, data);
     }
-
 
     this._listGChart.push({data: gChart.data, options: gChart.options, type: gChart.type});
   }

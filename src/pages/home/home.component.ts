@@ -13,6 +13,9 @@ import { Weather } from '../../api/weather.api'; //TRYHARD
 import { ApiService } from '../../providers/api/api.service';
 import { GeolocationService } from '../../providers/geolocation/geolocation.service';
 
+// Slim loading => https://github.com/akserg/ng2-slim-loading-bar
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -24,6 +27,7 @@ export class HomeComponent implements OnInit {
   public searchControl: FormControl;
   public location: any = {}
   public listApi: Array<Api>;
+  public allDataApiLoaded: boolean = false;
 
   private _options: any = {};
   private _apiData: Array<any> = [];
@@ -32,7 +36,8 @@ export class HomeComponent implements OnInit {
   (
     private _apiService: ApiService,
     private _router: Router,
-    private _geolocationService: GeolocationService
+    private _geolocationService: GeolocationService,
+    private _slimLoadingBarService: SlimLoadingBarService
   )
   {
     this.searchControl = new FormControl();
@@ -40,8 +45,8 @@ export class HomeComponent implements OnInit {
     this.listApi = new Array<Api>();
   }
 
-  ngOnInit()
-  {
+  ngOnInit() {
+    this.startLoading();
     this.location = JSON.parse(window.localStorage.getItem('location'));
 
     //Load all API that we need
@@ -96,41 +101,57 @@ export class HomeComponent implements OnInit {
     // });
 
     //get data for safecast
-    this._apiService.getData(SafeCast.websiteName, SafeCast.options).toPromise().then(
-      this.addData.bind(this, this._options)
-    );
+    this._apiService.getData(SafeCast.websiteName, SafeCast.options)
+    .subscribe( result => {
+      SafeCast.setData(result);
+      this.listApi.push(SafeCast);
+      if(this.listApi.length === 3) this.completeLoading();
+    }, err => {
+      console.log('error getting data for SafeCast', err);
+    });
 
     //get data for openaq
-    this._apiService.getData(Openaq.websiteName, Openaq.options).toPromise().then(
-      this.addData.bind(this, this._options)
-    );
+    this._apiService.getData(Openaq.websiteName, Openaq.options)
+    .subscribe( result => {
+      Openaq.setData(result);
+      this.listApi.push(Openaq);
+      if(this.listApi.length === 3) this.completeLoading();
+    }, err => {
+      console.log('error getting data for Openaq', err);
+    });
 
     //get data for aqicn
-    this._apiService.getData(Aqicn.websiteName, this._options).toPromise().then(
-      this.addData.bind(this, this._options)
-    );
+    this._apiService.getData(Aqicn.websiteName, this._options)
+    .subscribe( result => {
+      Aqicn.setData(result);
+      this.listApi.push(Aqicn);
+      if(this.listApi.length === 3) this.completeLoading();
+    }, err => {
+      console.log('error getting data for Aqicn', err);
+    });
 
     //get data for MyWweather
-    // this._apiService.getData(MyWeather.websiteName, this._options).toPromise().then(
-    //   this.addData.bind(this, this._options)
-    // );
-
-    this.listApi.push(Openaq);
-    this.listApi.push(SafeCast);
-    this.listApi.push(Aqicn);
-    // this.listApi.push(MyWeather);
+    // this._apiService.getData(MyWeather.websiteName, this._options).subscribe( result => {
+    //   MyWeather.setData(result);
+    //   this.listApi.push(MyWeather);
+    // }, err => {
+    //   console.log('error getting data for Aqicn', err);
+    // });
   }
 
   onSubmit(data: any) {
+    this.startLoading();
+
     let city = data._value.toLowerCase();
     // get Location data from the city
     let result = this._geolocationService.searchingDataForCity(city);
-    let timeoutId = setTimeout(() => {
+    setTimeout(() => {
       console.log(result);
       this.listApi.map((api) => {
         api.options.lat = result.latitude;
         api.options.lng = result.longitude;
       });
+      this.completeLoading();
     }, 1000);
   }
 
@@ -138,11 +159,18 @@ export class HomeComponent implements OnInit {
     this._router.navigate(['/pageApi', api.options]);
   }
 
-  addData(options: any, data: any): void {
-    this._apiData.push({
-        websiteName: options.websiteName,
-        data: data,
-        options: options
-    });
+  startLoading() {
+     this._slimLoadingBarService.start(() => {
+         console.log('Loading complete');
+     });
+   }
+
+  stopLoading() {
+    this._slimLoadingBarService.stop();
+  }
+
+  completeLoading() {
+    this._slimLoadingBarService.complete();
+    this.allDataApiLoaded = true;
   }
 }

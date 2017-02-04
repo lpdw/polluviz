@@ -20,7 +20,7 @@ export class GeolocationService implements Location {
   private _options: Object;
 
   constructor(private http: Http) {
-    
+
     // initialize properties
     // default location is Paris
     this.latitude  =  48.866667;
@@ -50,8 +50,7 @@ export class GeolocationService implements Location {
       // call the google api to try to get infos (postcode,cityName...)
       this.callGoogleApi('latlng');
     }, error => {
-      // alert('error gettings lat & lng');
-      console.log(error.code);
+      alert(`ERROR(${error.code}): ${error.message}`);
 
       // call the google api to try to get infos (postcode,cityName...)
       this.callGoogleApi('latlng');
@@ -81,6 +80,11 @@ export class GeolocationService implements Location {
     });
   }
 
+  /**
+  * @method getDataFromGoogleApi
+  * @param data Data from the google Api
+  * @param parameter Paramaters to get like 'latlng' or 'address'
+  */
   getDataFromGoogleApi(data: any, parameter: string) {
     this.address = data.results[0].formatted_address;
 

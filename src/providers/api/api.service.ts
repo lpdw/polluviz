@@ -1,10 +1,10 @@
-import { MapTypeStyle } from 'angular2-google-maps/core';
 //From angular
 import { Injectable }     from '@angular/core';
 import { Http, Response, Headers, RequestOptions, URLSearchParams, Jsonp } from '@angular/http';
 import { Component } from '@angular/core';
 import 'rxjs/Rx';
 import {Observable} from 'rxjs/Rx';
+
 // Import RxJs required methods
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -16,8 +16,15 @@ import { AirPollution } from '../../api/airpollution.api';
 import { ChimicalPollution } from '../../api/chimicalpollution.api';
 import { Weather } from '../../api/weather.api'; //TRYHARD
 
+
+/**
+- * @class ApiService
+- * @constructor
+- **/
+
 @Injectable()
 export class ApiService {
+
   private _listApi: Array<Api> = [];
   private _mapStyle: any = [];
   public location: any = {};
@@ -70,8 +77,7 @@ export class ApiService {
     this._listApi.push(weather); //TRYHARD
   }
 
-  public getData(serverName: string, options: any = {}): Observable<any>
-  {
+  public getData(serverName: string, options: any = {}): Observable<any> {
     // console.log(options);
     //we take the Api given from the parameters and return a Observable
     let apiUrlToGet = "";
@@ -99,7 +105,7 @@ export class ApiService {
 
   private extractData(response: Response) {
     // extract data from the API website and parse it to json
-    let body = response.json();
+    let body = response.json() || response;
     console.log(body);
     return body || {};
   }
