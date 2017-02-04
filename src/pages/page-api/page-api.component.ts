@@ -4,13 +4,15 @@ import { ActivatedRoute } from '@angular/router';
 
 //From our project ,
 // We only import what we need
-import { Api } from '../API/api.class';
-import { StylesMap } from '../API/styles.api';
-import { ApiService } from '../api.service';
-import { AirPollution } from '../API/airpollution.api';
-import { Weather } from '../API/weather.api'; //TRYHARD
-import { Gmap } from '../API/gmap.api';
-import { GChart} from '../API/gchart.api';
+import { Api } from '../../api/api.class';
+import { StylesMap } from '../../api/styles.api';
+import { AirPollution } from '../../api/airpollution.api';
+import { Weather } from '../../api/weather.api'; //TRYHARD
+import { Gmap } from '../../api/gmap.api';
+import { GChart} from '../../api/gchart.api';
+
+import { ApiService } from '../../providers/api/api.service';
+
 
 @Component({
   selector: 'app-page-api',

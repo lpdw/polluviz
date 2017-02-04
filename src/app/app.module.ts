@@ -6,10 +6,11 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 
 //From Custom Pipes
-import { OrderBy } from "./PIPES/orderBy.pipe";
+import { OrderBy } from "../pipes/orderBy";
 
 //Google Chart => https://www.npmjs.com/package/angular2-google-chart
 import { GoogleChart } from 'angular2-google-chart/directives/angular2-google-chart.directive';
+
 // Google Map
 import { CommonModule } from '@angular/common';
 import { AgmCoreModule, SebmGoogleMap, SebmGoogleMapMarker } from 'angular2-google-maps/core';
@@ -17,14 +18,14 @@ import { AgmCoreModule, SebmGoogleMap, SebmGoogleMapMarker } from 'angular2-goog
 import { AppRoutingModule } from './routing/app-routing.module';
 
 import { AppComponent } from './app.component';
-import { MenuComponent } from './menu/menu.component';
-import { HomeComponent } from './home/home.component';
-import { PageAPIComponent } from './page-api/page-api.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { FooterComponent } from './footer/footer.component';
-import { AboutComponent } from './about/about.component';
-import { TermsComponent } from './terms/terms.component';
-import { SitemapComponent } from './sitemap/sitemap.component';
+import { MenuComponent } from '../pages/menu/menu.component';
+import { HomeComponent } from '../pages//home/home.component';
+import { PageAPIComponent } from '../pages/page-api/page-api.component';
+import { PageNotFoundComponent } from '../pages/page-not-found/page-not-found.component';
+import { FooterComponent } from '../pages/footer/footer.component';
+import { AboutComponent } from '../pages/about/about.component';
+import { TermsComponent } from '../pages/terms/terms.component';
+import { SitemapComponent } from '../pages/sitemap/sitemap.component';
 
 //Providers
 import { GeolocationService } from '../providers/geolocation/geolocation.service';

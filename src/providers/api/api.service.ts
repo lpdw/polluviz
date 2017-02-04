@@ -11,10 +11,10 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 //Form our project
-import { Api } from './API/api.class';
-import { AirPollution } from './API/airpollution.api';
-import { ChimicalPollution } from './API/chimicalpollution.api';
-import { Weather } from './API/weather.api'; //TRYHARD
+import { Api } from '../../api/api.class';
+import { AirPollution } from '../../api/airpollution.api';
+import { ChimicalPollution } from '../../api/chimicalpollution.api';
+import { Weather } from '../../api/weather.api'; //TRYHARD
 
 @Injectable()
 export class ApiService {

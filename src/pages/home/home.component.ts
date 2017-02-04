@@ -4,13 +4,13 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 
 //From our project
-import { Api } from '../API/api.class';
-import { ApiService } from '../api.service';
-import { AirPollution } from '../API/airpollution.api';
-import { ChimicalPollution } from '../API/chimicalpollution.api';
-import { Weather } from '../API/weather.api'; //TRYHARD
+import { Api } from '../../api/api.class';
+import { AirPollution } from '../../api/airpollution.api';
+import { ChimicalPollution } from '../../api/chimicalpollution.api';
+import { Weather } from '../../api/weather.api'; //TRYHARD
 
-//Geolocation component
+// From providers
+import { ApiService } from '../../providers/api/api.service';
 import { GeolocationService } from '../../providers/geolocation/geolocation.service';
 
 @Component({
@@ -32,8 +32,7 @@ export class HomeComponent implements OnInit {
   (
     private _apiService: ApiService,
     private _router: Router,
-    private _geolocationService: GeolocationService,
-    // private _ngLocation: nglocationService
+    private _geolocationService: GeolocationService
   )
   {
     this.searchControl = new FormControl();
@@ -43,7 +42,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit()
   {
-
     this.location = JSON.parse(window.localStorage.getItem('location'));
 
     //Load all API that we need

@@ -15,11 +15,12 @@ export class GeolocationService implements Location {
   public city: string;
 
   public searchCity: string;
-  public searchResult: any = { latitude: 0, longitude: 0 };
+  public searchResult: any = { };
 
   private _options: Object;
 
   constructor(private http: Http) {
+    
     // initialize properties
     // default location is Paris
     this.latitude  =  48.866667;
@@ -29,6 +30,7 @@ export class GeolocationService implements Location {
     this.city =  'Paris';
 
     this.searchCity = '';
+    this.searchResult = { latitude: 0, longitude: 0 };
 
     // set default options for the Geolocation
     this._options = {
