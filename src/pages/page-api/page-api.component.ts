@@ -51,6 +51,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
     //  then load the API based on the websiteName given in the parameter.
     this._subscribe = this._route.params.subscribe(params =>
     {
+      console.log(params);
       this._showMap = (params['showMap'] === 'true');
       this._showChart = (params['showChart'] === 'true');
       this._websiteName = params['websiteName'];
@@ -61,6 +62,8 @@ export class PageAPIComponent implements OnInit, OnDestroy {
       else if(params['websiteName'] == 'openaq') //options for openaq
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], country: params['country']};
       else if(params['websiteName'] == 'aqicn')
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution']};
+      else if(params['websiteName'] == 'airvisual')
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution']};
       else if(params['websiteName'] == 'weather') //options for weather TRYHARD
         this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], country: params['country']};

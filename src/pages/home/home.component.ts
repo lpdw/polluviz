@@ -1,7 +1,7 @@
 //From angular
 import { Component, OnInit, Injectable } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 //From our project
 import { Api } from '../../api/api.class';
@@ -66,6 +66,9 @@ export class HomeComponent implements OnInit {
         optionalOptions = { distance: 2222 };
         options = this.getCommonAndOptionalOptions(api.websiteName, api.typePollution, optionalOptions);
       }
+      else if (api.websiteName == 'airvisual') {
+        options = this.getCommonAndOptionalOptions(api.websiteName, api.typePollution);
+      }
       api.setOptions(options);
 
       // geting data for all APIs
@@ -90,23 +93,18 @@ export class HomeComponent implements OnInit {
   }
 
   // we have a common options
-  getCommonAndOptionalOptions(websiteName: string, typePollution: string, optionalOptions: any) {
-    let options = [];
-
-    let commonOptions = {
-      websiteName: websiteName,
-      lat: this.location.latitude,
-      lng: this.location.longitude,
-      typePollution: typePollution,
-      showMap: true,
-      showChart: true
-    };
-
-    let optional = [];
-    optional.push(optionalOptions);
-
-    options.push({commonOptions: commonOptions});
-    options.push({optionalOptions: optionalOptions});
+  getCommonAndOptionalOptions(websiteName: string, typePollution: string, optionalOptions? : any) {
+    let options = [ {
+      commonOptions: {
+        websiteName: websiteName,
+        lat: this.location.latitude,
+        lng: this.location.longitude,
+        typePollution: typePollution,
+        showMap: true,
+        showChart: true
+      },
+      optional: optionalOptions
+    }];
 
     return options;
   }
@@ -127,8 +125,17 @@ export class HomeComponent implements OnInit {
     }, 1000);
   }
 
-  showPageApi(api: any): void {
-    this._router.navigate(['/pageApi', api.options]);
+  showPageApi(api: Api): void {
+    // merge common and optional options;
+    let options = this.extend(api.options[0].commonOptions, api.options[0].optional);
+    this._router.navigate(['/pageApi', options]);
+  }
+
+  private extend(obj, src) {
+    for (var key in src) {
+        if (src.hasOwnProperty(key)) obj[key] = src[key];
+    }
+    return obj;
   }
 
   startLoading() {
