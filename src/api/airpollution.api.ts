@@ -12,5 +12,7 @@ export class AirPollution extends Api {
     this.typeApi = "Air pollution";
     this.typePollution = 'air';
     this.token = token;
+    this.lat = this.location.latitude;
+    this.long = this.location.longitude;
   }
 }

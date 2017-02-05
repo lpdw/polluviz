@@ -49,94 +49,66 @@ export class HomeComponent implements OnInit {
     this.startLoading();
     this.location = JSON.parse(window.localStorage.getItem('location'));
 
-    //Load all API that we need
-    // let airvisual: AirPollution = new AirPollution();
-    // airvisual.websiteName = "airvisual";
+    let allApi = this._apiService.getAllApi();
 
-    let Openaq: AirPollution = new AirPollution('openaq');
-    let SafeCast: ChimicalPollution = new ChimicalPollution('safecast');
-    let Aqicn: AirPollution = new AirPollution('aqicn');
-    // let MyWeather: Weather = new Weather('weather'); //TRYHARD
+    allApi.map((api) => {
+      let options;
+      let optionalOptions;
+      if(api.websiteName == 'openaq') {
+        optionalOptions = { country: 'FR' };
+        options = this.getCommonAndOptionalOptions(api.websiteName, api.typePollution, optionalOptions);
+      }
+      else if(api.websiteName == 'safecast') {
+        optionalOptions = { distance: 2222 };
+        options = this.getCommonAndOptionalOptions(api.websiteName, api.typePollution, optionalOptions);
+      }
+      else if(api.websiteName == 'aqicn') {
+        optionalOptions = { distance: 2222 };
+        options = this.getCommonAndOptionalOptions(api.websiteName, api.typePollution, optionalOptions);
+      }
+      api.setOptions(options);
 
-    //options for openaq
-    Openaq.setOptions({
-      websiteName: 'openaq',
+      // geting data for all APIs
+      this._apiService.getData(api.websiteName, api.options)
+      .subscribe( result => {
+        this.listApi.push(api);
+        if(this.listApi.length === 3) this.completeLoading();
+      }, err => {
+        console.log(`error getting data for ${api.websiteName} : ${err}`);
+      });
+    });
+
+    // getting data for weather
+    let MyWeather: Weather = this._apiService.getMyWeatherApi();
+    this._apiService.getDataForWeather(MyWeather)
+    .subscribe( result => {
+      console.log('Weather data : ', result);
+    }, err => {
+      console.log(`error getting data for Weather : ${err}`);
+    });
+
+  }
+
+  // we have a common options
+  getCommonAndOptionalOptions(websiteName: string, typePollution: string, optionalOptions: any) {
+    let options = [];
+
+    let commonOptions = {
+      websiteName: websiteName,
       lat: this.location.latitude,
       lng: this.location.longitude,
-      typePollution: Openaq.typePollution,
-      country: 'FR',
+      typePollution: typePollution,
       showMap: true,
       showChart: true
-    });
+    };
 
-    //options for Safecast
-    SafeCast.setOptions({
-      websiteName: 'safecast',
-      lat: this.location.latitude,
-      lng: this.location.longitude,
-      typePollution: SafeCast.typePollution,
-      distance: 2222,
-      showMap: true,
-      showChart: true
-    });
+    let optional = [];
+    optional.push(optionalOptions);
 
-    //options for aqicn
-    Aqicn.setOptions({
-      websiteName: 'aqicn',
-      lat: this.location.latitude,
-      lng: this.location.longitude,
-      typePollution: Aqicn.typePollution,
-      showMap: true,
-      showChart: true
-    });
+    options.push({commonOptions: commonOptions});
+    options.push({optionalOptions: optionalOptions});
 
-    // options for weather TRYHARD
-    // MyWeather.setOptions({
-    //   websiteName: 'weather',
-    //   lat: this.location.latitude,
-    //   lng: this.location.longitude,
-    //   typePollution: MyWeather.typePollution,
-    //   showMap: true,
-    //   showChart: true
-    // });
-
-    //get data for safecast
-    this._apiService.getData(SafeCast.websiteName, SafeCast.options)
-    .subscribe( result => {
-      SafeCast.setData(result);
-      this.listApi.push(SafeCast);
-      if(this.listApi.length === 3) this.completeLoading();
-    }, err => {
-      console.log('error getting data for SafeCast', err);
-    });
-
-    //get data for openaq
-    this._apiService.getData(Openaq.websiteName, Openaq.options)
-    .subscribe( result => {
-      Openaq.setData(result);
-      this.listApi.push(Openaq);
-      if(this.listApi.length === 3) this.completeLoading();
-    }, err => {
-      console.log('error getting data for Openaq', err);
-    });
-
-    //get data for aqicn
-    this._apiService.getData(Aqicn.websiteName, this._options)
-    .subscribe( result => {
-      Aqicn.setData(result);
-      this.listApi.push(Aqicn);
-      if(this.listApi.length === 3) this.completeLoading();
-    }, err => {
-      console.log('error getting data for Aqicn', err);
-    });
-
-    //get data for MyWweather
-    // this._apiService.getData(MyWeather.websiteName, this._options).subscribe( result => {
-    //   MyWeather.setData(result);
-    //   this.listApi.push(MyWeather);
-    // }, err => {
-    //   console.log('error getting data for Aqicn', err);
-    // });
+    return options;
   }
 
   onSubmit(data: any) {

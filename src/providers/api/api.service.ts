@@ -16,7 +16,6 @@ import { AirPollution } from '../../api/airpollution.api';
 import { ChimicalPollution } from '../../api/chimicalpollution.api';
 import { Weather } from '../../api/weather.api'; //TRYHARD
 
-
 /**
 - * @class ApiService
 - * @constructor
@@ -25,56 +24,89 @@ import { Weather } from '../../api/weather.api'; //TRYHARD
 @Injectable()
 export class ApiService {
 
-  private _listApi: Array<Api> = [];
+  private _listApi: Array<Api>;
   private _mapStyle: any = [];
   public location: any = {};
   private _token: string;
 
-  constructor(private _http: Http, private _jsonp: Jsonp) {
+  constructor
+  (
+    public http: Http,
+    public jsonp: Jsonp
+  )
+  {
+    this._listApi = new Array<Api>();
+    this.initApi();
+  }
+
+  public initApi() {
 
     //Air pollution 1
     this._token = '4d786963eb8fec1329365e78bf3f9d16c1b157b9';
-    let aqicn: AirPollution = new AirPollution('aqicn', this._token);
-    aqicn.server = "http://api.waqi.info/";
-    aqicn.api = "feed/here/?token="+this._token;
-    aqicn.serverWithApiUrl = aqicn.server + aqicn.api;
+    let Aqicn: AirPollution = new AirPollution('aqicn', this._token);
+    Aqicn.server = "http://api.waqi.info/";
+    Aqicn.api = "feed/here/?token="+this._token;
+    Aqicn.serverWithApiUrl = Aqicn.server + Aqicn.api;
 
-    //Air quality
-    // 1) Create an ApiPollution with properties
-    // 2) Add it one the _listApi
-    let openaq: AirPollution = new AirPollution('openaq');
-    openaq.server = "https://api.openaq.org/";
-    openaq.api = "v1/latest?country=FR";
-    openaq.serverWithApiUrl = openaq.server + openaq.api;
+    //Air pollution 2
+    let Openaq: AirPollution = new AirPollution('openaq');
+    Openaq.server = "https://api.openaq.org/";
+    Openaq.api = "v1/latest?country=FR";
+    Openaq.serverWithApiUrl = Openaq.server + Openaq.api;
 
-    //Air quality
+    //Air pollution 3
     this._token = 'p4grS8buAWyJy36vJ';
-    let airvisual: AirPollution = new AirPollution('airvisual', this._token);
-    airvisual.server = "http://api.airvisual.com/";
-    airvisual.api = "v1/nearest?lat=" + airvisual.lat + "&lon=" + airvisual.long + "&key=" + airvisual.token;
-    airvisual.serverWithApiUrl = airvisual.server + airvisual.api;
+    let Airvisual: AirPollution = new AirPollution('airvisual', this._token);
+    Airvisual.server = "http://api.airvisual.com/";
+    Airvisual.api = "v1/nearest?lat=" + Airvisual.lat + "&lon=" + Airvisual.long + "&key=" + Airvisual.token;
+    Airvisual.serverWithApiUrl = Airvisual.server + Airvisual.api;
 
     //Chimical Pollution
     //This API is opensource and didn't need api-key, this api recognize longitude and latitude
     this._token = 'SH2oGvx4oSaGU59yJaAM';
-    let safeCast: ChimicalPollution = new ChimicalPollution('safecast', this._token);
-    safeCast.server = "https://api.safecast.org/";
-    safeCast.api = "measurements.json";
-    safeCast.serverWithApiUrl = safeCast.server + safeCast.api;
+    let SafeCast: ChimicalPollution = new ChimicalPollution('safecast', this._token);
+    SafeCast.server = "https://api.safecast.org/";
+    SafeCast.api = "measurements.json";
+    SafeCast.serverWithApiUrl = SafeCast.server + SafeCast.api;
 
-    //Weather
-    this._token = '691ec3376cb82530f3cd25ce9a1d1936';
-    let weather: Weather = new Weather('weather', this._token);
-    weather.server = "http://api.openweathermap.org/";
-    weather.api = "data/2.5/weather?lat=" + weather.lat + "&lon=" + weather.long + "&appid=" + weather.token;
-    weather.serverWithApiUrl = weather.server + weather.api;
 
     // this._listApi.push(airpollution);
-    this._listApi.push(openaq);
-    this._listApi.push(airvisual);
-    this._listApi.push(safeCast);
-    this._listApi.push(aqicn);
-    this._listApi.push(weather); //TRYHARD
+    this._listApi.push(Openaq);
+    this._listApi.push(Airvisual);
+    this._listApi.push(SafeCast);
+    this._listApi.push(Aqicn);
+  }
+
+  public getApi(typePollution: string, websiteName ?: string) {
+    if(websiteName) {
+      return this._listApi.map((api) => {
+        return (api.typePollution == typePollution.toLowerCase() && api.websiteName == websiteName.toLowerCase());
+      });
+    }
+    else {
+      return this._listApi.map((api) => {
+        return (api.typePollution == typePollution.toLowerCase());
+      });
+    }
+  }
+
+  getMyWeatherApi(): Weather {
+    //Weather
+    let token = '691ec3376cb82530f3cd25ce9a1d1936';
+    let MyWeather: Weather = new Weather('weather', token);
+    MyWeather.server = "http://api.openweathermap.org/";
+    MyWeather.api = "data/2.5/weather?lat=" + MyWeather.lat + "&lon=" + MyWeather.long + "&APPID=" + MyWeather.token;
+    MyWeather.serverWithApiUrl = MyWeather.server + MyWeather.api;
+
+    return MyWeather;
+  }
+
+  public getAllApi() { return this._listApi; }
+
+  public setOptions(websiteName: string, options: any) {
+    this._listApi.map((api) => {
+      api.setOptions(options);
+    });
   }
 
   public getData(serverName: string, options: any = {}): Observable<any> {
@@ -91,22 +123,24 @@ export class ApiService {
       else if(api.websiteName == serverName && serverName == 'openaq') {
         apiUrlToGet = api.server + "v1/latest?country=" + options.country;
       }
-      //For WEATHER TRYHARD
-      else if(api.websiteName == serverName && serverName == 'weather') {
-        apiUrlToGet = api.server + "v1/latest?country=" + options.country;
-      }
       else if(api.websiteName == serverName && serverName == 'aqicn') {
         apiUrlToGet = api.serverWithApiUrl;
       }
+      else if(api.websiteName == serverName && serverName == 'airvisual') {
+        apiUrlToGet = api.serverWithApiUrl;
+      }
     }
-    // console.log(apiUrlToGet);
-    return this._http.get(apiUrlToGet).map(this.extractData).catch(this.handleError);
+    return this.http.get(apiUrlToGet).map(this.extractData).catch(this.handleError);
+  }
+
+  getDataForWeather(myWeather: Weather) {
+    let apiUrlToGet = myWeather.server + myWeather.api;
+    return this.http.get(apiUrlToGet).map(this.extractData).catch(this.handleError);
   }
 
   private extractData(response: Response) {
     // extract data from the API website and parse it to json
-    let body = response.json() || response;
-    console.log(body);
+    let body = response.json();
     return body || {};
   }
 

@@ -80,11 +80,6 @@ export class GeolocationService implements Location {
     });
   }
 
-  /**
-  * @method getDataFromGoogleApi
-  * @param data Data from the google Api
-  * @param parameter Paramaters to get like 'latlng' or 'address'
-  */
   getDataFromGoogleApi(data: any, parameter: string) {
     this.address = data.results[0].formatted_address;
 

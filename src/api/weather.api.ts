@@ -7,9 +7,10 @@ export class Weather extends Api {
   constructor(websiteName?: string, token? : string) {
     super();
     this.websiteName = websiteName;
-    this.typeApi = 'Weather';
-    this.typePollution= 'none';
+    this.typeApi = 'weather';
     this.token = token;
+    this.lat = this.location.latitude;
+    this.long = this.location.longitude;
   }
 
 }

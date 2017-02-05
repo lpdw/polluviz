@@ -17,13 +17,13 @@ export class MenuComponent implements OnInit {
   public showBtnNavBack: boolean = false;
 
   constructor(private router: Router) {
-    this.location = JSON.parse(window.localStorage.getItem('location'));
-
     // watch the current url
     router.events.subscribe( val => {
       this.showBtnNavBack = (val.url == "/") ? false : true;
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.location = JSON.parse(window.localStorage.getItem('location'));
+  }
 }

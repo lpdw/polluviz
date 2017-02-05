@@ -1,4 +1,5 @@
-
+//Geolocation component
+import { GeolocationService } from '../providers/geolocation/geolocation.service';
 
 export class Api {
     public typeApi: string;
@@ -12,7 +13,19 @@ export class Api {
     public data:any = {};
     public options: any = {};
 
-    constructor() { }
+    public location: any;
+
+    constructor() {
+      this.typeApi = '';
+      this.server = '';
+      this.api = '';
+      this.serverWithApiUrl = '';
+      this.websiteName = '';
+      this.typePollution = '';
+      this.token= '';
+
+      this.location = JSON.parse(window.localStorage.getItem('location'));
+    }
 
     setOptions(options: any) { this.options = options }
 
