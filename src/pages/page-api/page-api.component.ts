@@ -89,6 +89,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
    this._myStyleMap = this._gMap.myStyleMap;
    this._gMap.lat = this._options.lat;
    this._gMap.lng = this._options.lng;
+   this._gMap.zoom = 14;
   }
 
   showGmap() {
@@ -119,7 +120,41 @@ export class PageAPIComponent implements OnInit, OnDestroy {
 
     switch(this._websiteName) {
       case  'openaq' :
+      this._data = data.results;
         console.log(`${this._websiteName}`);
+        this._data.websiteName = this._websiteName;
+        for(var i = 0; i < this._data.length; i++){
+    
+          this._circleRadius = this._data[i].measurements[0].value;
+          if(this._circleRadius < 15){
+            this._data[i].circleRadius = this._circleRadius;
+            this._data[i].circleColor = "lightgreen";
+          }
+          if(this._circleRadius >= 15 && this._circleRadius < 25){
+            this._data[i].circleRadius = this._circleRadius;
+            this._data[i].circleColor = "green";
+          }
+          if(this._circleRadius >= 25 && this._circleRadius < 35){
+          this._data[i].circleRadius = this._circleRadius;
+          this._data[i].circleColor = "darkgreen";
+        }
+        if(this._circleRadius >= 35 && this._circleRadius < 45){
+        this._data[i].circleRadius = this._circleRadius;
+        this._data[i].circleColor = "yellow";
+       }
+       if(this._circleRadius >= 45 && this._circleRadius < 55){
+         this._data[i].circleRadius = this._circleRadius;
+         this._data[i].circleColor = "orange";
+       }
+       if(this._circleRadius >= 55 && this._circleRadius < 65){
+         this._data[i].circleRadius = this._circleRadius;
+         this._data[i].circleColor = "red";
+       }
+       if(this._circleRadius >= 65){
+         this._data[i].circleRadius = this._circleRadius;
+         this._data[i].circleColor = "black";
+       }
+        }
         break;
       case  'safecast' :
         this._data[0].websiteName = this._websiteName;
@@ -163,6 +198,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
       break;
       case 'aqicn' :
         console.log(`${this._websiteName}`);
+        console.log(this._data[i]);
         break;
     }
   }

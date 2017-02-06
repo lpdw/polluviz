@@ -11,6 +11,7 @@ export class Gmap extends Api {
   public type: string;
   public data: any = [];
   public options: any;
+  public zoom: number = 15;
 
   constructor() { super(); }
 
