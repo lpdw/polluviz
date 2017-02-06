@@ -116,13 +116,13 @@ export class HomeComponent implements OnInit {
     // get Location data from the city
     let result = this._geolocationService.searchingDataForCity(city);
     setTimeout(() => {
-      console.log(result);
-      this.listApi.map((api) => {
-        api.options.lat = result.latitude;
-        api.options.lng = result.longitude;
+      this.listApi.map((api: Api) => {
+        api.options[0].commonOptions.lat = result.latitude;
+        api.options[0].commonOptions.lng = result.longitude;
       });
       this.completeLoading();
     }, 1000);
+
   }
 
   showPageApi(api: Api): void {
