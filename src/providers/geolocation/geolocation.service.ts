@@ -61,6 +61,17 @@ export class GeolocationService implements Location {
 
   searchingDataForCity(city: string) {
     // remove all data from the observable
+    this.clearSearchData();
+
+    // add the city
+    this._search.getValue().push({city: city});
+    this._search.next(this._search.getValue());
+    // and latitude & longitude from googleApi
+    this.callGoogleApi('address');
+    return this._search.getValue();
+  }
+
+  clearSearchData() {
     if(this._search.getValue().length > 0) {
       while (this._search.getValue().length > 0) {
         for (let item of this._search.getValue())
@@ -68,12 +79,6 @@ export class GeolocationService implements Location {
       }
       this._search.next(this._search.getValue());
     }
-    // add the city
-    this._search.getValue().push({city: city});
-    this._search.next(this._search.getValue());
-    // and latitude & longitude from googleApi
-    this.callGoogleApi('address');
-    return this._search.getValue();
   }
 
   callGoogleApi(parameter: string) {
