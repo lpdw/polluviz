@@ -24,7 +24,9 @@ export class Api {
       this.typePollution = '';
       this.token= '';
 
-      this.location = JSON.parse(window.localStorage.getItem('location'));
+      setTimeout(() => {
+        this.location = JSON.parse(window.localStorage.getItem('location'));
+      }, 1500);
     }
 
     setOptions(options: any) { this.options = options }

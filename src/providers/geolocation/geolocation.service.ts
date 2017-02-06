@@ -1,6 +1,8 @@
 // From Angular
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import {Observable} from 'rxjs/Rx';
 
 // From internal
 import { Location } from './location.interface';
@@ -14,8 +16,8 @@ export class GeolocationService implements Location {
   public postalCode: number;
   public city: string;
 
-  public searchCity: string;
-  public searchResult: any = { };
+  private _search: BehaviorSubject<Array<any>>;
+  public searchObservable: Observable<Array<any>>;
 
   private _options: Object;
 
@@ -29,8 +31,8 @@ export class GeolocationService implements Location {
     this.postalCode =  75000;
     this.city =  'Paris';
 
-    this.searchCity = '';
-    this.searchResult = { latitude: 0, longitude: 0 };
+    this._search = new BehaviorSubject(Array<any>());
+    this.searchObservable = this._search.asObservable();
 
     // set default options for the Geolocation
     this._options = {
@@ -58,17 +60,27 @@ export class GeolocationService implements Location {
   }
 
   searchingDataForCity(city: string) {
-    // history from all city research
-    this.searchCity = city;
+    // remove all data from the observable
+    if(this._search.getValue().length > 0) {
+      while (this._search.getValue().length > 0) {
+        for (let item of this._search.getValue())
+          this._search.getValue().splice(item, 1);
+      }
+      this._search.next(this._search.getValue());
+    }
+    // add the city
+    this._search.getValue().push({city: city});
+    this._search.next(this._search.getValue());
+    // and latitude & longitude from googleApi
     this.callGoogleApi('address');
-    return this.searchResult;
+    return this._search.getValue();
   }
 
   callGoogleApi(parameter: string) {
     let link: string = '';
 
     if(parameter == 'address')
-      link = 'http://maps.googleapis.com/maps/api/geocode/json?' + parameter +'='+ this.searchCity + '&sensor=true';
+      link = 'http://maps.googleapis.com/maps/api/geocode/json?' + parameter +'='+ this._search.getValue()[0].city + '&sensor=true';
     else
       link = 'http://maps.googleapis.com/maps/api/geocode/json?' + parameter + '=' + this.latitude + ','+ this.longitude + '&sensor=true';
 
@@ -81,12 +93,14 @@ export class GeolocationService implements Location {
   }
 
   getDataFromGoogleApi(data: any, parameter: string) {
+    console.log(data.results[0]);
     this.address = data.results[0].formatted_address;
 
     //if is a reseach city
     if(parameter == 'address') {
-      this.searchResult.latitude = data.results[0].geometry.location.lat;
-      this.searchResult.longitude = data.results[0].geometry.location.lng;
+      this._search.getValue().push({latitude: data.results[0].geometry.location.lat});
+      this._search.getValue().push({longitude: data.results[0].geometry.location.lng});
+      this._search.next(this._search.getValue());
     }
     else {
       data.results[0].address_components.reduce((city, value) => {

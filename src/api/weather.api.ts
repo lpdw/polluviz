@@ -9,8 +9,11 @@ export class Weather extends Api {
     this.websiteName = websiteName;
     this.typeApi = 'weather';
     this.token = token;
-    this.lat = this.location.latitude;
-    this.long = this.location.longitude;
+
+    setTimeout(() => {
+      this.lat = this.location.latitude;
+      this.long = this.location.longitude;
+    }, 1500);
   }
 
 }

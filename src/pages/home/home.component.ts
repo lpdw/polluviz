@@ -117,8 +117,8 @@ export class HomeComponent implements OnInit {
     let result = this._geolocationService.searchingDataForCity(city);
     setTimeout(() => {
       this.listApi.map((api: Api) => {
-        api.options[0].commonOptions.lat = result.latitude;
-        api.options[0].commonOptions.lng = result.longitude;
+        api.options[0].commonOptions.lat = result[1].latitude;
+        api.options[0].commonOptions.lng = result[2].longitude;
       });
       this.completeLoading();
     }, 1000);

@@ -26,7 +26,6 @@ export class ApiService {
 
   private _listApi: Array<Api>;
   private _mapStyle: any = [];
-  public location: any = {};
   private _token: string;
 
   constructor
@@ -95,7 +94,9 @@ export class ApiService {
     let token = '691ec3376cb82530f3cd25ce9a1d1936';
     let MyWeather: Weather = new Weather('weather', token);
     MyWeather.server = "http://api.openweathermap.org/";
-    MyWeather.api = "data/2.5/weather?lat=" + MyWeather.lat + "&lon=" + MyWeather.long + "&APPID=" + MyWeather.token;
+    setTimeout(() => {
+      MyWeather.api = "data/2.5/weather?lat=" + MyWeather.lat + "&lon=" + MyWeather.long + "&APPID=" + MyWeather.token;
+    },1500);
     MyWeather.serverWithApiUrl = MyWeather.server + MyWeather.api;
 
     return MyWeather;

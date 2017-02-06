@@ -11,8 +11,11 @@ export class ChimicalPollution extends Api {
     this.typeApi = 'Chimical Pollution';
     this.typePollution= 'chimical';
     this.token = token;
-    this.lat = this.location.latitude;
-    this.long = this.location.longitude;
+
+    setTimeout(() => {
+      this.lat = this.location.latitude;
+      this.long = this.location.longitude;
+    }, 1500);
   }
 
 }
