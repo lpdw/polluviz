@@ -49,24 +49,22 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   {
     // The PageAPI component must read the parameter,
     //  then load the API based on the websiteName given in the parameter.
-    this._subscribe = this._route.params.subscribe(params =>
-    {
-      console.log(params);
+    this._subscribe = this._route.params.subscribe(params => {
       this._showMap = (params['showMap'] === 'true');
       this._showChart = (params['showChart'] === 'true');
       this._websiteName = params['websiteName'];
 
       //get all params that we need depends api
       if(params['websiteName'] == 'safecast')//options for safecast
-        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], distance: params['distance']};
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, longitude: +params['longitude'], latitude: +params['latitude'], typePollution: params['typePollution'], distance: params['distance']};
       else if(params['websiteName'] == 'openaq') //options for openaq
-        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], country: params['country']};
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, longitude: +params['longitude'], latitude: +params['latitude'], typePollution: params['typePollution'], country: params['country']};
       else if(params['websiteName'] == 'aqicn')
-        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution']};
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, longitude: +params['longitude'], latitude: +params['latitude'], typePollution: params['typePollution']};
       else if(params['websiteName'] == 'airvisual')
-        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution']};
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, longitude: +params['longitude'], latitude: +params['latitude'], typePollution: params['typePollution']};
       else if(params['websiteName'] == 'weather') //options for weather TRYHARD
-        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, lng: +params['lng'], lat: +params['lat'], typePollution: params['typePollution'], country: params['country']};
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, longitude: +params['longitude'], latitude: +params['latitude'], typePollution: params['typePollution'], country: params['country']};
 
        //call the ApiService to fectch all data
        this._apiService.getData(params['websiteName'],this._options)
@@ -87,8 +85,8 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   drawGmap(): void {
    this._gMap.title = this._options.websiteName;
    this._myStyleMap = this._gMap.myStyleMap;
-   this._gMap.lat = this._options.lat;
-   this._gMap.lng = this._options.lng;
+   this._gMap.latitude = this._options.latitude;
+   this._gMap.longitude = this._options.longitude;
    this._gMap.zoom = 14;
   }
 
@@ -124,7 +122,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
         console.log(`${this._websiteName}`);
         this._data.websiteName = this._websiteName;
         for(var i = 0; i < this._data.length; i++){
-    
+
           this._circleRadius = this._data[i].measurements[0].value;
           if(this._circleRadius < 15){
             this._data[i].circleRadius = this._circleRadius;

@@ -5,9 +5,9 @@
       <!-- Show Google Maps if params show = true and data are not empty -->
       <div *ngIf="!isEmptyData()" class="good">
         <div *ngIf="_options.showMap">
-          <sebm-google-map  [latitude]="_gMap.lat" [longitude]="_gMap.lng" [zoom]="this._gMap.zoom" [streetViewControl]="false"  [styles]="getStyleMap(_options.typePollution)">
+          <sebm-google-map  [latitude]="_gMap.latitude" [longitude]="_gMap.longitude" [zoom]="this._gMap.zoom" [streetViewControl]="false"  [styles]="getStyleMap(_options.typePollution)">
               <!-- the main marker -->
-              <sebm-google-map-marker [zIndex]="1" [latitude]="_gMap.lat" [longitude]="_gMap.lng"  [iconUrl]="'https://cdn0.iconfinder.com/data/icons/fatcow/16/radioactivity.png'"></sebm-google-map-marker>
+              <sebm-google-map-marker [zIndex]="1" [latitude]="_gMap.latitude" [longitude]="_gMap.longitude"  [iconUrl]="'https://cdn0.iconfinder.com/data/icons/fatcow/16/radioactivity.png'"></sebm-google-map-marker>
               <!--create a loop to display data : INSERER VARIABLE A LA PLACE DES VALEURS-->
 
             <div *ngIf='_websiteName=== "safecast" '>

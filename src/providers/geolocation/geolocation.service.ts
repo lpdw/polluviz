@@ -8,31 +8,27 @@ import {Observable} from 'rxjs/Rx';
 import { Location } from './location.interface';
 
 @Injectable()
-export class GeolocationService implements Location {
+export class GeolocationService {
 
-  public latitude : number;
-  public longitude : number;
-  public address: string;
-  public postalCode: number;
-  public city: string;
-
-  private _search: BehaviorSubject<Array<any>>;
-  public searchObservable: Observable<Array<any>>;
+  private _locationBehaviour: BehaviorSubject<any>;
+  public locationObservable: Observable<any>;
 
   private _options: Object;
 
   constructor(private http: Http) {
 
-    // initialize properties
     // default location is Paris
-    this.latitude  =  48.866667;
-    this.longitude  =  2.333333;
-    this.address =  'Paris';
-    this.postalCode =  75000;
-    this.city =  'Paris';
+    let data = {
+      latitude:  48.866667,
+      longitude:  2.333333,
+      address: 'Paris',
+      postalCode: 75000,
+      city: 'Paris',
+      search: false // if is from a research
+    }
 
-    this._search = new BehaviorSubject(Array<any>());
-    this.searchObservable = this._search.asObservable();
+    this._locationBehaviour = new BehaviorSubject(data);
+    this.locationObservable = this._locationBehaviour.asObservable();
 
     // set default options for the Geolocation
     this._options = {
@@ -40,91 +36,95 @@ export class GeolocationService implements Location {
       timeout: 5000,
       maximumAge: 0
     };
+
     // set the default location
     this.setDefaultLocation();
   }
 
   setDefaultLocation() {
     navigator.geolocation.getCurrentPosition( position => {
-      this.latitude = position.coords.latitude;
-      this.longitude = position.coords.longitude;
-      // console.log('success gettings lat & lng');
-      // call the google api to try to get infos (postcode,cityName...)
-      this.callGoogleApi('latlng');
-    }, error => {
-      alert(`ERROR(${error.code}): ${error.message}`);
+      // update lat & long from the browser location
+      this._locationBehaviour.getValue().latitude = position.coords.latitude;
+      this._locationBehaviour.getValue().longitude = position.coords.longitude;
+      this._locationBehaviour.next(this._locationBehaviour.getValue());
 
-      // call the google api to try to get infos (postcode,cityName...)
-      this.callGoogleApi('latlng');
+      // call the google api to try to get infos from position
+      this.callGoogleApi();
+    }, error => {
+      console.log(`ERROR(${error.code}): ${error.message}`);
+
+      // call the google api to try to get default infos from Paris
+      this.callGoogleApi();
     }, this._options);
   }
 
   searchingDataForCity(city: string) {
     // remove all data from the observable
-    this.clearSearchData();
+    this._locationBehaviour.getValue().search = true;
+    this._locationBehaviour.getValue().city = city;
+    this._locationBehaviour.next(this._locationBehaviour.getValue());
 
-    // add the city
-    this._search.getValue().push({city: city});
-    this._search.next(this._search.getValue());
     // and latitude & longitude from googleApi
-    this.callGoogleApi('address');
-    return this._search.getValue();
+    this.callGoogleApi();
+    return this._locationBehaviour.getValue();
   }
 
-  clearSearchData() {
-    if(this._search.getValue().length > 0) {
-      while (this._search.getValue().length > 0) {
-        for (let item of this._search.getValue())
-          this._search.getValue().splice(item, 1);
-      }
-      this._search.next(this._search.getValue());
+  resetDefaultDataGeolocation() {
+    this._locationBehaviour.getValue().latitude = 48.866667,
+    this._locationBehaviour.getValue().longitude = 2.333333,
+    this._locationBehaviour.getValue().address = 'Paris',
+    this._locationBehaviour.getValue().postalCode = 75000,
+    this._locationBehaviour.getValue().city = 'Paris',
+    this._locationBehaviour.getValue().search = false // if is from a research
+    this._locationBehaviour.next(this._locationBehaviour.getValue());
+    this.setDefaultLocation();
+  }
+
+  callGoogleApi() {
+    let link = '';
+    if(this._locationBehaviour.getValue().search === true) {
+      let city = this._locationBehaviour.getValue().city;
+      link = 'http://maps.googleapis.com/maps/api/geocode/json?address='+ this._locationBehaviour.getValue().city + '&sensor=true';
     }
-  }
-
-  callGoogleApi(parameter: string) {
-    let link: string = '';
-
-    if(parameter == 'address')
-      link = 'http://maps.googleapis.com/maps/api/geocode/json?' + parameter +'='+ this._search.getValue()[0].city + '&sensor=true';
     else
-      link = 'http://maps.googleapis.com/maps/api/geocode/json?' + parameter + '=' + this.latitude + ','+ this.longitude + '&sensor=true';
+      link = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + this._locationBehaviour.getValue().latitude + ','+ this._locationBehaviour.getValue().longitude + '&sensor=true';
 
     this.http.get(link).subscribe( response => {
       if(response.status == 200)
-        this.getDataFromGoogleApi(response.json(), parameter);
+        this.getDataFromGoogleApi(response.json());
     }, error => {
       console.log('error from getting data from gmaps');
     });
   }
 
-  getDataFromGoogleApi(data: any, parameter: string) {
-    console.log(data.results[0]);
-    this.address = data.results[0].formatted_address;
+  getDataFromGoogleApi(data: any) {
+    this._locationBehaviour.getValue().address = data.results[0].formatted_address;
 
     //if is a reseach city
-    if(parameter == 'address') {
-      this._search.getValue().push({latitude: data.results[0].geometry.location.lat});
-      this._search.getValue().push({longitude: data.results[0].geometry.location.lng});
-      this._search.next(this._search.getValue());
+    if(this._locationBehaviour.getValue().search === true) {
+      this._locationBehaviour.getValue().latitude = data.results[0].geometry.location.lat;
+      this._locationBehaviour.getValue().longitude = data.results[0].geometry.location.lng;
     }
     else {
       data.results[0].address_components.reduce((city, value) => {
        if (value.types[0] == "locality")
-         this.city = value.long_name;
+         this._locationBehaviour.getValue().city = value.long_name;
        if (value.types[0] == "postal_code")
-            this.postalCode = value.long_name;
+            this._locationBehaviour.getValue().postalCode = value.long_name;
       }, '');
 
-      //set persistence of the location
-      let infos = {
-        latitude: this.latitude,
-        longitude : this.longitude,
-        address: this.address,
-        postalCode: this.postalCode,
-        city: this.city
-      };
-      window.localStorage.setItem('location', JSON.stringify(infos));
+      // update value
+      this._locationBehaviour.next(this._locationBehaviour.getValue());
     }
+  }
+
+  getData() {
+    this.setDefaultLocation();
+    return this._locationBehaviour.getValue();
+  }
+
+  getDataLocation(): Observable<any> {
+    return this.locationObservable;
   }
 
 }

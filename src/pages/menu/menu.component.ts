@@ -19,39 +19,25 @@ export class MenuComponent implements OnInit {
   public _subscribe: any;
 
   constructor ( private router: Router, private _route: ActivatedRoute, private _geolocationService: GeolocationService ) {
-
-  }
-
-  ngOnInit() {
-
     // watch the current url
-    this.getCurrentLocation();
     this.router.events.subscribe( val => {
-
-      console.log(val.url);
       if(val.url == "/") {
         this.showBtnNavBack = false;
-        this.getCurrentLocation();
+        this._geolocationService.resetDefaultDataGeolocation();
+        setTimeout(() => {
+          this.city = this._geolocationService.getData().city;
+        }, 2000);
       }
       else { // we are on the page Api
         this.showBtnNavBack = true;
+        setTimeout(() => {
+          this.city = this._geolocationService.getData().city;
+        }, 1500);
       }
-
-      // update the city view
-      this._geolocationService.searchObservable.subscribe((data) => {
-        if(data.length > 0 && this.showBtnNavBack === true) {
-          this.city = data[0].city;
-        }
-      });
-
     });
   }
 
-  getCurrentLocation() {
-    setTimeout(() => {
-      this.location = JSON.parse(window.localStorage.getItem('location'));
-      this.city = this.location.city;
-    }, 1500);
+  ngOnInit() {
   }
 
   ngOnDestroy() {

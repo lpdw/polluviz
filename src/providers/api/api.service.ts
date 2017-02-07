@@ -11,6 +11,9 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 //Form our project
+// providers
+import { GeolocationService } from '../../providers/geolocation/geolocation.service';
+
 import { Api } from '../../api/api.class';
 import { AirPollution } from '../../api/airpollution.api';
 import { ChimicalPollution } from '../../api/chimicalpollution.api';
@@ -24,6 +27,7 @@ import { Weather } from '../../api/weather.api'; //TRYHARD
 @Injectable()
 export class ApiService {
 
+  private _location: any;
   private _listApi: Array<Api>;
   private _mapStyle: any = [];
   private _token: string;
@@ -31,10 +35,23 @@ export class ApiService {
   constructor
   (
     public http: Http,
-    public jsonp: Jsonp
+    public jsonp: Jsonp,
+    private _geolocationService : GeolocationService
   )
   {
     this._listApi = new Array<Api>();
+    this._location = {
+      latitude:  48.866667,
+      longitude:  2.333333,
+      address: 'Paris',
+      postalCode: 75000,
+      city: 'Paris',
+      search: false // if is from a research
+    }
+
+    this._geolocationService.locationObservable.subscribe((data: any) => {
+      this.updateLocationData(data);
+    });
     this.initApi();
   }
 
@@ -57,7 +74,7 @@ export class ApiService {
     this._token = 'p4grS8buAWyJy36vJ';
     let Airvisual: AirPollution = new AirPollution('airvisual', this._token);
     Airvisual.server = "http://api.airvisual.com/";
-    Airvisual.api = "v1/nearest?lat=" + Airvisual.lat + "&lon=" + Airvisual.long + "&key=" + Airvisual.token;
+    Airvisual.api = "v1/nearest?lat=" + Airvisual.latitude + "&lon=" + Airvisual.longitude + "&key=" + Airvisual.token;
     Airvisual.serverWithApiUrl = Airvisual.server + Airvisual.api;
 
     //Chimical Pollution
@@ -74,6 +91,12 @@ export class ApiService {
     this._listApi.push(Airvisual);
     this._listApi.push(SafeCast);
     this._listApi.push(Aqicn);
+
+    // update location
+    this._listApi.map((api) => {
+      api.latitude = this._location.latitude;
+      api.longitude = this._location.longitude;
+    });
   }
 
   public getApi(typePollution: string, websiteName ?: string) {
@@ -89,13 +112,24 @@ export class ApiService {
     }
   }
 
+  updateLocationData(data: any) {
+    this._location = {
+      latitude:  data.latitude,
+      longitude:  data.longitude,
+      address: data.address,
+      postalCode: data.postalCode,
+      city: data.city,
+      search: data.search // if is from a research
+    }
+  }
+
   getMyWeatherApi(): Weather {
     //Weather
     let token = '691ec3376cb82530f3cd25ce9a1d1936';
     let MyWeather: Weather = new Weather('weather', token);
     MyWeather.server = "http://api.openweathermap.org/";
     setTimeout(() => {
-      MyWeather.api = "data/2.5/weather?lat=" + MyWeather.lat + "&lon=" + MyWeather.long + "&APPID=" + MyWeather.token;
+      MyWeather.api = "data/2.5/weather?lat=" + MyWeather.latitude + "&lon=" + MyWeather.longitude + "&APPID=" + MyWeather.token;
     },1500);
     MyWeather.serverWithApiUrl = MyWeather.server + MyWeather.api;
 

@@ -1,8 +1,6 @@
 import { Api } from './api.class';
 
 export class AirPollution extends Api {
-  public lat: number;
-  public long: number;
   public mapStyle: any;
 
   //le token est optionnel
@@ -12,10 +10,5 @@ export class AirPollution extends Api {
     this.typeApi = "Air pollution";
     this.typePollution = 'air';
     this.token = token;
-
-    setTimeout(() => {
-      this.lat = this.location.latitude;
-      this.long = this.location.longitude;
-    }, 1500);
   }
 }

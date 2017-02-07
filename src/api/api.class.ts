@@ -1,6 +1,3 @@
-//Geolocation component
-import { GeolocationService } from '../providers/geolocation/geolocation.service';
-
 export class Api {
     public typeApi: string;
     public server: string;
@@ -13,7 +10,8 @@ export class Api {
     public data:any = {};
     public options: any = {};
 
-    public location: any;
+    public latitude: string;
+    public longitude: string;
 
     constructor() {
       this.typeApi = '';
@@ -22,11 +20,9 @@ export class Api {
       this.serverWithApiUrl = '';
       this.websiteName = '';
       this.typePollution = '';
-      this.token= '';
-
-      setTimeout(() => {
-        this.location = JSON.parse(window.localStorage.getItem('location'));
-      }, 1500);
+      this.token = '';
+      this.latitude = '';
+      this.longitude = '';
     }
 
     setOptions(options: any) { this.options = options }

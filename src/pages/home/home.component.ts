@@ -47,7 +47,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.startLoading();
-    this.location = JSON.parse(window.localStorage.getItem('location'));
 
     let allApi = this._apiService.getAllApi();
 
@@ -56,18 +55,18 @@ export class HomeComponent implements OnInit {
       let optionalOptions;
       if(api.websiteName == 'openaq') {
         optionalOptions = { country: 'FR' };
-        options = this.getCommonAndOptionalOptions(api.websiteName, api.typePollution, optionalOptions);
+        options = this.getCommonAndOptionalOptions(api, optionalOptions);
       }
       else if(api.websiteName == 'safecast') {
         optionalOptions = { distance: 2222 };
-        options = this.getCommonAndOptionalOptions(api.websiteName, api.typePollution, optionalOptions);
+        options = this.getCommonAndOptionalOptions(api, optionalOptions);
       }
       else if(api.websiteName == 'aqicn') {
         optionalOptions = { distance: 2222 };
-        options = this.getCommonAndOptionalOptions(api.websiteName, api.typePollution, optionalOptions);
+        options = this.getCommonAndOptionalOptions(api, optionalOptions);
       }
       else if (api.websiteName == 'airvisual') {
-        options = this.getCommonAndOptionalOptions(api.websiteName, api.typePollution);
+        options = this.getCommonAndOptionalOptions(api);
       }
       api.setOptions(options);
 
@@ -93,13 +92,14 @@ export class HomeComponent implements OnInit {
   }
 
   // we have a common options
-  getCommonAndOptionalOptions(websiteName: string, typePollution: string, optionalOptions? : any) {
+  getCommonAndOptionalOptions(api: Api, optionalOptions ?: any) {
+
     let options = [ {
       commonOptions: {
-        websiteName: websiteName,
-        lat: this.location.latitude,
-        lng: this.location.longitude,
-        typePollution: typePollution,
+        websiteName: api.websiteName,
+        latitude: api.latitude,
+        longitude: api.longitude,
+        typePollution: api.typePollution,
         showMap: true,
         showChart: true
       },
@@ -114,14 +114,14 @@ export class HomeComponent implements OnInit {
 
     let city = data._value.toLowerCase();
     // get Location data from the city
-    let result = this._geolocationService.searchingDataForCity(city);
+    let dataLocation = this._geolocationService.searchingDataForCity(city);
     setTimeout(() => {
       this.listApi.map((api: Api) => {
-        api.options[0].commonOptions.lat = result[1].latitude;
-        api.options[0].commonOptions.lng = result[2].longitude;
+        api.options[0].commonOptions.latitude = dataLocation.latitude;
+        api.options[0].commonOptions.longitude = dataLocation.longitude;
       });
       this.completeLoading();
-    }, 1000);
+    }, 2000);
 
   }
 
@@ -132,8 +132,10 @@ export class HomeComponent implements OnInit {
   }
 
   private extend(obj, src) {
-    for (var key in src) {
-        if (src.hasOwnProperty(key)) obj[key] = src[key];
+    if(typeof src !== 'undefined') {
+      for (var key in src) {
+          if (src.hasOwnProperty(key)) obj[key] = src[key];
+      }
     }
     return obj;
   }
