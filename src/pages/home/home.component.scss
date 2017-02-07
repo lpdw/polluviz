@@ -28,6 +28,32 @@
 .moyen { background-color: #FBC02D;}
 .bad {background-color: #BF360C}
 
+.formCity input {
+  border: none;
+}
+.formCity input, .formCity input:focus {
+  outline: none;
+}
+.formCity input[type="text"] {
+  width: 300px;
+  padding: 8px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.formCity input[type="submit"] {
+  padding: 8px;
+  background-color: #188a94;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0.8;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.formCity input[type="submit"]:hover {
+  opacity: 1;
+}
+
+
 @media screen and (max-width: 900px) {
   .card {
     width: 40%

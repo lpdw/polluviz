@@ -1,12 +1,11 @@
 <ng2-slim-loading-bar [height]="'4px'"></ng2-slim-loading-bar>
 
-
-<form (ngSubmit)="onSubmit(searchControl)" style="text-align:center;margin-top:2em;">
-  <input type="text" [formControl]="searchControl" placeholder="city" style="margin-left:2em">
-  <input type="submit">
-</form>
-
 <div class="container text-center" *ngIf="allDataApiLoaded">
+
+  <form (ngSubmit)="onSubmit(searchControl)" class="formCity">
+    <input type="text" [formControl]="searchControl" placeholder="Trouver une ville"><input value="GO !" type="submit">
+  </form>
+
   <div class="card good" *ngFor="let api of listApi | orderBy : ['websiteName'] "
         (click)="showPageApi(api)">
         {{api.websiteName}}
