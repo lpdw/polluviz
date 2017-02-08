@@ -15,7 +15,7 @@ a {
   width: 40%;
   margin: 2%;
   display: inline-block;
-  vertical-align: top;
+  vertical-align: middle;
 }
 
 .container {
@@ -25,6 +25,16 @@ a {
 .good {  border-bottom: 3px solid #7CB342;}
 .moyen { border-bottom: 3px solid #FBC02D;}
 .bad {   border-bottom: 3px solid #BF360C;}
+
+.list-elements {
+  list-style: none;
+}
+
+.list-elements li span {
+  width: 80px;
+  display: inline-block;
+  font-weight: bold;
+}
 
 @media screen and (max-width: 900px) {
   .box {
