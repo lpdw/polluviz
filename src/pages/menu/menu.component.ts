@@ -19,20 +19,19 @@ export class MenuComponent implements OnInit {
   public _subscribe: any;
 
   constructor ( private router: Router, private _route: ActivatedRoute, private _geolocationService: GeolocationService ) {
+
+    // wath the location
+    this._geolocationService.locationObservable.subscribe( location => {
+      this.city = location.city;
+    });
+
     // watch the current url
     this.router.events.subscribe( val => {
       if(val.url == "/") {
         this.showBtnNavBack = false;
-        this._geolocationService.resetDefaultDataGeolocation();
-        setTimeout(() => {
-          this.city = this._geolocationService.getData().city;
-        }, 2000);
       }
       else { // we are on the page Api
         this.showBtnNavBack = true;
-        setTimeout(() => {
-          this.city = this._geolocationService.getData().city;
-        }, 1500);
       }
     });
   }

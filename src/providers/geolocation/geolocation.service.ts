@@ -66,7 +66,6 @@ export class GeolocationService {
 
     // and latitude & longitude from googleApi
     this.callGoogleApi();
-    return this._locationBehaviour.getValue();
   }
 
   resetDefaultDataGeolocation() {
@@ -86,12 +85,14 @@ export class GeolocationService {
       let city = this._locationBehaviour.getValue().city;
       link = 'http://maps.googleapis.com/maps/api/geocode/json?address='+ this._locationBehaviour.getValue().city + '&sensor=true';
     }
-    else
+    else {
       link = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + this._locationBehaviour.getValue().latitude + ','+ this._locationBehaviour.getValue().longitude + '&sensor=true';
+    }
 
     this.http.get(link).subscribe( response => {
-      if(response.status == 200)
+      if(response.status == 200) {
         this.getDataFromGoogleApi(response.json());
+      }
     }, error => {
       console.log('error from getting data from gmaps');
     });
@@ -113,9 +114,10 @@ export class GeolocationService {
             this._locationBehaviour.getValue().postalCode = value.long_name;
       }, '');
 
-      // update value
-      this._locationBehaviour.next(this._locationBehaviour.getValue());
     }
+
+    // update value
+    this._locationBehaviour.next(this._locationBehaviour.getValue());
   }
 
   getData() {

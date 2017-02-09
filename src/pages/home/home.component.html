@@ -6,9 +6,11 @@
     <input type="text" [formControl]="searchControl" placeholder="Trouver une ville"><input value="GO !" type="submit">
   </form>
 
-  <div class="card good" *ngFor="let api of listApi | orderBy : ['websiteName'] "
-        (click)="showPageApi(api)">
-        {{api.websiteName}}
+  <div *ngIf="allDataApiLoaded">
+    <div class="card good" *ngFor="let api of listApi | orderBy : ['websiteName'] "
+          (click)="showPageApi(api)">
+          {{api.websiteName}}
+    </div>
   </div>
 </div>
 
