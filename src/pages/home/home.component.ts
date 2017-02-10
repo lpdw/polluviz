@@ -84,13 +84,6 @@ export class HomeComponent implements OnInit {
       });
     });
 
-    let myYahooWeather: YahooWeather = this._apiService.getMyWeatherApi2();
-    this._apiService.getDataForWeather2(myYahooWeather)
-    .subscribe( result => {
-    }, err => {
-      console.log(`error getting data for YahooWeather : ${err}`);
-    });
-
   }
 
   // we have common options

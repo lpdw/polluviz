@@ -17,7 +17,6 @@ import { GeolocationService } from '../../providers/geolocation/geolocation.serv
 import { Api } from '../../api/api.class';
 import { AirPollution } from '../../api/airpollution.api';
 import { ChimicalPollution } from '../../api/chimicalpollution.api';
-import { Weather } from '../../api/weather.api'; //TRYHARD
 import { YahooWeather } from '../../api/yahooweather.api';
 
 /**
@@ -128,12 +127,11 @@ export class ApiService {
     }
   }
 
-  getMyWeatherApi2(): YahooWeather{
+  //Do not set intervall - API endpoint cannot permit this kind of request
+  getMyWeatherApi(): YahooWeather{
     let myYahooWeather: YahooWeather = new YahooWeather('Weathers');
     myYahooWeather.server = "https://query.yahooapis.com/v1/";
-    //setTimeout(() => {
-      myYahooWeather.api = "public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22"+"Paris"+"%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
-    //},1500);
+    myYahooWeather.api = "public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22"+"Paris"+"%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
     myYahooWeather.serverWithApiUrl = myYahooWeather.server + myYahooWeather.api;
     return myYahooWeather;
   }
@@ -172,8 +170,8 @@ export class ApiService {
     }
     return this.http.get(apiUrlToGet).map(this.extractData).catch(this.handleError);
   }
-  
-  getDataForWeather2(myYahooWeather: YahooWeather) {
+
+  getDataForWeather(myYahooWeather: YahooWeather) {
     let apiUrlToGet = myYahooWeather.server + myYahooWeather.api;
     return this.http.get(apiUrlToGet).map(this.extractData).catch(this.handleError);
   }

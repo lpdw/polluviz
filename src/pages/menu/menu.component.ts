@@ -44,8 +44,8 @@ export class MenuComponent implements OnInit {
     });
 
 
-    let myYahooWeather: YahooWeather = this._apiService.getMyWeatherApi2();
-    this._apiService.getDataForWeather2(myYahooWeather)
+    let myYahooWeather: YahooWeather = this._apiService.getMyWeatherApi();
+    this._apiService.getDataForWeather(myYahooWeather)
     .subscribe( result => {
 
       //TODO I a poor lonsome cowboy ... I've a long long way from home.
