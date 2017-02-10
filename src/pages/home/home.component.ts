@@ -8,7 +8,7 @@ import { Api } from '../../api/api.class';
 import { AirPollution } from '../../api/airpollution.api';
 import { ChimicalPollution } from '../../api/chimicalpollution.api';
 import { Weather } from '../../api/weather.api'; //TRYHARD
-
+import { YahooWeather } from '../../api/yahooweather.api';
 // From providers
 import { ApiService } from '../../providers/api/api.service';
 import { GeolocationService } from '../../providers/geolocation/geolocation.service';
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
   public listApi: Array<Api>;
   public location: any;
   public allDataApiLoaded: boolean;
-
+  public temperature: number;
   private _options: any;
   private _apiData: Array<any> = [];
 
@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit {
       }
       api.setOptions(options);
 
-      // geting data for all APIs
+      // API
       this._apiService.getData(api.websiteName, api.options)
       .subscribe( result => {
         this.listApi.push(api);
@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit {
       });
     });
 
-    // getting data for weather
+    // weather
     let MyWeather: Weather = this._apiService.getMyWeatherApi();
     this._apiService.getDataForWeather(MyWeather)
     .subscribe( result => {
@@ -94,9 +94,16 @@ export class HomeComponent implements OnInit {
       console.log(`error getting data for Weather : ${err}`);
     });
 
+    let myYahooWeather: YahooWeather = this._apiService.getMyWeatherApi2();
+    this._apiService.getDataForWeather2(myYahooWeather)
+    .subscribe( result => {
+    }, err => {
+      console.log(`error getting data for YahooWeather : ${err}`);
+    });
+
   }
 
-  // we have a common options
+  // we have common options
   getCommonAndOptionalOptions(api: Api, optionalOptions ?: any) {
     let options;
 

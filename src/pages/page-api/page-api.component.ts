@@ -34,22 +34,21 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   private _gMap: Gmap;
   private _styleMap: StylesMap;
   private _websiteName: string;
-  private _circleRadius: number = 0 ;
+  private _circleRadius: number = 0;
   private _circleColor: string;
 
   constructor
-  (
+    (
     private _geolocationService: GeolocationService,
     private _route: ActivatedRoute,
     private _apiService: ApiService
-  )
-  {
+    ) {
     this._styleMap = new StylesMap();
     this._gMap = new Gmap();
   }
 
   ngOnInit() {
-    this._geolocationService.locationObservable.subscribe( location => {
+    this._geolocationService.locationObservable.subscribe(location => {
       console.log(location);
       this._location = location;
     });
@@ -62,24 +61,24 @@ export class PageAPIComponent implements OnInit, OnDestroy {
       this._websiteName = params['websiteName'];
 
       //get all params that we need depends api
-      if(params['websiteName'] == 'safecast')//options for safecast
-        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution'], distance: params['distance']};
-      else if(params['websiteName'] == 'openaq') //options for openaq
-        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution'], country: params['country']};
-      else if(params['websiteName'] == 'aqicn')
-        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution']};
-      else if(params['websiteName'] == 'airvisual')
-        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution']};
-      else if(params['websiteName'] == 'weather') //options for weather TRYHARD
-        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution'], country: params['country']};
+      if (params['websiteName'] == 'safecast')//options for safecast
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution'], distance: params['distance'] };
+      else if (params['websiteName'] == 'openaq') //options for openaq
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution'], country: params['country'] };
+      else if (params['websiteName'] == 'aqicn')
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution'] };
+      else if (params['websiteName'] == 'airvisual')
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution'] };
+      else if (params['websiteName'] == 'weather') //options for weather TRYHARD
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution'], country: params['country'] };
 
-       //call the ApiService to fectch all data
-       this._apiService.getData(params['websiteName'],this._options)
-       .subscribe( result => {
-         this.setData(result);
-       }, error => {
-         console.log('error gettings data from the API ');
-       });
+      //call the ApiService to fectch all data
+      this._apiService.getData(params['websiteName'], this._options)
+        .subscribe(result => {
+          this.setData(result);
+        }, error => {
+          console.log('error gettings data from the API ');
+        });
     });
   }
 
@@ -90,31 +89,32 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   }
 
   drawGmap(): void {
-   this._gMap.title = this._options.websiteName;
-   this._myStyleMap = this._gMap.myStyleMap;
-   this._gMap.latitude = this._location.latitude;
-   this._gMap.longitude = this._location.longitude;
-   this._gMap.zoom = 14;
+    this._gMap.title = this._options.websiteName;
+    this._myStyleMap = this._gMap.myStyleMap;
+    this._gMap.latitude = this._location.latitude;
+    this._gMap.longitude = this._location.longitude;
+    this._gMap.zoom = 14;
   }
 
   showGmap() {
-    if(this._options.showMap == true)
+    if (this._options.showMap == true)
       this.drawGmap();
     else
       console.log("don't need the map");
   }
 
   showGChart() {
-    if(this._showChart == true)
-        //for openaq use LineChart
-        if (this._websiteName == 'openaq') {
-            this.drawGChart('LineChart',this._data);
-        }
-        else if (this._websiteName == 'aqicn') { //for openaq use PieChart
-            this.drawGChart('PieChart',this._data);
-        }
+    if (this._showChart == true)
+      //for openaq use LineChart
+      if (this._websiteName == 'openaq') {
+        this.drawGChart('LineChart', this._data);
+      }
+      else if (this._websiteName == 'aqicn') { //for openaq use PieChart
+        this.drawGChart('PieChart', this._data);
+      }
 
   }
+
 
   setData(data: any) {
     this._data = data;
@@ -123,85 +123,84 @@ export class PageAPIComponent implements OnInit, OnDestroy {
     this.showGmap();
     this.showGChart();
 
-    switch(this._websiteName) {
-      case  'openaq' :
-      this._data = data.results;
-        console.log(`${this._websiteName}`);
+    switch (this._websiteName) {
+      case 'openaq':
+        this._data = data.results;
+
         this._data.websiteName = this._websiteName;
-        for(var i = 0; i < this._data.length; i++){
+        for (var i = 0; i < this._data.length; i++) {
 
           this._circleRadius = this._data[i].measurements[0].value;
-          if(this._circleRadius < 15){
+          if (this._circleRadius < 15) {
             this._data[i].circleRadius = this._circleRadius;
             this._data[i].circleColor = "lightgreen";
           }
-          if(this._circleRadius >= 15 && this._circleRadius < 25){
+          if (this._circleRadius >= 15 && this._circleRadius < 25) {
             this._data[i].circleRadius = this._circleRadius;
             this._data[i].circleColor = "green";
           }
-          if(this._circleRadius >= 25 && this._circleRadius < 35){
-          this._data[i].circleRadius = this._circleRadius;
-          this._data[i].circleColor = "darkgreen";
-        }
-        if(this._circleRadius >= 35 && this._circleRadius < 45){
-        this._data[i].circleRadius = this._circleRadius;
-        this._data[i].circleColor = "yellow";
-       }
-       if(this._circleRadius >= 45 && this._circleRadius < 55){
-         this._data[i].circleRadius = this._circleRadius;
-         this._data[i].circleColor = "orange";
-       }
-       if(this._circleRadius >= 55 && this._circleRadius < 65){
-         this._data[i].circleRadius = this._circleRadius;
-         this._data[i].circleColor = "red";
-       }
-       if(this._circleRadius >= 65){
-         this._data[i].circleRadius = this._circleRadius;
-         this._data[i].circleColor = "black";
-       }
-        }
-        break;
-      case  'safecast' :
-        this._data[0].websiteName = this._websiteName;
-        // alert(` ${this._websiteName}`);
-        console.log(this._data);
-        for(var i=0; i<this._data.length; i++)
-        {
-          // boucle permettant d'avoir les infos de l'objet _data
-          console.log(this._data[i]);
-          this._circleRadius = this._data[i].value;  // la value des points pour avoir la taille @TODO --> avec ce code mm taille partt, peut etre faire un array !
-         // this._circleColor = "yellow";/
-          if(this._circleRadius < 40){
-            this._data[i].circleRadius = this._circleRadius;
-            this._data[i].circleColor = "lightgreen";
-          }
-          if(this._circleRadius >= 40 && this._circleRadius < 60){
-            this._data[i].circleRadius = this._circleRadius;
-            this._data[i].circleColor = "green";
-          }
-            if(this._circleRadius >= 60 && this._circleRadius < 80){
+          if (this._circleRadius >= 25 && this._circleRadius < 35) {
             this._data[i].circleRadius = this._circleRadius;
             this._data[i].circleColor = "darkgreen";
           }
-          if(this._circleRadius >= 80 && this._circleRadius < 90){
+          if (this._circleRadius >= 35 && this._circleRadius < 45) {
             this._data[i].circleRadius = this._circleRadius;
             this._data[i].circleColor = "yellow";
           }
-          if(this._circleRadius >= 90 && this._circleRadius < 110){
+          if (this._circleRadius >= 45 && this._circleRadius < 55) {
             this._data[i].circleRadius = this._circleRadius;
             this._data[i].circleColor = "orange";
           }
-          if(this._circleRadius >= 110 && this._circleRadius < 150){
+          if (this._circleRadius >= 55 && this._circleRadius < 65) {
             this._data[i].circleRadius = this._circleRadius;
             this._data[i].circleColor = "red";
           }
-          if(this._circleRadius >= 150){
+          if (this._circleRadius >= 65) {
+            this._data[i].circleRadius = this._circleRadius;
+            this._data[i].circleColor = "black";
+          }
+        }
+        break;
+      case 'safecast':
+        this._data[0].websiteName = this._websiteName;
+
+        console.log(this._data);
+        for (var i = 0; i < this._data.length; i++) {
+          // boucle permettant d'avoir les infos de l'objet _data
+          console.log(this._data[i]);
+          this._circleRadius = this._data[i].value;  // la value des points pour avoir la taille @TODO --> avec ce code mm taille partt, peut etre faire un array !
+          // this._circleColor = "yellow";/
+          if (this._circleRadius < 40) {
+            this._data[i].circleRadius = this._circleRadius;
+            this._data[i].circleColor = "lightgreen";
+          }
+          if (this._circleRadius >= 40 && this._circleRadius < 60) {
+            this._data[i].circleRadius = this._circleRadius;
+            this._data[i].circleColor = "green";
+          }
+          if (this._circleRadius >= 60 && this._circleRadius < 80) {
+            this._data[i].circleRadius = this._circleRadius;
+            this._data[i].circleColor = "darkgreen";
+          }
+          if (this._circleRadius >= 80 && this._circleRadius < 90) {
+            this._data[i].circleRadius = this._circleRadius;
+            this._data[i].circleColor = "yellow";
+          }
+          if (this._circleRadius >= 90 && this._circleRadius < 110) {
+            this._data[i].circleRadius = this._circleRadius;
+            this._data[i].circleColor = "orange";
+          }
+          if (this._circleRadius >= 110 && this._circleRadius < 150) {
+            this._data[i].circleRadius = this._circleRadius;
+            this._data[i].circleColor = "red";
+          }
+          if (this._circleRadius >= 150) {
             this._data[i].circleRadius = this._circleRadius;
             this._data[i].circleColor = "black";
           }
         };
-      break;
-      case 'aqicn' :
+        break;
+      case 'aqicn':
         console.log(`${this._websiteName}`);
         console.log(this._data[i]);
         break;
@@ -214,26 +213,26 @@ export class PageAPIComponent implements OnInit, OnDestroy {
 
   getStyleMap(style: string) {
     let styleType;
-    if(this._options.typePollution == style)
+    if (this._options.typePollution == style)
       styleType = this._styleMap.getStyle(style);
     return styleType;
   }
 
   drawGChart(chartType: string, data: any) {
-    // console.log(data);
+
     let gChart: GChart = new GChart();
     gChart.type = chartType;
 
     gChart.data = gChart.getChartData(this._websiteName, data);
 
-    if(this._websiteName == 'openaq') {
-        //chaque chart a ses propres options
-        gChart.options = gChart.getChartOptions(this._websiteName, data);
+    if (this._websiteName == 'openaq') {
+      //chaque chart a ses propres options
+      gChart.options = gChart.getChartOptions(this._websiteName, data);
     }
     else if (this._websiteName == 'aqicn') {
-        gChart.options = gChart.getChartOptions(this._websiteName, data);
+      gChart.options = gChart.getChartOptions(this._websiteName, data);
     }
 
-    this._listGChart.push({data: gChart.data, options: gChart.options, type: gChart.type});
+    this._listGChart.push({ data: gChart.data, options: gChart.options, type: gChart.type });
   }
 }

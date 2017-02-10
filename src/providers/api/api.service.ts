@@ -18,6 +18,7 @@ import { Api } from '../../api/api.class';
 import { AirPollution } from '../../api/airpollution.api';
 import { ChimicalPollution } from '../../api/chimicalpollution.api';
 import { Weather } from '../../api/weather.api'; //TRYHARD
+import { YahooWeather } from '../../api/yahooweather.api';
 
 /**
 - * @class ApiService
@@ -131,13 +132,24 @@ export class ApiService {
     //Weather
     let token = '691ec3376cb82530f3cd25ce9a1d1936';
     let MyWeather: Weather = new Weather('weather', token);
-    MyWeather.server = "http://api.openweathermap.org/";
+
     setTimeout(() => {
+      MyWeather.server = "http://api.openweathermap.org/";
       MyWeather.api = "data/2.5/weather?lat=" + "48.866667" + "&lon=" + "2.333333" + "&APPID=" + token;
     },1500);
     MyWeather.serverWithApiUrl = MyWeather.server + MyWeather.api;
 
     return MyWeather;
+  }
+
+  getMyWeatherApi2(): YahooWeather{
+    let myYahooWeather: YahooWeather = new YahooWeather('Weathers');
+    myYahooWeather.server = "https://query.yahooapis.com/v1/";
+    //setTimeout(() => {
+      myYahooWeather.api = "public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22"+"Paris"+"%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
+    //},1500);
+    myYahooWeather.serverWithApiUrl = myYahooWeather.server + myYahooWeather.api;
+    return myYahooWeather;
   }
 
   public getAllApi() { return this._listApi; }
@@ -177,6 +189,11 @@ export class ApiService {
 
   getDataForWeather(myWeather: Weather) {
     let apiUrlToGet = myWeather.server + myWeather.api;
+    return this.http.get(apiUrlToGet).map(this.extractData).catch(this.handleError);
+  }
+
+  getDataForWeather2(myYahooWeather: YahooWeather) {
+    let apiUrlToGet = myYahooWeather.server + myYahooWeather.api;
     return this.http.get(apiUrlToGet).map(this.extractData).catch(this.handleError);
   }
 
