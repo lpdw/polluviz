@@ -46,8 +46,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.allDataApiLoaded = false;
     this.startLoading();
 
     this._geolocationService.resetDefaultDataGeolocation();
@@ -116,7 +114,6 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit(data: any) {
-    this.allDataApiLoaded = false;
     this.startLoading();
 
     let city = data._value.toLowerCase();
@@ -150,6 +147,8 @@ export class HomeComponent implements OnInit {
   }
 
   startLoading() {
+
+    this.allDataApiLoaded = false;
      this._slimLoadingBarService.start(() => {
          console.log('Loading complete');
      });

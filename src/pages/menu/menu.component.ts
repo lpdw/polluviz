@@ -20,10 +20,7 @@ export class MenuComponent implements OnInit {
 
   constructor ( private router: Router, private _route: ActivatedRoute, private _geolocationService: GeolocationService ) {
 
-    // wath the location
-    this._geolocationService.locationObservable.subscribe( location => {
-      this.city = location.city;
-    });
+
 
     // watch the current url
     this.router.events.subscribe( val => {
@@ -37,6 +34,10 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    // wath the location
+    this._subscribe = this._geolocationService.locationObservable.subscribe( location => {
+      this.city = location.city;
+    });
   }
 
   ngOnDestroy() {
