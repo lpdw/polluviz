@@ -5,11 +5,14 @@
   <form (ngSubmit)="onSubmit(searchControl)" class="formCity">
     <input type="text" [formControl]="searchControl" placeholder="Trouver une ville"><input value="GO !" type="submit">
   </form>
-
+  
   <div *ngIf="allDataApiLoaded">
     <div class="card good" *ngFor="let api of listApi | orderBy : ['websiteName'] "
           (click)="showPageApi(api)">
-          {{api.websiteName}}
+          <span *ngIf="api.websiteName==='aqicn'" >Pollution de l'air</span>
+          <span *ngIf="api.websiteName==='airvisual'" >Pollution visuelle</span>
+          <span *ngIf="api.websiteName==='openaq'" >Qualité de l'air</span>
+          <span *ngIf="api.websiteName==='safecast'" >Taux de radiation</span>
     </div>
   </div>
 </div>
