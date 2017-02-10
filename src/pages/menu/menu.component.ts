@@ -1,7 +1,6 @@
 //From Angular
 import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-import { Weather } from '../../api/weather.api'; //TRYHARD
 import { Api } from '../../api/api.class';
 import { ApiService } from '../../providers/api/api.service';
 //Geolocation component
@@ -51,7 +50,7 @@ export class MenuComponent implements OnInit {
 
       //TODO I a poor lonsome cowboy ... I've a long long way from home.
       this.temperature = ((result.query.results.channel.item.condition.temp - 32)*5/9).toFixed(1) +" °C";
-    
+
     }, err => {
       console.log(`error getting data for YahooWeather : ${err}`);
     });

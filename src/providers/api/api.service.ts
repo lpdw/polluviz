@@ -128,20 +128,6 @@ export class ApiService {
     }
   }
 
-  getMyWeatherApi(): Weather {
-    //Weather
-    let token = '691ec3376cb82530f3cd25ce9a1d1936';
-    let MyWeather: Weather = new Weather('weather', token);
-
-    setTimeout(() => {
-      MyWeather.server = "http://api.openweathermap.org/";
-      MyWeather.api = "data/2.5/weather?lat=" + "48.866667" + "&lon=" + "2.333333" + "&APPID=" + token;
-    },1500);
-    MyWeather.serverWithApiUrl = MyWeather.server + MyWeather.api;
-
-    return MyWeather;
-  }
-
   getMyWeatherApi2(): YahooWeather{
     let myYahooWeather: YahooWeather = new YahooWeather('Weathers');
     myYahooWeather.server = "https://query.yahooapis.com/v1/";
@@ -186,12 +172,7 @@ export class ApiService {
     }
     return this.http.get(apiUrlToGet).map(this.extractData).catch(this.handleError);
   }
-
-  getDataForWeather(myWeather: Weather) {
-    let apiUrlToGet = myWeather.server + myWeather.api;
-    return this.http.get(apiUrlToGet).map(this.extractData).catch(this.handleError);
-  }
-
+  
   getDataForWeather2(myYahooWeather: YahooWeather) {
     let apiUrlToGet = myYahooWeather.server + myYahooWeather.api;
     return this.http.get(apiUrlToGet).map(this.extractData).catch(this.handleError);

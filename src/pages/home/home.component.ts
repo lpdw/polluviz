@@ -7,7 +7,6 @@ import { Router, NavigationExtras } from '@angular/router';
 import { Api } from '../../api/api.class';
 import { AirPollution } from '../../api/airpollution.api';
 import { ChimicalPollution } from '../../api/chimicalpollution.api';
-import { Weather } from '../../api/weather.api'; //TRYHARD
 import { YahooWeather } from '../../api/yahooweather.api';
 // From providers
 import { ApiService } from '../../providers/api/api.service';
@@ -83,15 +82,6 @@ export class HomeComponent implements OnInit {
       }, err => {
         console.log(`error getting data for ${api.websiteName} : ${err}`);
       });
-    });
-
-    // weather
-    let MyWeather: Weather = this._apiService.getMyWeatherApi();
-    this._apiService.getDataForWeather(MyWeather)
-    .subscribe( result => {
-      console.log('Weather data : ', result);
-    }, err => {
-      console.log(`error getting data for Weather : ${err}`);
     });
 
     let myYahooWeather: YahooWeather = this._apiService.getMyWeatherApi2();
