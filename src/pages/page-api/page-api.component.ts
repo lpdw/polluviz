@@ -12,6 +12,7 @@ import { GChart} from '../../api/gchart.api';
 
 // From providers
 import { ApiService } from '../../providers/api/api.service';
+import { GeolocationService } from '../../providers/geolocation/geolocation.service';
 
 @Component({
   selector: 'app-page-api',
@@ -21,6 +22,7 @@ import { ApiService } from '../../providers/api/api.service';
 })
 export class PageAPIComponent implements OnInit, OnDestroy {
 
+  private _location: any;
   private _subscribe: any;
   private _options: any = {};
   private _showMap: boolean = false;
@@ -37,6 +39,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
 
   constructor
   (
+    private _geolocationService: GeolocationService,
     private _route: ActivatedRoute,
     private _apiService: ApiService
   )
@@ -45,8 +48,12 @@ export class PageAPIComponent implements OnInit, OnDestroy {
     this._gMap = new Gmap();
   }
 
-  ngOnInit()
-  {
+  ngOnInit() {
+    this._geolocationService.locationObservable.subscribe( location => {
+      console.log(location);
+      this._location = location;
+    });
+
     // The PageAPI component must read the parameter,
     //  then load the API based on the websiteName given in the parameter.
     this._subscribe = this._route.params.subscribe(params => {
@@ -56,15 +63,15 @@ export class PageAPIComponent implements OnInit, OnDestroy {
 
       //get all params that we need depends api
       if(params['websiteName'] == 'safecast')//options for safecast
-        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, longitude: +params['longitude'], latitude: +params['latitude'], typePollution: params['typePollution'], distance: params['distance']};
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution'], distance: params['distance']};
       else if(params['websiteName'] == 'openaq') //options for openaq
-        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, longitude: +params['longitude'], latitude: +params['latitude'], typePollution: params['typePollution'], country: params['country']};
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution'], country: params['country']};
       else if(params['websiteName'] == 'aqicn')
-        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, longitude: +params['longitude'], latitude: +params['latitude'], typePollution: params['typePollution']};
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution']};
       else if(params['websiteName'] == 'airvisual')
-        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, longitude: +params['longitude'], latitude: +params['latitude'], typePollution: params['typePollution']};
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution']};
       else if(params['websiteName'] == 'weather') //options for weather TRYHARD
-        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, longitude: +params['longitude'], latitude: +params['latitude'], typePollution: params['typePollution'], country: params['country']};
+        this._options = { websiteName: params['websiteName'], showMap: this._showMap, showChart: this._showChart, typePollution: params['typePollution'], country: params['country']};
 
        //call the ApiService to fectch all data
        this._apiService.getData(params['websiteName'],this._options)
@@ -85,8 +92,8 @@ export class PageAPIComponent implements OnInit, OnDestroy {
   drawGmap(): void {
    this._gMap.title = this._options.websiteName;
    this._myStyleMap = this._gMap.myStyleMap;
-   this._gMap.latitude = this._options.latitude;
-   this._gMap.longitude = this._options.longitude;
+   this._gMap.latitude = this._location.latitude;
+   this._gMap.longitude = this._location.longitude;
    this._gMap.zoom = 14;
   }
 

@@ -25,11 +25,11 @@ import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 export class HomeComponent implements OnInit {
 
   public searchControl: FormControl;
-  public location: any = {}
   public listApi: Array<Api>;
-  public allDataApiLoaded: boolean = false;
+  public location: any;
+  public allDataApiLoaded: boolean;
 
-  private _options: any = {};
+  private _options: any;
   private _apiData: Array<any> = [];
 
   constructor
@@ -46,7 +46,14 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.allDataApiLoaded = false;
     this.startLoading();
+
+    this._geolocationService.resetDefaultDataGeolocation();
+    this._geolocationService.locationObservable.subscribe( location => {
+        this.location = location;
+    });
 
     let allApi = this._apiService.getAllApi();
 
@@ -93,12 +100,11 @@ export class HomeComponent implements OnInit {
 
   // we have a common options
   getCommonAndOptionalOptions(api: Api, optionalOptions ?: any) {
+    let options;
 
-    let options = [ {
+    options = [ {
       commonOptions: {
         websiteName: api.websiteName,
-        latitude: api.latitude,
-        longitude: api.longitude,
         typePollution: api.typePollution,
         showMap: true,
         showChart: true
@@ -110,19 +116,22 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit(data: any) {
+    this.allDataApiLoaded = false;
     this.startLoading();
 
     let city = data._value.toLowerCase();
     // get Location data from the city
-    let dataLocation = this._geolocationService.searchingDataForCity(city);
-    setTimeout(() => {
-      this.listApi.map((api: Api) => {
-        api.options[0].commonOptions.latitude = dataLocation.latitude;
-        api.options[0].commonOptions.longitude = dataLocation.longitude;
-      });
-      this.completeLoading();
-    }, 2000);
+    this._geolocationService.searchingDataForCity(city);
 
+    this._geolocationService.locationObservable.subscribe( location => {
+      this.listApi.map((api) => {
+        // foreach Api => update the location for the params only
+        api.options[0].commonOptions.latitude = location.latitude;
+        api.options[0].commonOptions.longitude = location.longitude;
+      });
+
+      this.completeLoading();
+    });
   }
 
   showPageApi(api: Api): void {
