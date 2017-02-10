@@ -1,7 +1,9 @@
 //From Angular
 import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-
+import { Weather } from '../../api/weather.api'; //TRYHARD
+import { Api } from '../../api/api.class';
+import { ApiService } from '../../providers/api/api.service';
 //Geolocation component
 import { GeolocationService } from '../../providers/geolocation/geolocation.service';
 
@@ -9,7 +11,7 @@ import { GeolocationService } from '../../providers/geolocation/geolocation.serv
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
-  providers: []
+  providers: [ApiService],
 })
 export class MenuComponent implements OnInit {
 
@@ -17,8 +19,10 @@ export class MenuComponent implements OnInit {
   public city: string;
   public showBtnNavBack: boolean = false;
   public _subscribe: any;
+  private _apiService: ApiService;
 
   constructor ( private router: Router, private _route: ActivatedRoute, private _geolocationService: GeolocationService ) {
+
 
     // wath the location
     this._geolocationService.locationObservable.subscribe( location => {
@@ -34,9 +38,11 @@ export class MenuComponent implements OnInit {
         this.showBtnNavBack = true;
       }
     });
+
   }
 
   ngOnInit() {
+
   }
 
   ngOnDestroy() {

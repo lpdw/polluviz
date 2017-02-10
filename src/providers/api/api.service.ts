@@ -82,7 +82,7 @@ export class ApiService {
     this._token = 'SH2oGvx4oSaGU59yJaAM';
     let SafeCast: ChimicalPollution = new ChimicalPollution('safecast', this._token);
     SafeCast.server = "https://api.safecast.org/";
-    SafeCast.api = "measurements.json";
+    SafeCast.api = "measurements.json?distance=20000&latitude="+SafeCast.latitude+"&longitude=" +SafeCast.longitude;;
     SafeCast.serverWithApiUrl = SafeCast.server + SafeCast.api;
 
 
@@ -129,7 +129,7 @@ export class ApiService {
     let MyWeather: Weather = new Weather('weather', token);
     MyWeather.server = "http://api.openweathermap.org/";
     setTimeout(() => {
-      MyWeather.api = "data/2.5/weather?lat=" + MyWeather.latitude + "&lon=" + MyWeather.longitude + "&APPID=" + MyWeather.token;
+      MyWeather.api = "data/2.5/weather?lat=" + "48.866667" + "&lon=" + "2.333333" + "&APPID=" + token;
     },1500);
     MyWeather.serverWithApiUrl = MyWeather.server + MyWeather.api;
 
