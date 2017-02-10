@@ -94,8 +94,10 @@ export class ApiService {
 
     // update location
     this._listApi.map((api) => {
-      api.latitude = this._location.latitude;
-      api.longitude = this._location.longitude;
+      this._geolocationService.locationObservable.subscribe(locaton => {
+        api.latitude = this._location.latitude;
+        api.longitude = this._location.longitude;
+      });      
     });
   }
 
