@@ -82,7 +82,7 @@ export class ApiService {
     this._token = 'SH2oGvx4oSaGU59yJaAM';
     let SafeCast: ChimicalPollution = new ChimicalPollution('safecast', this._token);
     SafeCast.server = "https://api.safecast.org/";
-    SafeCast.api = "measurements.json";
+    SafeCast.api = "measurements.json?distance=20000&latitude="+SafeCast.latitude+"&longitude="+SafeCast.longitude;
     SafeCast.serverWithApiUrl = SafeCast.server + SafeCast.api;
 
 
@@ -94,8 +94,12 @@ export class ApiService {
 
     // update location
     this._listApi.map((api) => {
-      api.latitude = this._location.latitude;
-      api.longitude = this._location.longitude;
+      this._geolocationService.locationObservable.subscribe(location => {
+        api.latitude = location.latitude;
+        api.longitude = location.longitude;
+        this._location.latitude = location.latitude;
+        this._location.longitude = location.longitude;
+      });
     });
   }
 
@@ -129,7 +133,7 @@ export class ApiService {
     let MyWeather: Weather = new Weather('weather', token);
     MyWeather.server = "http://api.openweathermap.org/";
     setTimeout(() => {
-      MyWeather.api = "data/2.5/weather?lat=" + MyWeather.latitude + "&lon=" + MyWeather.longitude + "&APPID=" + MyWeather.token;
+      MyWeather.api = "data/2.5/weather?lat=" + "48.866667" + "&lon=" + "2.333333" + "&APPID=" + token;
     },1500);
     MyWeather.serverWithApiUrl = MyWeather.server + MyWeather.api;
 
@@ -150,9 +154,12 @@ export class ApiService {
     let apiUrlToGet = "";
     for (let api of this._listApi)
     {
+      api.latitude = this._location.latitude;
+      api.longitude = this._location.longitude;
+
       //For SAFECAST
       if (api.websiteName == serverName && serverName == 'safecast') {
-        apiUrlToGet = api.server + "measurements.json?distance="+ options.distance + "&latitude=" + options.lat + "&longitude=" + options.lng;
+        apiUrlToGet = api.server + "measurements.json?distance="+ options.distance + "&latitude=" + api.latitude + "&longitude=" + api.longitude;
       }
       //For OPENAQ
       else if(api.websiteName == serverName && serverName == 'openaq') {
