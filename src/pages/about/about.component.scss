@@ -5,3 +5,26 @@ h1 {
   margin-bottom: 20px;
   text-align: justify;
 }
+.btn-about {
+  text-decoration: none;
+  button {
+    background-color: #b1d9d8;
+    width: 150px;
+    padding: 5px;
+    border-radius: 6px;
+    box-shadow: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 14px;
+  }
+}
+
+.btn-about:hover {
+  button {
+    background-color: #7bbfbd;
+    transition: 0.3s;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  }
+}
