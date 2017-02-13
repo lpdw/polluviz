@@ -59,10 +59,11 @@ export class ApiService {
 
     //Air pollution 1
     this._token = '4d786963eb8fec1329365e78bf3f9d16c1b157b9';
+    //http://api.waqi.info/feed/shanghai/?token=demo
     let Aqicn: AirPollution = new AirPollution('aqicn', this._token);
-    Aqicn.server = "http://api.waqi.info/";
-    Aqicn.api = "feed/here/?token="+this._token;
-    Aqicn.serverWithApiUrl = Aqicn.server + Aqicn.api;
+    Aqicn.server = "http://api.waqi.info/feed/";
+
+    Aqicn.serverWithApiUrl = Aqicn.server;
 
     //Air pollution 2
     let Openaq: AirPollution = new AirPollution('openaq');
@@ -162,7 +163,8 @@ export class ApiService {
         apiUrlToGet = api.server + "v1/latest?country=" + options.country;
       }
       else if(api.websiteName == serverName && serverName == 'aqicn') {
-        apiUrlToGet = api.serverWithApiUrl;
+        apiUrlToGet = api.serverWithApiUrl + this._location.city + "/?token="+api.token;
+        console.log(apiUrlToGet);
       }
       else if(api.websiteName == serverName && serverName == 'airvisual') {
         apiUrlToGet = api.serverWithApiUrl;
