@@ -46,7 +46,35 @@
           </div>
       </div>
 <div class="container">
-  <h1>Titre {{ title }}</h1>
+  
+      <div *ngIf='_websiteName=== "safecast" '>
+        <h1>{{ _websiteName }}</h1><h2>légende :</h2>
+        <br/>
+        <h3>Taux de radioactivitée en µSv/h</h3>
+          <ul class="legende">
+            <li class="lightgreen" >
+              <div ></div><p> <  0,2</p>
+            </li>
+            <li  class="green">
+              <div></div><p> >= 0,2 < 0,3</p>
+            </li>
+            <li class="darkgreen">
+              <div ></div><p> >= 0,3 < 0,4 uSv/h </p>
+            </li>
+            <li class="yellow">
+              <div></div><p> >= 0,4 < 0,45</p>
+            </li>
+            <li class="orange">
+              <div></div><p> >= 0,45 < 0,55</p>
+            </li>
+            <li class="red">
+              <div></div><p> >= 0,55 < 0,75</p>
+            </li>
+            <li class="black">
+              <div></div><p> >= 0,75</p>
+            </li>
+          </ul>
+      </div>
   <!-- <p>show the map : <b>{{_options.showMap}}</b></p>
   <p>data empty : <b>{{isEmptyData()}}</b></p> -->
 

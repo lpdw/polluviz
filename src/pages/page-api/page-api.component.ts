@@ -167,7 +167,7 @@ export class PageAPIComponent implements OnInit, OnDestroy {
         console.log(this._data);
         for (var i = 0; i < this._data.length; i++) {
           // boucle permettant d'avoir les infos de l'objet _data
-          console.log(this._data[i]);
+          console.log('test'+this._data[i].value);
           this._circleRadius = this._data[i].value;  // la value des points pour avoir la taille @TODO --> avec ce code mm taille partt, peut etre faire un array !
           // this._circleColor = "yellow";/
           if (this._circleRadius < 40) {
