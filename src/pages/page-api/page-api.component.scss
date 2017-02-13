@@ -37,9 +37,19 @@ a {
 }
 
 // ICI LA LEGENDE
-
+.aside{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+.desc{
+  flex: 1;
+  min-width: 250px;
+}
 .legende{
-  width: 400px;
+  flex: 1;
+  min-width: 250px;
   li{
     width: 100%;
     list-style-type: none;

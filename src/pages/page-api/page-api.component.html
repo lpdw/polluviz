@@ -48,32 +48,39 @@
 <div class="container">
   
       <div *ngIf='_websiteName=== "safecast" '>
-        <h1>{{ _websiteName }}</h1><h2>légende :</h2>
-        <br/>
+        <h1>{{ _websiteName }}</h1>
+        <h2>légende :</h2>
         <h3>Taux de radioactivitée en µSv/h</h3>
-          <ul class="legende">
-            <li class="lightgreen" >
-              <div ></div><p> <  0,2</p>
-            </li>
-            <li  class="green">
-              <div></div><p> >= 0,2 < 0,3</p>
-            </li>
-            <li class="darkgreen">
-              <div ></div><p> >= 0,3 < 0,4</p>
-            </li>
-            <li class="yellow">
-              <div></div><p> >= 0,4 < 0,45</p>
-            </li>
-            <li class="orange">
-              <div></div><p> >= 0,45 < 0,55</p>
-            </li>
-            <li class="red">
-              <div></div><p> >= 0,55 < 0,75</p>
-            </li>
-            <li class="black">
-              <div></div><p> >= 0,75</p>
-            </li>
-          </ul>
+        <aside class="aside">
+
+          
+            <ul class="legende">
+              <li class="lightgreen" >
+                <div ></div><p> <  0,2</p>
+              </li>
+              <li  class="green">
+                <div></div><p> >= 0,2 < 0,3</p>
+              </li>
+              <li class="darkgreen">
+                <div ></div><p> >= 0,3 < 0,4</p>
+              </li>
+              <li class="yellow">
+                <div></div><p> >= 0,4 < 0,45</p>
+              </li>
+              <li class="orange">
+                <div></div><p> >= 0,45 < 0,55</p>
+              </li>
+              <li class="red">
+                <div></div><p> >= 0,55 < 0,75</p>
+              </li>
+              <li class="black">
+                <div></div><p> >= 0,75</p>
+              </li>
+            </ul>
+            <p class="desc">
+            Né à Tokyo après la catastrophe de Fukushima en 2011, le projet Safecast permet de mesurer les radiations à l’aide d’un boîtier DiY et de partager les données sur une carte accessible à tous. Makery a rencontré l’équipe fondatrice de ce projet qui mélange ingénieurs, designers et bénévoles.
+            </p>
+        </aside>
       </div>
   <!-- <p>show the map : <b>{{_options.showMap}}</b></p>
   <p>data empty : <b>{{isEmptyData()}}</b></p> -->
