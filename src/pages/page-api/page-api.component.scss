@@ -36,6 +36,104 @@ a {
   font-weight: bold;
 }
 
+// ICI LA LEGENDE
+
+.legende{
+  width: 400px;
+  li{
+    width: 100%;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .lightgreen{
+    height: 20px;
+    div{
+      width: 10px;
+      height: 10px;
+      background-color: lightgreen;
+      border-radius: 5px;
+    }
+    p{
+      margin-left: 100px;
+    }
+  }
+  .green{
+    height: 30px;
+    div{
+      width: 15px;
+      height: 15px;
+      background-color: green;
+      border-radius: 7px;
+    }
+    p{
+      margin-left: 95px;
+    }
+  }
+  .darkgreen{
+    height: 25px;
+    div{
+      width: 20px;
+      height: 20px;
+      background-color: darkgreen;
+      border-radius: 10px;
+    }
+    p{
+      margin-left: 90px;
+    }
+  }
+  .yellow{
+    height: 30px;
+    div{
+      width: 25px;
+      height: 25px;
+      background-color: yellow;
+      border-radius: 13px;
+    }
+    p{
+      margin-left: 85px;
+    }
+  }
+  .orange{
+    height: 35px;
+    div{
+      width: 30px;
+      height: 30px;
+      background-color: orange;
+      border-radius: 15px;
+    }
+    p{
+      margin-left: 80px;
+    }
+  }
+  .red{
+    height: 40px;
+    div{
+      width: 35px;
+      height: 35px;
+      background-color: red;
+      border-radius: 18px;  
+    }
+    p{
+      margin-left: 75px;
+    }
+  }
+  .black{
+    height: 55px;
+    div{
+      width: 50px;
+      height: 50px;
+      background-color: black;
+      border-radius: 25px;
+    }
+    p{
+      margin-left: 60px;
+    }
+  }
+}
+
+
 @media screen and (max-width: 900px) {
   .box {
     text-align: center;
